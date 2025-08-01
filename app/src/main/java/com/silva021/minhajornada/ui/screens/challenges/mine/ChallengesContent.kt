@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.challenges
+package com.silva021.minhajornada.ui.screens.challenges.mine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,12 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.ui.theme.Palette
 
@@ -97,7 +97,7 @@ fun ChallengesContent(
                 text = "Continue assim, você está indo bem!",
                 color = Palette.textSecondary,
                 fontSize = 14.sp,
-                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                fontStyle = FontStyle.Italic,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),

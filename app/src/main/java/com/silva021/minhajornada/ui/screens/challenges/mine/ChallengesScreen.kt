@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.challenges
+package com.silva021.minhajornada.ui.screens.challenges.mine
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable

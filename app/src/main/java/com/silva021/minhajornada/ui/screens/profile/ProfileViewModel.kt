@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
-import com.silva021.minhajornada.ui.screens.challenges.ChallengesUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

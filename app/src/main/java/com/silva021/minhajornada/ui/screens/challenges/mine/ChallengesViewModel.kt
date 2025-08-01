@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.challenges
+package com.silva021.minhajornada.ui.screens.challenges.mine
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -28,7 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.silva021.minhajornada.ui.routes.Routes
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
-import com.silva021.minhajornada.ui.screens.challenges.ChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.communities.CommunitiesScreen
