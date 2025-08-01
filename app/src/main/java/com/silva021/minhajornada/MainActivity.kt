@@ -32,6 +32,8 @@ import com.silva021.minhajornada.ui.screens.challenges.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.communities.CommunitiesScreen
+import com.silva021.minhajornada.ui.screens.feedback.FeedbackScreen
+import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
@@ -62,7 +64,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.WelcomeScreen.route,
+                    startDestination = Routes.CommunitiesScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -75,17 +77,53 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.ChallengesScreen.route) {
                         ChallengesScreen(
                             onCreateChallenge = {
-                                Routes.CreateChallengesScreen.navigateToCreateChallengesScreen(navController)
+                                Routes.CreateChallengesScreen.navigateToCreateChallengesScreen(
+                                    navController
+                                )
                             },
                             onUpdateChallengeProgress = {
                                 navigateToUpdateChallengeProgressScreen(navController)
                             }
                         )
                     }
-                    composable(Routes.ProfileScreen.route) { ProfileScreen() }
-                    composable(Routes.CreateChallengesScreen.route) { CreateChallengesScreen() }
-                    composable(Routes.UpdateChallengeProgressScreen.route) { UpdateChallengeProgressScreen() }
+                    composable(Routes.ProfileScreen.route) {
+                        ProfileScreen(
+                            onContactUsClick = {
+                                Routes.FeedbackScreen.navigateToFeedbackScreen(navController)
+                            },
+                            onHelpClick = {
+                                Routes.HelpScreen.navigateToHelpScreen(navController)
+                            }
+                        )
+                    }
+                    composable(Routes.CreateChallengesScreen.route) {
+                        CreateChallengesScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.ChallengesScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
+                    composable(Routes.UpdateChallengeProgressScreen.route) {
+                        UpdateChallengeProgressScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.ChallengesScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
                     composable(Routes.CommunitiesScreen.route) { CommunitiesScreen() }
+                    composable(Routes.FeedbackScreen.route) {
+                        FeedbackScreen(onBackPressed = { navController.popBackStack() })
+                    }
+
+                    composable(Routes.HelpScreen.route) {
+                        HelpScreen(onBackPressed = { navController.popBackStack() })
+                    }
                 }
             }
         }

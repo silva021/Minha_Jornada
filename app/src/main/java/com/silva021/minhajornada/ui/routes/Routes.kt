@@ -25,6 +25,18 @@ sealed class Routes(val route: String) {
         }
     }
 
+    object FeedbackScreen : Routes("feedback_screen") {
+        fun navigateToFeedbackScreen(navController: NavController) {
+            navController.navigate(FeedbackScreen.route)
+        }
+    }
+
+    object HelpScreen : Routes("help_screen") {
+        fun navigateToHelpScreen(navController: NavController) {
+            navController.navigate(HelpScreen.route)
+        }
+    }
+
     object UpdateChallengeProgressScreen : Routes("update_challenge_progress_screen") {
         fun navigateToUpdateChallengeProgressScreen(navController: NavController) {
             navController.navigate(UpdateChallengeProgressScreen.route)

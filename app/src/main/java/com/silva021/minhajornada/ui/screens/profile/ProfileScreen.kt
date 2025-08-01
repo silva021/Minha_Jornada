@@ -10,7 +10,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel = koinViewModel()
+    viewModel: ProfileViewModel = koinViewModel(),
+    onContactUsClick: () -> Unit,
+    onHelpClick: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -24,6 +26,10 @@ fun ProfileScreen(
             onRetry = { viewModel.fetchProfile() },
             onContactSupport = { /* implementar */ }
         )
-        is ProfileUiState.Success -> ProfileContent(profile = state.profile)
+        is ProfileUiState.Success -> ProfileContent(
+            profile = state.profile,
+            onContactUsClick = onContactUsClick,
+            onHelpClick = onHelpClick
+        )
     }
 }

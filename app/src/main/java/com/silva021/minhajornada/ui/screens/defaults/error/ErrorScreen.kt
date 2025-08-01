@@ -37,7 +37,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @Composable
 fun ErrorScreen(
     onRetry: () -> Unit,
-    onContactSupport: () -> Unit,
+    onContactSupport: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -98,17 +98,19 @@ fun ErrorScreen(
                 Text("Tentar novamente")
             }
 
-            Button(
-                onClick = onContactSupport,
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.extraLarge,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = textSecondary
-                ),
-                border = BorderStroke(2.dp, textSecondary)
-            ) {
-                Text("Contatar Suporte")
+            onContactSupport?.let {
+                Button(
+                    onClick = { it.invoke() },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = textSecondary
+                    ),
+                    border = BorderStroke(2.dp, textSecondary)
+                ) {
+                    Text("Contatar Suporte")
+                }
             }
         }
     }

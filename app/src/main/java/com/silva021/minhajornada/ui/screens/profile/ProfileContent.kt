@@ -43,7 +43,9 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileContent(
-    profile: Profile
+    profile: Profile,
+    onHelpClick: () -> Unit,
+    onContactUsClick: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -85,8 +87,8 @@ fun ProfileContent(
             SectionCard(
                 title = "Suporte",
                 items = listOf(
-                    SettingsItem("Ajuda", icon = Icons.Default.Settings),
-                    SettingsItem("Contate-nos", icon = Icons.Default.Settings)
+                    SettingsItem("Ajuda", icon = Icons.Default.Settings, onClick = onHelpClick),
+                    SettingsItem("Contate-nos", icon = Icons.Default.Settings, onClick = onContactUsClick)
                 )
             )
         }
@@ -203,7 +205,7 @@ fun ProfileListItem(item: SettingsItem) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Handle click */ }
+            .clickable { item.onClick?.invoke() }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         if (item.icon != null) {
@@ -256,6 +258,8 @@ fun ProfileContentPreview() {
                 following = 3,
                 followers = 2
             )
-        )
+        ),
+        onContactUsClick = {},
+        onHelpClick = {}
     )
 }

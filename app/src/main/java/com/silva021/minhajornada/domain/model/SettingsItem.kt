@@ -6,4 +6,5 @@ data class SettingsItem(
     val text: String,
     val value: String? = null,
     val icon: ImageVector? = null,
+    val onClick: (() -> Unit)? = null
 )
