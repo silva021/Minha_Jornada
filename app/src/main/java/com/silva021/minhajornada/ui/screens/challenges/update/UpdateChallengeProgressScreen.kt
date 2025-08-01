@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.challenges
+package com.silva021.minhajornada.ui.screens.challenges.update
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

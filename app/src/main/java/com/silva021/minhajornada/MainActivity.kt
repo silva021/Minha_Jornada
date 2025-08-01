@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
@@ -30,8 +29,8 @@ import androidx.navigation.compose.rememberNavController
 import com.silva021.minhajornada.ui.routes.Routes
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.challenges.ChallengesScreen
-import com.silva021.minhajornada.ui.screens.challenges.CreateChallengesScreen
-import com.silva021.minhajornada.ui.screens.challenges.UpdateChallengeProgressScreen
+import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.communities.CommunitiesScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
