@@ -92,7 +92,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun BottomNavigationBar(
     currentRoute: String,

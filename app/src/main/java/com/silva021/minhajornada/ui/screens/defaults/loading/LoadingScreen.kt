@@ -43,7 +43,7 @@ fun LoadingScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = message ?: "Carregando desafios...",
+            text = message ?: "Carregando...",
             color = textSecondary,
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal
