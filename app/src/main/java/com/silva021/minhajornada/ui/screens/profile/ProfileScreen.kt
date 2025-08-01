@@ -1,0 +1,250 @@
+package com.silva021.minhajornada.ui.screens.profile
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import com.silva021.minhajornada.ui.theme.Palette
+import com.silva021.minhajornada.ui.theme.Palette.accentColor
+import com.silva021.minhajornada.ui.theme.Palette.dividerColor
+import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfileScreen() {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Palette.backgroundColor)
+            .padding(horizontal = 16.dp)
+    ) {
+        item {
+            ProfileHeader()
+        }
+
+        item {
+            StatsRow()
+            Spacer(modifier = Modifier.height(24.dp))
+        }
+
+        item {
+            SectionCard(
+                title = "Conta",
+                items = listOf(
+                    ProfileItem("Editar Perfil", icon = Icons.Default.Settings),
+                    ProfileItem("Notificações", icon = Icons.Default.Settings),
+                    ProfileItem("Privacidade", icon = Icons.Default.Settings)
+                )
+            )
+        }
+
+        item {
+            SectionCard(
+                title = "Preferências",
+                items = listOf(
+                    ProfileItem("Idioma", value = "Português"),
+                    ProfileItem("Tema", value = "Sistema")
+                )
+            )
+        }
+
+        item {
+            SectionCard(
+                title = "Suporte",
+                items = listOf(
+                    ProfileItem("Ajuda", icon = Icons.Default.Settings),
+                    ProfileItem("Contate-nos", icon = Icons.Default.Settings)
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun ProfileHeader() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 24.dp)
+    ) {
+        AsyncImage(
+            model = "https://media.licdn.com/dms/image/v2/D4D03AQGHu5O7K6BgOA/profile-displayphoto-shrink_800_800/B4DZYRGyL2GwAk-/0/1744043714075?e=1756944000&v=beta&t=1a1Ej8JUBG-Awxu-qDbAXTUjCk3u5bPOGQ3rTsnPEtE",
+            contentDescription = "Foto de Perfil",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(96.dp)
+                .clip(CircleShape)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Ethan Carter",
+            color = Palette.textPrimary,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = "@ethan.carter",
+            color = textSecondary,
+            fontSize = 16.sp
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = "Membro desde 2021",
+            color = textSecondary,
+            fontSize = 14.sp
+        )
+    }
+}
+
+@Composable
+fun StatsRow() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        StatItem(value = "12", label = "Desafios")
+        StatItem(value = "3", label = "Seguindo")
+        StatItem(value = "2", label = "Seguidores")
+    }
+}
+
+@Composable
+fun StatItem(value: String, label: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = value,
+            color = Palette.textPrimary,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = label,
+            color = textSecondary,
+            fontSize = 14.sp
+        )
+    }
+}
+
+@Composable
+fun SectionCard(title: String, items: List<ProfileItem>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(accentColor)
+            .padding(vertical = 8.dp)
+    ) {
+        Text(
+            text = title,
+            color = Palette.textPrimary,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
+        items.forEachIndexed { index, item ->
+            ProfileListItem(item = item)
+            if (index < items.lastIndex) {
+                Divider(
+                    color = dividerColor,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+        }
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+}
+
+@Composable
+fun ProfileListItem(item: ProfileItem) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { /* Handle click */ }
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
+        if (item.icon != null) {
+            Icon(
+                imageVector = item.icon,
+                contentDescription = item.text,
+                tint = textSecondary,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+        }
+
+        Text(
+            text = item.text,
+            color = Palette.textPrimary,
+            fontSize = 16.sp,
+            modifier = Modifier.weight(1f)
+        )
+
+        if (item.value != null) {
+            Text(
+                text = item.value,
+                color = textSecondary,
+                fontSize = 16.sp
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = "Ir",
+                tint = textSecondary,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    }
+}
+
+data class ProfileItem(
+    val text: String,
+    val value: String? = null,
+    val icon: ImageVector? = null,
+)
+
+@Composable
+@Preview
+fun ProfileScreenPreview() {
+    ProfileScreen()
+}
