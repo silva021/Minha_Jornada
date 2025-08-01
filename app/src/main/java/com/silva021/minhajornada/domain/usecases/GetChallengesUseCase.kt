@@ -5,14 +5,9 @@ import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.domain.model.toDomain
 
 class GetChallengesUseCase(
-    val repository: ChallengeRepository
+    val repository: ChallengeRepository,
 ) {
-    suspend operator fun invoke() : Result<Challenges> {
-        try {
-            val challenges = repository.getChallenges().toDomain()
-            return Result.success(challenges)
-        } catch (e: Exception) {
-            return Result.failure(e)
-        }
+    suspend operator fun invoke(): Result<Challenges> = runCatching {
+        repository.getChallenges().toDomain()
     }
 }
