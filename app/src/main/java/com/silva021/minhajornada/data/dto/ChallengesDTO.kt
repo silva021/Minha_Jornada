@@ -6,7 +6,7 @@ data class ChallengesDTO(
 )
 
 data class ChallengeDTO(
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String,
     val progress: Int,

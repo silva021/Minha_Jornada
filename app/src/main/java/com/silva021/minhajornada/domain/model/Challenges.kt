@@ -9,7 +9,7 @@ data class Challenges(
 )
 
 data class Challenge(
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String,
     val progress: Int,

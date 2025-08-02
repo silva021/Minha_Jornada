@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,14 +36,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.ui.theme.Palette
 
 @Composable
 fun ChallengesContent(
     challenges: Challenges,
-    onCreateChallenge: () -> Unit = { /* Default action */ },
-    onUpdateChallengeProgress: () -> Unit = { /* Default action */ },
+    onCreateChallenge: () -> Unit,
+    onUpdateChallengeProgress: () -> Unit,
+    onSummaryChallengeClick: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -118,7 +119,10 @@ fun ChallengesContent(
         items(challenges.completed) {
             CompletedChallengeItem(
                 title = it.title,
-                completionDate = "Concluído em ${it.endDate}"
+                completionDate = "Concluído em ${it.endDate}",
+                onClick = {
+                    onSummaryChallengeClick()
+                }
             )
         }
     }
@@ -195,34 +199,41 @@ fun ChallengeItem(
 }
 
 @Composable
-fun CompletedChallengeItem(title: String, completionDate: String) {
+fun CompletedChallengeItem(
+    title: String,
+    completionDate: String,
+    onClick: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(Palette.cardBackground)
             .padding(16.dp)
+            .clickable {
+                onClick.invoke()
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Palette.successColor.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Ícone de Concluído",
-                    tint = Palette.successColor,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
+//            Box(
+//                modifier = Modifier
+//                    .size(40.dp)
+//                    .clip(CircleShape)
+//                    .background(Palette.successColor.copy(alpha = 0.2f)),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.Check,
+//                    contentDescription = "Ícone de Concluído",
+//                    tint = Palette.successColor,
+//                    modifier = Modifier.size(20.dp)
+//                )
+//            }
+//
+//            Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -238,12 +249,12 @@ fun CompletedChallengeItem(title: String, completionDate: String) {
                 )
             }
 
-            Icon(
-                imageVector = Icons.Default.Check,
-                contentDescription = "Concluído",
-                tint = Palette.successColor,
-                modifier = Modifier.size(24.dp)
-            )
+//            Icon(
+//                imageVector = Icons.Default.Check,
+//                contentDescription = "Concluído",
+//                tint = Palette.successColor,
+//                modifier = Modifier.size(24.dp)
+//            )
         }
     }
     Spacer(modifier = Modifier.height(8.dp))
@@ -273,10 +284,57 @@ fun ProgressBar(progress: Int) {
 @Composable
 @Preview
 fun ChallengesContentPreview() {
-    ChallengesContent(
-        challenges = Challenges(
-            actives = listOf(),
-            completed = listOf()
+    val challenges = Challenges(
+        actives = listOf(
+            Challenge(
+                id = 1,
+                title = "Ler 10 livros",
+                description = "Complete a leitura de 10 livros nos próximos 30 dias .",
+                progress = 70,
+                startDate = "2025-07-01",
+                endDate = "2025-08-01"
+            ),
+            Challenge(
+                id = 2,
+                title = "Correr 80 km",
+                description = "Corra um total de 80 km no mês .",
+                progress = 40,
+                startDate = "2025-07-10",
+                endDate = "2025-08-10"
+            ),
+            Challenge(
+                id = 3,
+                title = "Aprender um novo idioma",
+                description = "Estude um novo idioma por pelo menos 10 minutos por dia .",
+                progress = 20,
+                startDate = "2025-07-20",
+                endDate = "2025-08-20"
+            )
+        ),
+        completed = listOf(
+            Challenge(
+                id = 4,
+                title = "Meditar diariamente por 30 dias",
+                description = "Desafio de meditação diária concluído.",
+                progress = 100,
+                startDate = "2023-07-15",
+                endDate = "2023-08-15"
+            ),
+            Challenge(
+                id = 5,
+                title = "Beber 8 copos de água por dia",
+                description = "Hábitos de hidratação saudáveis desenvolvidos.",
+                progress = 100,
+                startDate = "2023-06-20",
+                endDate = "2023-07-20"
+            )
         )
+    )
+
+    ChallengesContent(
+        challenges = challenges,
+        onCreateChallenge = {},
+        onUpdateChallengeProgress = {},
+        onSummaryChallengeClick = {}
     )
 }

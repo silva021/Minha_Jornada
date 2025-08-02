@@ -14,8 +14,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ChallengesScreen(
     viewModel: ChallengesViewModel = koinViewModel(),
-    onCreateChallenge: () -> Unit = { /* Default action */ },
-    onUpdateChallengeProgress: () -> Unit = { /* Default action */ },
+    onCreateChallenge: () -> Unit,
+    onUpdateChallengeProgress: () -> Unit,
+    onSummaryChallengeClick: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -39,15 +40,9 @@ fun ChallengesScreen(
             ChallengesContent(
                 challenges = state.challenges,
                 onCreateChallenge = onCreateChallenge,
-                onUpdateChallengeProgress = onUpdateChallengeProgress
+                onUpdateChallengeProgress = onUpdateChallengeProgress,
+                onSummaryChallengeClick = onSummaryChallengeClick
             )
         }
     }
-}
-
-
-@Composable
-@Preview
-fun ChallengesScreenPreview() {
-    ChallengesScreen()
 }

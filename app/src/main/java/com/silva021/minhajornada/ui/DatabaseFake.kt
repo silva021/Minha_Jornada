@@ -4,6 +4,8 @@ import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Comment
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.domain.model.PublicChallenge
+import com.silva021.minhajornada.domain.model.Report
+import com.silva021.minhajornada.domain.model.ReportStatus
 
 object DatabaseFake {
 
@@ -120,6 +122,34 @@ object DatabaseFake {
             content = "Alguém animado para uma trilha no final de semana? Vamos explorar novas trilhas e aproveitar o ar livre juntos!",
             likes = 30,
             comments = 8
+        )
+    )
+
+    val reports = listOf(
+        Report(
+            status = ReportStatus.SUCCESS,
+            day = "Dia 1",
+            date = "20/10/2024",
+//            date = "20 de Outubro, 2024",
+            notes = "Me sentindo ótimo!"
+        ),
+        Report(
+            status = ReportStatus.SUCCESS,
+            day = "Dia 2",
+            date = "21/10/2024",
+            notes = "Difícil mas valeu a pena."
+        ),
+        Report(
+            status = ReportStatus.FAILURE,
+            day = "Dia 3",
+            date = "22/10/2024",
+            notes = "Falhei hoje, vou tentar novamente."
+        ),
+        Report(
+            status = ReportStatus.SUCCESS,
+            day = "Dia 4",
+            date = "23/10/2024",
+            notes = "Difícil mas valeu a pena."
         )
     )
 }
