@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.inputBackground
 import com.silva021.minhajornada.ui.theme.Palette.inputBorder
@@ -57,18 +58,7 @@ fun FeedbackScreen(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-
-        Row {
-            IconButton(
-                onClick = onBackPressed
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Voltar",
-                    tint = textPrimary
-                )
-            }
-        }
+        Header { onBackPressed.invoke() }
 
         Spacer(modifier = Modifier.height(16.dp))
 

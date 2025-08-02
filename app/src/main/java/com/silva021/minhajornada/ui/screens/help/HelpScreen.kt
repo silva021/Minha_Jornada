@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.domain.model.Faq
+import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.cardBackground
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
@@ -50,17 +51,7 @@ fun HelpScreen(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        Row {
-            IconButton(
-                onClick = onBackPressed
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Voltar",
-                    tint = textPrimary
-                )
-            }
-        }
+        Header { onBackPressed.invoke() }
 
         LazyColumn(
             modifier = Modifier
