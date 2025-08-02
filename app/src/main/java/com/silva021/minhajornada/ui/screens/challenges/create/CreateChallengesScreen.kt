@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
@@ -63,7 +65,7 @@ fun CreateChallengesScreen(
                 onClick = onBackPressed
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Voltar",
                     tint = textPrimary
                 )
@@ -215,9 +217,8 @@ fun CreateChallengesScreen(
                     )
                 }
 
-                Divider(color = mutedColor, thickness = 1.dp)
+                HorizontalDivider(thickness = 1.dp, color = mutedColor)
 
-                // Notificações
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
