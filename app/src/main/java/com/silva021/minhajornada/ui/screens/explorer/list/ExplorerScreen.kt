@@ -48,67 +48,73 @@ fun ExplorerScreen(
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
 
-    LazyColumn(
-        modifier = Modifier
-            .background(backgroundColor)
+    Column(
+        modifier = Modifier.background(backgroundColor)
     ) {
-        item {
-            Search(
-                text = searchText,
-                onTextChange = { searchText = it },
-                placeholder = "Pesquisar desafios"
-            )
 
-            CategoriesFilter(
-                selectedCategory
-            ) {
-                selectedCategory = it
-            }
+        Spacer(modifier = Modifier.height(16.dp))
 
+        Search(
+            text = searchText,
+            onTextChange = { searchText = it },
+            placeholder = "Pesquisar comunidades"
+        )
 
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Destaques",
-                    color = textPrimary,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+        CategoriesFilter(
+            selectedCategory
+        ) {
+            selectedCategory = it
+        }
 
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(DatabaseFake.featuredChallenges) {
-                        FeaturedChallengeCard(it, onChallengeClick)
+        LazyColumn(
+            modifier = Modifier
+                .background(backgroundColor)
+        ) {
+            item {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Destaques",
+                        color = textPrimary,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        items(DatabaseFake.featuredChallenges) {
+                            FeaturedChallengeCard(it, onChallengeClick)
+                        }
                     }
                 }
-            }
 
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Populares",
-                    color = textPrimary,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Populares",
+                        color = textPrimary,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
 
-                DatabaseFake.popularChallenges.chunked(2).forEach { rowItems ->
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        rowItems.forEach { challenge ->
-                            Box(modifier = Modifier.weight(1f)) {
-                                PopularChallengeCard(challenge, onChallengeClick)
+                    DatabaseFake.popularChallenges.chunked(2).forEach { rowItems ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            rowItems.forEach { challenge ->
+                                Box(modifier = Modifier.weight(1f)) {
+                                    PopularChallengeCard(challenge, onChallengeClick)
+                                }
+                            }
+
+                            if (rowItems.size == 1) {
+                                Spacer(modifier = Modifier.weight(1f))
                             }
                         }
-
-                        if (rowItems.size == 1) {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
@@ -119,7 +125,7 @@ fun ExplorerScreen(
 @Composable
 private fun FeaturedChallengeCard(
     challenge: PublicChallenge,
-    onChallengeClick: (PublicChallenge) -> Unit
+    onChallengeClick: (PublicChallenge) -> Unit,
 ) {
     Card(
         modifier = Modifier
