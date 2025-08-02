@@ -38,6 +38,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.silva021.minhajornada.ui.components.PrimaryButton
+import com.silva021.minhajornada.ui.components.SecondButton
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
@@ -251,51 +253,43 @@ fun CreateChallengesScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.weight(1f))
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Palette.backgroundColor)
                     .padding(16.dp)
             ) {
-                Button(
+                PrimaryButton(
                     onClick = { /* Salvar alterações */ },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Palette.primaryColor,
-                        contentColor = Palette.backgroundColor
-                    )
-                ) {
-                    Text("Salvar Alterações")
-                }
+                    text = "Salvar Alterações"
+                )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Button(
-                    onClick = { /* Usar modelo */ },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = accentColor,
-                        contentColor = textPrimary
-                    )
-                ) {
-                    Text("Usar Modelo")
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = { /* Excluir modelo */ },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Palette.primaryColor
-                    )
-                ) {
-                    Text("Excluir Modelo")
-                }
+//                if (false) {
+//                    SecondButton(
+//                        onClick = { /* Usar modelo */ },
+//                        modifier = Modifier.fillMaxWidth(),
+//                        text = "Usar Modelo"
+//                    )
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    Button(
+//                        onClick = { /* Excluir modelo */ },
+//                        modifier = Modifier.fillMaxWidth(),
+//                        shape = RoundedCornerShape(50),
+//                        colors = ButtonDefaults.buttonColors(
+//                            containerColor = Color.Transparent,
+//                            contentColor = Palette.primaryColor
+//                        )
+//                    ) {
+//                        Text("Excluir Modelo")
+//                    }
+//                }
             }
         }
 

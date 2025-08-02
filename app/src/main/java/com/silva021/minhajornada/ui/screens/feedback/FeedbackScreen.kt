@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.ui.components.Header
+import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.inputBackground
 import com.silva021.minhajornada.ui.theme.Palette.inputBorder
@@ -153,18 +154,13 @@ fun FeedbackScreen(
                     placeholder = { Text("Conte-nos o que está pensando...") })
             }
 
-            Button(
-                onClick = { /* Enviar feedback */ },
+            PrimaryButton(
+                text = "Enviar Feedback",
+                onClick = { /* Ação ao enviar feedback */ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryColor, contentColor = backgroundColor
-                )
-            ) {
-                Text("Enviar", fontWeight = FontWeight.Bold)
-            }
+                    .padding(bottom = 16.dp)
+            )
         }
     }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
+import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
@@ -176,23 +177,13 @@ fun UpdateChallengeProgressScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { /* Marcar como concluído */ },
+
+            PrimaryButton(
+                text = "Marcar como concluído",
+                onClick = { /* Ação ao marcar como concluído */ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Palette.primaryColor,
-                    contentColor = Palette.backgroundColor
-                )
-            ) {
-                Text(
-                    text = "Marcar como Concluído",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            )
         }
     }
 }

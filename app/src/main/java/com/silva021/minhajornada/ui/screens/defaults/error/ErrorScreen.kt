@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.silva021.minhajornada.ui.components.PrimaryButton
+import com.silva021.minhajornada.ui.components.SecondButton
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.errorColor
 import com.silva021.minhajornada.ui.theme.Palette.primaryColor
@@ -43,7 +45,7 @@ fun ErrorScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -82,35 +84,21 @@ fun ErrorScreen(
         // Botões
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Button(
+            PrimaryButton(
                 onClick = onRetry,
                 modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.extraLarge,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryColor,
-                    contentColor = backgroundColor
-                )
-            ) {
-                Text("Tentar novamente")
-            }
+                text = "Tentar novamente",
+            )
 
             onContactSupport?.let {
-                Button(
+                SecondButton(
                     onClick = { it.invoke() },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = textSecondary
-                    ),
-                    border = BorderStroke(2.dp, textSecondary)
-                ) {
-                    Text("Contatar Suporte")
-                }
+                    text = "Contatar Suporte"
+                )
             }
         }
     }

@@ -5,14 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.silva021.minhajornada.ui.components.Header
+import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
-import com.silva021.minhajornada.ui.theme.Palette.primaryColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
 @Composable
 fun CommunityDetailsScreen(
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +38,7 @@ fun CommunityDetailsScreen(
             .background(backgroundColor)
             .verticalScroll(rememberScrollState())
     ) {
-        Header (
+        Header(
             "Comunidade",
             onBackPressed = onBackPressed,
         )
@@ -86,24 +83,13 @@ private fun CommunityProfileSection() {
             )
         }
 
-        // Botão de participar
-        Button(
+        PrimaryButton(
             onClick = { /* Participar da comunidade */ },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = primaryColor,
-                contentColor = backgroundColor
-            ),
-            shape = CircleShape,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 32.dp)
-                .height(48.dp)
-        ) {
-            Text(
-                text = "Participar da Comunidade",
-                fontWeight = FontWeight.Bold
-            )
-        }
+                .padding(horizontal = 32.dp),
+            text = "Participar da Comunidade",
+        )
     }
 }
 
@@ -129,8 +115,6 @@ private fun AboutSection() {
         )
     }
 }
-
-
 
 @Preview
 @Composable

@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.silva021.minhajornada.domain.model.Comment
 import com.silva021.minhajornada.ui.components.Header
+import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.cardBackground
 import com.silva021.minhajornada.ui.theme.Palette.likeColor
@@ -289,17 +290,11 @@ private fun CommentInput() {
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Button(
+        PrimaryButton(
             onClick = { /* Postar comentário */ },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = primaryColor,
-                contentColor = Color.White
-            ),
             shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.height(40.dp)
-        ) {
-            Text("Postar")
-        }
+            text = "Postar"
+        )
     }
 }
 

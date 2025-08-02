@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.R
+import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette
 
 @Composable
@@ -90,24 +91,13 @@ fun WelcomeScreen(
                 )
             }
 
-            Button(
+            PrimaryButton(
+                text = "Começar",
                 onClick = onGetStartedClicked,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 32.dp)
-                    .height(56.dp),
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF8DD279),
-                    contentColor = Palette.backgroundColor
-                )
-            ) {
-                Text(
-                    text = "Começar",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            )
         }
     }
 }
