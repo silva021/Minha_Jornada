@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.ui.theme.Palette
+import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
@@ -48,7 +49,6 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 fun CreateChallengesScreen(
     onBackPressed: () -> Unit,
     ) {
-    val mutedColor = Color(0xFF333333)
 
     val templateName = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
@@ -92,9 +92,9 @@ fun CreateChallengesScreen(
                     placeholder = { Text("Ex: Desafio Fitness de 30 Dias") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = mutedColor,
-                        unfocusedContainerColor = mutedColor,
-                        disabledContainerColor = mutedColor,
+                        focusedContainerColor = accentColor,
+                        unfocusedContainerColor = accentColor,
+                        disabledContainerColor = accentColor,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = textPrimary,
@@ -124,9 +124,9 @@ fun CreateChallengesScreen(
                         .fillMaxWidth()
                         .height(120.dp),
                     colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = mutedColor,
-                        unfocusedContainerColor = mutedColor,
-                        disabledContainerColor = mutedColor,
+                        focusedContainerColor = accentColor,
+                        unfocusedContainerColor = accentColor,
+                        disabledContainerColor = accentColor,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = textPrimary,
@@ -152,9 +152,9 @@ fun CreateChallengesScreen(
                     placeholder = { Text("Ex: 30 dias") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = mutedColor,
-                        unfocusedContainerColor = mutedColor,
-                        disabledContainerColor = mutedColor,
+                        focusedContainerColor = accentColor,
+                        unfocusedContainerColor = accentColor,
+                        disabledContainerColor = accentColor,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = textPrimary,
@@ -212,12 +212,12 @@ fun CreateChallengesScreen(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = Palette.primaryColor,
                             uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = mutedColor
+                            uncheckedTrackColor = accentColor
                         )
                     )
                 }
 
-                HorizontalDivider(thickness = 1.dp, color = mutedColor)
+                HorizontalDivider(thickness = 1.dp, color = accentColor)
 
                 Row(
                     modifier = Modifier
@@ -245,7 +245,7 @@ fun CreateChallengesScreen(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = Palette.primaryColor,
                             uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = mutedColor
+                            uncheckedTrackColor = accentColor
                         )
                     )
                 }
@@ -276,7 +276,7 @@ fun CreateChallengesScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = mutedColor,
+                        containerColor = accentColor,
                         contentColor = textPrimary
                     )
                 ) {
