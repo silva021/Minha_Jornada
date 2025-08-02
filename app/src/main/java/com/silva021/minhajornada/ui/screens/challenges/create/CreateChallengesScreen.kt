@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.components.SecondButton
 import com.silva021.minhajornada.ui.theme.Palette
@@ -88,24 +89,12 @@ fun CreateChallengesScreen(
                     color = textSecondary,
                     fontWeight = FontWeight.Medium
                 )
-                TextField(
+
+                CustomTextField(
                     value = templateName.value,
                     onValueChange = { templateName.value = it },
-                    placeholder = { Text("Ex: Desafio Fitness de 30 Dias") },
+                    placeholder = "Ex: Desafio Fitness de 30 Dias",
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = accentColor,
-                        unfocusedContainerColor = accentColor,
-                        disabledContainerColor = accentColor,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = textPrimary,
-                        focusedTextColor = textPrimary,
-                        unfocusedTextColor = textPrimary,
-//                        placeholderColor = textSecondary
-                    ),
-                    shape = RoundedCornerShape(12.dp),
-                    singleLine = true
                 )
             }
 
@@ -118,24 +107,14 @@ fun CreateChallengesScreen(
                     color = textSecondary,
                     fontWeight = FontWeight.Medium
                 )
-                TextField(
+
+                CustomTextField(
                     value = description.value,
                     onValueChange = { description.value = it },
-                    placeholder = { Text("Descreva o desafio...") },
+                    placeholder = "Descreva o desafio...",
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp),
-                    colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = accentColor,
-                        unfocusedContainerColor = accentColor,
-                        disabledContainerColor = accentColor,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = textPrimary,
-                        focusedTextColor = textPrimary,
-                        unfocusedTextColor = textPrimary,
-                    ),
-                    shape = RoundedCornerShape(12.dp)
                 )
             }
 
@@ -148,30 +127,18 @@ fun CreateChallengesScreen(
                     color = textSecondary,
                     fontWeight = FontWeight.Medium
                 )
-                TextField(
+
+                CustomTextField(
                     value = duration.value,
                     onValueChange = { duration.value = it },
-                    placeholder = { Text("Ex: 30 dias") },
+                    placeholder = "Ex: 30 dias",
                     modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.colors().copy(
-                        focusedContainerColor = accentColor,
-                        unfocusedContainerColor = accentColor,
-                        disabledContainerColor = accentColor,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = textPrimary,
-                        focusedTextColor = textPrimary,
-                        unfocusedTextColor = textPrimary,
-                    ),
-                    shape = RoundedCornerShape(12.dp),
-                    singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Configurações
             Text(
                 text = "Configurações",
                 color = textPrimary,
@@ -187,7 +154,6 @@ fun CreateChallengesScreen(
                     .clip(RoundedCornerShape(12.dp))
                     .background(Palette.cardBackground)
             ) {
-                // Visibilidade
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

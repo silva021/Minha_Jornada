@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
+import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
@@ -147,32 +148,14 @@ fun UpdateChallengeProgressScreen(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
-            Spacer(modifier = Modifier.height(4.dp))
 
+            Spacer(modifier = Modifier.height(8.dp))
 
-            TextField(
+            CustomTextField(
                 value = observationText.value,
                 onValueChange = { observationText.value = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                placeholder = {
-                    Text(
-                        text = "Como foi? Alguma dificuldade ou observação?",
-                        color = textSecondary
-                    )
-                },
-                colors = TextFieldDefaults.colors().copy(
-                    focusedContainerColor = accentColor,
-                    unfocusedContainerColor = accentColor,
-                    disabledContainerColor = accentColor,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = Palette.primaryColor,
-                    focusedTextColor = textPrimary,
-                    unfocusedTextColor = textPrimary,
-                ),
-                shape = RoundedCornerShape(16.dp)
+                placeholder = "Como foi? Alguma dificuldade ou observação?",
+                modifier = Modifier.fillMaxWidth().height(120.dp),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
