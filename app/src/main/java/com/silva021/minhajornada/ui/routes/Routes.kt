@@ -101,5 +101,11 @@ sealed class Routes(val route: String) {
         }
     }
 
+    object ChallengeSummaryScreen : Routes("challenge_summary_screen") {
+        fun navigateToChallengeSummaryScreen(navController: NavController) {
+            navController.navigate(ChallengeSummaryScreen.route)
+        }
+    }
+
     object WelcomeScreen : Routes("welcome_screen")
 }

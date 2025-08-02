@@ -32,6 +32,7 @@ import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.summary.ChallengeSummaryScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedScreen
@@ -92,6 +93,11 @@ class MainActivity : ComponentActivity() {
                             },
                             onUpdateChallengeProgress = {
                                 navigateToUpdateChallengeProgressScreen(navController)
+                            },
+                            onSummaryChallengeClick = {
+                                Routes.ChallengeSummaryScreen.navigateToChallengeSummaryScreen(
+                                    navController
+                                )
                             }
                         )
                     }
@@ -197,6 +203,17 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.CommunityPostScreen.route) {
                         CommunityPostScreen()
+                    }
+
+                    composable(Routes.ChallengeSummaryScreen.route) {
+                        ChallengeSummaryScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.ChallengesScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
                     }
                 }
             }
