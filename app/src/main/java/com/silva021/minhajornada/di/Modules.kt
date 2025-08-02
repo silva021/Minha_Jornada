@@ -13,7 +13,7 @@ import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
-import com.silva021.minhajornada.ui.screens.communities.CommunitiesViewModel
+import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

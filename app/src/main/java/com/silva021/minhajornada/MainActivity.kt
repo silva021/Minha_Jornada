@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
@@ -27,11 +28,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.silva021.minhajornada.ui.routes.Routes
+import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
-import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
-import com.silva021.minhajornada.ui.screens.communities.CommunitiesScreen
+import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsScreen
+import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedScreen
+import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesScreen
+import com.silva021.minhajornada.ui.screens.communities.post.CommunityPostScreen
+import com.silva021.minhajornada.ui.screens.explorer.challengedetails.ExplorerChallengeDetailsScreen
+import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerScreen
 import com.silva021.minhajornada.ui.screens.feedback.FeedbackScreen
 import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
@@ -53,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             Routes.ChallengesScreen.route,
                             Routes.ProfileScreen.route,
                             Routes.CommunitiesScreen.route,
+                            Routes.ExplorerScreen.route,
                         )
                     ) {
                         BottomNavigationBar(
@@ -64,7 +72,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.CommunitiesScreen.route,
+                    startDestination = Routes.ExplorerScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -116,13 +124,76 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
-                    composable(Routes.CommunitiesScreen.route) { CommunitiesScreen() }
+                    composable(Routes.CommunitiesScreen.route) {
+                        CommunitiesScreen(
+                            onCommunityClick = {
+                                CommunityDetailsScreen.navigateToCommunityDetailsScreen(
+                                    navController
+                                )
+                            },
+                            onMineCommunityClick = {
+                                Routes.CommunityFeedScreen.navigateToCommunityFeedScreen(
+                                    navController
+                                )
+                            }
+                        )
+                    }
                     composable(Routes.FeedbackScreen.route) {
                         FeedbackScreen(onBackPressed = { navController.popBackStack() })
                     }
 
                     composable(Routes.HelpScreen.route) {
                         HelpScreen(onBackPressed = { navController.popBackStack() })
+                    }
+
+                    composable(Routes.ExplorerScreen.route) {
+                        ExplorerScreen(
+                            onChallengeClick = {
+                                Routes.ExplorerChallengeDetailsScreen.navigateToExplorerChallengeDetailsScreen(
+                                    navController
+                                )
+                            }
+                        )
+                    }
+
+                    composable(Routes.ExplorerChallengeDetailsScreen.route) {
+                        ExplorerChallengeDetailsScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.ExplorerScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
+
+                    composable(Routes.CommunityDetailsScreen.route) {
+                        CommunityDetailsScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.CommunitiesScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
+
+                    composable(Routes.CommunityFeedScreen.route) {
+                        CommunityFeedScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.CommunitiesScreen.route,
+                                    inclusive = false
+                                )
+                            },
+                            onClickPostItem = {
+                                Routes.CommunityPostScreen.navigateToCommunityPostScreen(navController)
+                            }
+                        )
+                    }
+
+                    composable(Routes.CommunityPostScreen.route) {
+                        CommunityPostScreen()
                     }
                 }
             }
@@ -142,9 +213,18 @@ fun BottomNavigationBar(
             currentRoute = currentRoute,
             routeOfTheItem = Routes.ChallengesScreen.route,
             icon = Icons.Default.Home,
-            label = "Home",
+            label = "Início",
             onClick = {
                 Routes.ChallengesScreen.navigateToChallengesScreen(navController)
+            }
+        )
+        NavigationBarItem(
+            currentRoute = currentRoute,
+            routeOfTheItem = Routes.ExplorerScreen.route,
+            icon = Icons.Default.Explore,
+            label = "Explorar",
+            onClick = {
+                Routes.ExplorerScreen.navigateToExplorerScreen(navController)
             }
         )
         NavigationBarItem(
