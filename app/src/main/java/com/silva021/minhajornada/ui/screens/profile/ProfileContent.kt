@@ -66,9 +66,9 @@ fun ProfileContent(
             SectionCard(
                 title = "Conta",
                 items = listOf(
-                    SettingsItem("Editar Perfil", icon = Icons.Default.Settings),
-                    SettingsItem("Notificações", icon = Icons.Default.Settings),
-                    SettingsItem("Privacidade", icon = Icons.Default.Settings)
+                    SettingsItem("Editar Perfil"),
+                    SettingsItem("Notificações"),
+                    SettingsItem("Privacidade")
                 )
             )
         }
@@ -87,8 +87,8 @@ fun ProfileContent(
             SectionCard(
                 title = "Suporte",
                 items = listOf(
-                    SettingsItem("Ajuda", icon = Icons.Default.Settings, onClick = onHelpClick),
-                    SettingsItem("Contate-nos", icon = Icons.Default.Settings, onClick = onContactUsClick)
+                    SettingsItem("Ajuda", onClick = onHelpClick),
+                    SettingsItem("Contate-nos", onClick = onContactUsClick)
                 )
             )
         }
@@ -208,16 +208,6 @@ fun ProfileListItem(item: SettingsItem) {
             .clickable { item.onClick?.invoke() }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        if (item.icon != null) {
-            Icon(
-                imageVector = item.icon,
-                contentDescription = item.text,
-                tint = textSecondary,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-        }
-
         Text(
             text = item.text,
             color = Palette.textPrimary,
