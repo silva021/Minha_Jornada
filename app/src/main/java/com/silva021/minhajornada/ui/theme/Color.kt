@@ -21,6 +21,7 @@ object Palette {
     val successColor = Color(0xFF50D22C)
     val warningColor = Color(0xFFFFCC00)
     val errorColor = Color(0xFFFF3B30)
+    val likeColor = Color(0xFFFF5733)
     val dividerColor = Color(0xFF444444)
 
     val buttonHover = Color(0xFFA0E68F)
