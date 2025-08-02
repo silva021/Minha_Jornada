@@ -44,6 +44,7 @@ import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
+import com.silva021.minhajornada.ui.utils.hasNavigationToRoute
 
 class MainActivity : ComponentActivity() {
 
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ExplorerScreen.route,
+                    startDestination = Routes.ChallengesScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -187,7 +188,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             onClickPostItem = {
-                                Routes.CommunityPostScreen.navigateToCommunityPostScreen(navController)
+                                Routes.CommunityPostScreen.navigateToCommunityPostScreen(
+                                    navController
+                                )
                             }
                         )
                     }
@@ -273,7 +276,11 @@ fun RowScope.NavigationBarItem(
             )
         },
         selected = isSelected,
-        onClick = onClick,
+        onClick = {
+            if (currentRoute.hasNavigationToRoute(routeOfTheItem))
+                onClick.invoke()
+
+        },
         colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
     )
 }

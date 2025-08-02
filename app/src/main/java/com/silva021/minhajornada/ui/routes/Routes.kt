@@ -9,13 +9,25 @@ sealed class Routes(val route: String) {
 
     object ProfileScreen : Routes("profile_screen") {
         fun navigateToProfileScreen(navController: NavController) {
-            navController.navigate(ProfileScreen.route)
+            navController.navigate(ProfileScreen.route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         }
     }
 
     object ChallengesScreen : Routes("challenges_screen") {
         fun navigateToChallengesScreen(navController: NavController) {
-            navController.navigate(ChallengesScreen.route)
+            navController.navigate(ChallengesScreen.route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         }
     }
 
@@ -45,13 +57,25 @@ sealed class Routes(val route: String) {
 
     object CommunitiesScreen : Routes("communities_screen") {
         fun navigateToCommunitiesScreen(navController: NavController) {
-            navController.navigate(CommunitiesScreen.route)
+            navController.navigate(CommunitiesScreen.route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         }
     }
 
     object ExplorerScreen : Routes("explorer_screen") {
         fun navigateToExplorerScreen(navController: NavController) {
-            navController.navigate(ExplorerScreen.route)
+            navController.navigate(ExplorerScreen.route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         }
     }
 

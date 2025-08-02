@@ -17,16 +17,17 @@ class CommunitiesViewModel(
     val uiState: StateFlow<CommunitiesUiState> = _uiState.asStateFlow()
 
     fun fetchCommunities() {
-        viewModelScope.launch {
-            _uiState.value = CommunitiesUiState.Loading
-            getCommunities().onSuccess {
-                _uiState.value = CommunitiesUiState.Success(it)
-            }.onFailure {
-                _uiState.value = CommunitiesUiState.Error(
-                    it.message ?: "Erro ao carregar comunidades"
-                )
+        if (_uiState.value.isSuccess().not())
+            viewModelScope.launch {
+                _uiState.value = CommunitiesUiState.Loading
+                getCommunities().onSuccess {
+                    _uiState.value = CommunitiesUiState.Success(it)
+                }.onFailure {
+                    _uiState.value = CommunitiesUiState.Error(
+                        it.message ?: "Erro ao carregar comunidades"
+                    )
+                }
             }
-        }
     }
 }
 
@@ -34,4 +35,6 @@ sealed class CommunitiesUiState {
     data class Success(val communities: Communities) : CommunitiesUiState()
     object Loading : CommunitiesUiState()
     data class Error(val message: String) : CommunitiesUiState()
+
+    fun isSuccess() = this is Success
 }

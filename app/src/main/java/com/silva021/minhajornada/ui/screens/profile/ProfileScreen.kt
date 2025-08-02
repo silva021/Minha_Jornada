@@ -23,8 +23,7 @@ fun ProfileScreen(
     when (val state = uiState) {
         is ProfileUiState.Loading -> LoadingScreen()
         is ProfileUiState.Error -> ErrorScreen(
-            onRetry = { viewModel.fetchProfile() },
-            onContactSupport = { /* implementar */ }
+            onRetry = { viewModel.fetchProfile() }
         )
         is ProfileUiState.Success -> ProfileContent(
             profile = state.profile,

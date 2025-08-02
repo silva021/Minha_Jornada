@@ -18,14 +18,16 @@ class ChallengesViewModel(
 
 
     fun getChallenges() {
-        viewModelScope.launch {
-            _uiState.value = ChallengesUiState.Loading
-            getChallenges.invoke().onSuccess {
-                _uiState.value = ChallengesUiState.Success(it)
-            }.onFailure {
-                _uiState.value = ChallengesUiState.Error(
-                    message = it.message ?: "An error occurred while fetching challenges"
-                )
+        if (_uiState.value.isSuccess().not()) {
+            viewModelScope.launch {
+                _uiState.value = ChallengesUiState.Loading
+                getChallenges.invoke().onSuccess {
+                    _uiState.value = ChallengesUiState.Success(it)
+                }.onFailure {
+                    _uiState.value = ChallengesUiState.Error(
+                        message = it.message ?: "An error occurred while fetching challenges"
+                    )
+                }
             }
         }
     }
@@ -35,4 +37,6 @@ sealed class ChallengesUiState {
     data class Success(val challenges: Challenges) : ChallengesUiState()
     object Loading : ChallengesUiState()
     data class Error(val message: String) : ChallengesUiState()
+
+    fun isSuccess() = this is Success
 }
