@@ -2,7 +2,7 @@ package com.silva021.minhajornada.data.dto
 
 data class CommunitiesDTO(
     val featured: List<CommunityDTO>,
-    val categories: List<CategoryDTO>
+    val my: List<CommunityDTO>,
 )
 
 data class CommunityDTO(

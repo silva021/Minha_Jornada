@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.communities
+package com.silva021.minhajornada.ui.screens.communities.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

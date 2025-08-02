@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.communities
+package com.silva021.minhajornada.ui.screens.communities.list
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.silva021.minhajornada.domain.model.Challenges
+import com.silva021.minhajornada.domain.model.Community
 import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import org.koin.androidx.compose.koinViewModel
@@ -13,7 +14,9 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommunitiesScreen(
-    viewModel: CommunitiesViewModel = koinViewModel()
+    viewModel: CommunitiesViewModel = koinViewModel(),
+    onCommunityClick: (Community) -> Unit,
+    onMineCommunityClick: (Community) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -28,7 +31,11 @@ fun CommunitiesScreen(
             onContactSupport = {}
         )
         is CommunitiesUiState.Success -> {
-            CommunitiesContent(state.communities)
+            CommunitiesContent(
+                state.communities,
+                onCommunityClick = onCommunityClick,
+                onMineCommunityClick = onMineCommunityClick
+            )
         }
     }
 }
