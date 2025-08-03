@@ -8,9 +8,3 @@ data class ProfileDTO(
     val memberSince: String,
     val stats: ProfileStatsDTO
 )
-
-data class ProfileStatsDTO(
-    val challenges: Int,
-    val following: Int,
-    val followers: Int
-)
