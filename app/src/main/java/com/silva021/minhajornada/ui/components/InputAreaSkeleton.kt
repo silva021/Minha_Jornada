@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.communities.feed
+package com.silva021.minhajornada.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -72,7 +72,7 @@ fun NewPostAreaSkeleton() {
 
             Box(
                 modifier = Modifier
-                    .width(80.dp)
+                    .width(40.dp)
                     .height(36.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .shimmer(shimmerInstance)
