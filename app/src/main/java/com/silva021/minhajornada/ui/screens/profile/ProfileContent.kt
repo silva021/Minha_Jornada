@@ -57,10 +57,10 @@ fun ProfileContent(
             ProfileHeader(profile)
         }
 
-        item {
-            StatsRow()
-            Spacer(modifier = Modifier.height(24.dp))
-        }
+//        item {
+//            StatsRow()
+//            Spacer(modifier = Modifier.height(24.dp))
+//        }
 
         item {
             SectionCard(
@@ -139,17 +139,17 @@ fun ProfileHeader(profile: Profile) {
     }
 }
 
-@Composable
-fun StatsRow() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        StatItem(value = "12", label = "Desafios")
-        StatItem(value = "3", label = "Seguindo")
-        StatItem(value = "2", label = "Seguidores")
-    }
-}
+//@Composable
+//fun StatsRow() {
+//    Row(
+//        modifier = Modifier.fillMaxWidth(),
+//        horizontalArrangement = Arrangement.SpaceEvenly
+//    ) {
+//        StatItem(value = "12", label = "Desafios")
+//        StatItem(value = "3", label = "Seguindo")
+//        StatItem(value = "2", label = "Seguidores")
+//    }
+//}
 
 @Composable
 fun StatItem(value: String, label: String) {
