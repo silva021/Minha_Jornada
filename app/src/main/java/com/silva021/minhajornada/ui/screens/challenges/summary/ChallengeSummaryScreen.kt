@@ -24,9 +24,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.silva021.minhajornada.domain.model.Report
-import com.silva021.minhajornada.domain.model.ReportStatus
-import com.silva021.minhajornada.ui.DatabaseFake.reports
+import com.silva021.minhajornada.domain.model.Challenge
+import com.silva021.minhajornada.domain.model.CheckIn
+import com.silva021.minhajornada.domain.model.CheckInStatus
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
@@ -38,6 +40,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
 @Composable
 fun ChallengeSummaryScreen(
+    challenge: Challenge,
     onBackPressed: () -> Unit,
 ) {
     Column(
@@ -56,8 +59,8 @@ fun ChallengeSummaryScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ProgressSummary()
-            DailyReports()
+            ProgressSummary(challenge)
+            DailyReports(challenge.checkins)
             FinalThoughts()
         }
     }
@@ -84,12 +87,14 @@ private fun ChallengeHeader() {
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth()
     )
+
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
-private fun ProgressSummary() {
+private fun ProgressSummary(challenge: Challenge) {
     Text(
-        text = "Você completou 2 de 3 dias do seu desafio. Continue avançando!",
+        text = "Você completou ${challenge.checkins.filter { it.status == CheckInStatus.SUCCESS }.size} de ${challenge.durationType.days} dias do seu desafio. Continue avançando!",
         color = textPrimary,
         fontSize = 18.sp,
         textAlign = TextAlign.Center,
@@ -100,7 +105,9 @@ private fun ProgressSummary() {
 }
 
 @Composable
-private fun ColumnScope.DailyReports() {
+private fun ColumnScope.DailyReports(
+    checkIns: List<CheckIn>,
+) {
     Column(
         modifier = Modifier
             .padding(bottom = 32.dp)
@@ -115,8 +122,8 @@ private fun ColumnScope.DailyReports() {
         )
 
         LazyColumn {
-            items(reports) { report ->
-                ReportItem(report)
+            items(checkIns.reversed()) {
+                ReportItem(it)
                 Spacer(modifier = Modifier.height(4.dp))
             }
         }
@@ -125,7 +132,7 @@ private fun ColumnScope.DailyReports() {
 
 @Composable
 private fun ReportItem(
-    report: Report
+    checkIn: CheckIn,
 ) {
     Row(
         modifier = Modifier
@@ -136,21 +143,21 @@ private fun ReportItem(
     ) {
 
         Text(
-            text = if (report.status == ReportStatus.SUCCESS) "✔" else "✖",
-            color = if (report.status == ReportStatus.SUCCESS) successColor else errorColor,
+            text = if (checkIn.status == CheckInStatus.SUCCESS) "✔" else "✖",
+            color = if (checkIn.status == CheckInStatus.SUCCESS) successColor else errorColor,
             fontSize = 24.sp,
             modifier = Modifier.padding(end = 16.dp)
         )
 
         Column {
             Text(
-                text = report.day,
+                text = "Dia ${checkIn.day}",
                 color = textPrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = report.date,
+                text = checkIn.date,
                 color = textSecondary,
                 fontSize = 14.sp
             )
@@ -160,7 +167,7 @@ private fun ReportItem(
 
         Text(
             modifier = Modifier.width(140.dp),
-            text = report.notes,
+            text = checkIn.note,
             color = textSecondary,
             fontSize = 14.sp
         )
@@ -200,6 +207,7 @@ fun FinalThoughts() {
 @Preview
 fun ChallengeSummaryScreenPreview() {
     ChallengeSummaryScreen(
+        challenge = DatabaseFake.challengesDto.first().toDomain(),
         onBackPressed = {}
     )
 }
