@@ -7,16 +7,6 @@ data class Challenges(
     val completed: List<Challenge>
 )
 
-data class Challenge(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val durationType: DurationType,
-    val categoryType: CategoryType,
-    val checkins: List<CheckIn>,
-    val startDate: String,
-)
-
 fun ChallengeDTO.toDomain(): Challenge {
     return Challenge(
         id = this.id,
@@ -27,9 +17,4 @@ fun ChallengeDTO.toDomain(): Challenge {
         categoryType = CategoryType.valueOf(this.categoryType.uppercase()),
         durationType = DurationType.valueOf(this.durationType.uppercase())
     )
-}
-
-enum class ChallengeResult {
-    SUCCESS,
-    FAILED
 }
