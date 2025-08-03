@@ -1,6 +1,5 @@
 package com.silva021.minhajornada.ui.screens.challenges.update
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,25 +7,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.rememberAsyncImagePainter
+import com.silva021.minhajornada.domain.model.Challenge
+import com.silva021.minhajornada.domain.model.CheckInStatus
+import com.silva021.minhajornada.domain.model.DurationType
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
+import com.silva021.minhajornada.ui.components.SecondButton
+import com.silva021.minhajornada.ui.components.StatusFilter
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
@@ -35,9 +40,11 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateChallengeProgressScreen(
+    challenge: Challenge,
     onBackPressed: () -> Unit,
 ) {
     val observationText = remember { mutableStateOf("") }
+    var statusSelected by remember { mutableStateOf(CheckInStatus.SUCCESS) }
 
     Column(
         modifier = Modifier
@@ -55,23 +62,8 @@ fun UpdateChallengeProgressScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        model = "https://lh3.googleusercontent.com/aida-public/AB6AXuCjAsJPAh34xYmsJb1nQ7zQ4kOorAExSEv4Ef0d-Ja1b6NdUhbXqDPbiE44jE6oEUlfjPlvVNn8FDiQ964I47DrNQUP2h1rEXxZWCRsaOwlXkNs667Peey5nmsbZrp2-JvGyjY8kMpYaoC2jBzNiMwZ0Suy5Qay6D99JcazlcLjwQMqhOjlEJ65lrieRcvU93Q-_7a6J6In6C9lqod_CUdt35RQv8DjQ48lkdDI178yVCUGnE9hlJSQW2lq4kkqksRH38ZbnOp6Q64"
-                    ),
-                    contentDescription = "Imagem do Desafio",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(128.dp)
-                        .clip(RoundedCornerShape(24.dp))
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
                 Text(
-                    text = "Desafio Fitness de 30 Dias",
+                    text = "Desafio ${challenge.title}",
                     color = textPrimary,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -80,7 +72,7 @@ fun UpdateChallengeProgressScreen(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Fitness",
+                    text = challenge.categoryType.label,
                     color = textSecondary,
                     fontSize = 16.sp
                 )
@@ -94,9 +86,8 @@ fun UpdateChallengeProgressScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Tarefa do dia
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,7 +105,7 @@ fun UpdateChallengeProgressScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Tarefa de hoje: Complete um treino HIIT de 30 minutos. Foque em intervalos de alta intensidade com curtos períodos de descanso. Lembre-se de se hidratar e ouvir seu corpo.",
+                    text = challenge.description,
                     color = textSecondary,
                     fontSize = 16.sp
                 )
@@ -140,13 +131,40 @@ fun UpdateChallengeProgressScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Text(
+                text = "Status",
+                color = textPrimary,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            StatusFilter(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                checkInStatusSelected = statusSelected,
+                onCheckInStatusSelected = { statusSelected = it}
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
 
             PrimaryButton(
-                text = "Marcar como concluído",
+                text = "Concluir o dia",
                 onClick = { /* Ação ao marcar como concluído */ },
                 modifier = Modifier
                     .fillMaxWidth()
             )
+
+            Spacer(Modifier.height(8.dp))
+
+            SecondButton(
+                text = "Concluir desafio",
+                onClick = { /* Ação ao marcar como concluído */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(16.dp))
         }
     }
 }
@@ -156,6 +174,7 @@ fun UpdateChallengeProgressScreen(
 @Composable
 fun UpdateChallengeProgressScreenPreview() {
     UpdateChallengeProgressScreen(
+        challenge = DatabaseFake.challengesDto[0].toDomain(),
         onBackPressed = {}
     )
 }
