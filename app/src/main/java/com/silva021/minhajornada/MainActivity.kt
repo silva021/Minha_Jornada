@@ -254,14 +254,26 @@ class MainActivity : ComponentActivity() {
                             },
                             onClickPostItem = {
                                 Routes.CommunityPostScreen.navigateToCommunityPostScreen(
-                                    navController
+                                    navController,
+                                    it.id
                                 )
                             }
                         )
                     }
 
-                    composable(Routes.CommunityPostScreen.route) {
+                    composable(
+                        route = Routes.CommunityPostScreen.route,
+                        arguments = listOf(
+                            navArgument(Routes.CommunityPostScreen.POST_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val postId =
+                            backStackEntry.arguments?.getString(Routes.CommunityPostScreen.POST_ID)
+                                .orEmpty()
                         CommunityPostScreen(
+                            postId = postId,
                             onBackPressed = {
                                 navController.popBackStack()
                             }

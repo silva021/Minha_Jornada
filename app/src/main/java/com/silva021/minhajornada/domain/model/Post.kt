@@ -3,9 +3,9 @@ package com.silva021.minhajornada.domain.model
 import com.silva021.minhajornada.data.dto.PostDTO
 
 data class Post(
-    val userImage: String,
-    val userName: String,
-    val timeAgo: String,
+    val id: String,
+    val owner: Profile,
+    val createdAt: String,
     val content: String,
     val likes: Int,
     val comments: Int,
@@ -13,9 +13,9 @@ data class Post(
 
 fun PostDTO.toDomain(): Post {
     return Post(
-        userImage = userImage,
-        userName = userName,
-        timeAgo = timeAgo,
+        id = id,
+        owner = profile.toDomain(),
+        createdAt = createdAt,
         content = content,
         likes = likes,
         comments = comments

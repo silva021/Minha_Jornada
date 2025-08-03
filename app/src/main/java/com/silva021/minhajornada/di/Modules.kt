@@ -10,9 +10,11 @@ import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
 import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
+import com.silva021.minhajornada.domain.usecases.GetCommentsByPostIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
+import com.silva021.minhajornada.domain.usecases.GetCommunityPostByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
@@ -21,6 +23,7 @@ import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsViewModel
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
+import com.silva021.minhajornada.ui.screens.communities.post.CommunityPostViewModel
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
 import okhttp3.OkHttpClient
@@ -37,6 +40,7 @@ val viewModelModule = module {
     viewModel { ExplorerViewModel(get(), get( )) }
     viewModel { CommunityDetailsViewModel(get()) }
     viewModel { CommunityFeedViewModel(get(), get(), get()) }
+    viewModel { CommunityPostViewModel(get(), get(), get()) }
 }
 
 val usecasesModule = module {
@@ -47,6 +51,8 @@ val usecasesModule = module {
     factory { GetCommunitiesByCategoryUseCase(get()) }
     factory { GetCommunityByIdUseCase(get()) }
     factory { GetCommunityPostsUseCase(get()) }
+    factory { GetCommunityPostByIdUseCase(get()) }
+    factory { GetCommentsByPostIdUseCase(get()) }
 
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }

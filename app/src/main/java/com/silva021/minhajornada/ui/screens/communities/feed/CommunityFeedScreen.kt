@@ -9,9 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.ui.components.Header
+import com.silva021.minhajornada.ui.components.InputArea
+import com.silva021.minhajornada.ui.components.NewPostAreaSkeleton
 import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import com.silva021.minhajornada.ui.theme.Palette
@@ -27,6 +33,7 @@ fun CommunityFeedScreen(
     val communityState by viewModel.communityState.collectAsState()
     val feedState by viewModel.feedState.collectAsState()
     val userState by viewModel.userState.collectAsState()
+    var inputText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         viewModel.loadCommunityScreen(communityId)
@@ -71,7 +78,11 @@ fun CommunityFeedScreen(
             is UserInfoUiState.Loading -> NewPostAreaSkeleton()
             is UserInfoUiState.Error -> {}
             is UserInfoUiState.Success -> {
-                NewPostArea(state.profile)
+                InputArea(
+                    state.profile,
+                    postText = inputText,
+                    onPostTextChange = { inputText = it }
+                )
             }
         }
     }

@@ -2,6 +2,7 @@ package com.silva021.minhajornada.ui
 
 import com.silva021.minhajornada.data.dto.ChallengeDTO
 import com.silva021.minhajornada.data.dto.CheckInDTO
+import com.silva021.minhajornada.data.dto.CommentDTO
 import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
 import com.silva021.minhajornada.data.dto.PostDTO
@@ -10,9 +11,7 @@ import com.silva021.minhajornada.data.dto.ProfileStatsDTO
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.CheckInStatus
-import com.silva021.minhajornada.domain.model.Comment
 import com.silva021.minhajornada.domain.model.DurationType
-import com.silva021.minhajornada.domain.model.Post
 
 object DatabaseFake {
 
@@ -184,65 +183,65 @@ object DatabaseFake {
     )
 
     val comments = listOf(
-        Comment(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuAZlM4wvIsS3fmlcpSyTvhzzjZF7Q_Op85f3s0ny4TpDiU-MIz49SBtb9Gf8hUhkr2iIUVhMgywH7u7NsQDYdwmZE6Ss76FL1wjeaN_JFtmde7n6Tvw1KG87xs1qXLva771J63ZtojlMI36UezCJsXxCWUtPwLSS99k5PTQHq0TPMHcjrIoyG-em8wHtkwKnhrbJDoxHXm6kTMndU3tTbFbhOIu-e4JsCDfBa5hkydz3oja5kRYelhhzV28TBYRJgWvlqFXyo_pMuI",
-            userName = "Ethan Carter",
-            timeAgo = "1d",
+        CommentDTO(
+            postId = "1",
+            profile = profilesDTO.first(),
+            createdAt = "2025-08-03",
             comment = "Isso é incrível, Jessica! Eu sempre quis aprender espanhol também. Me avise se precisar de um parceiro para praticar!"
         ),
-        Comment(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuCdBDfNXrteRJRjT-vER_7GASE5paihBZU6VF70j2REcHW5gn-lwFiYXIM82It99QIMKjnV8lgTWC5KzqQiA1o6S_Gfan0pgb5JnJ9Jnf2JPLn07FHfi13bmRApe7B6w3WEvJuQJRwzupIFK2iNI0nlmcuv6tNBoPMdO8O6i1rblXKZg4gHzSCnkHIFagBK2b0nHwqofhGfaCZGrQqOkUKFaYLGGvFDRt8htR1eaUIwA_QkEZhucRg9nFNL_kxX7xyUFU6RkyWAuU0",
-            userName = "Olivia Davis",
-            timeAgo = "2d",
+        CommentDTO(
+            postId = "1",
+            profile = profilesDTO[1],
+            createdAt = "2025-04-02",
             comment = "Boa sorte! Tenho certeza que você vai se sair bem. Lembre-se de celebrar seu progresso ao longo do caminho."
         )
     )
 
     val postList = listOf(
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuDtOZOGqPBmoMIxOJODpUF6L55FFzYzDm-7hdl2NAIn44H2ViOQAGcW_9BLQ1JXgaCtWCA4Faq3I-uU4MF6pDd9ixBDalXweY9q1Tz1CBZe5F0dCHySwJjn21fBCZ-dHBU_lDUbFSItE21a0vIT-wO9bdYw1hPv5ej6XyBzb5sVHP3Lh0hi59j48AntkhtNH0ADIm--kflWd8AZa-ZA7GmULHesWk8EcM98tMB3ebeLOk5LiaU9-dgp-qwq5ouQj3JP4v1mc73v1L8",
-            userName = "Sarah Miller",
-            timeAgo = "2d",
+            id = "1",
+            profile = profilesDTO[2],
+            createdAt = "2025-08-03",
             content = "Acabei de completar minha corrida de 5km! Me sentindo ótima e cheia de energia para o dia. Quem mais está alcançando seus objetivos fitness hoje?",
             likes = 23,
             comments = 5
         ),
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuD38031a9CUlzl_YS565weCOqjozwjPs_D8QhTpnQNCNbreXCZXtJmMNmIYPu0l8vmmXMGS3EMcPwJG-tlMUr_-Y0y3qxdtsG0HyurbO0MBouSoZDdD9dX7QgSFqDi5nyeq3Hrioaln2cG345utbSVfOeEuzmpREIlRnlAJXNB_VTsajQcFh-KuG4hX_vWA1CaeRpIXU-1j-ZH20kzY2vxMbAvV1mpjvFXMgD82P80FTne_XTXi1yd1pVPBpE7GXZ-zHFKHnG1yHqo",
-            userName = "Mark Thompson",
-            timeAgo = "1sem",
+            id = "2",
+            profile = profilesDTO.first(),
+            createdAt = "2025-07-02",
             content = "Estou tentando incluir mais treino de força na minha rotina. Alguma dica para iniciantes?",
             likes = 15,
             comments = 3
         ),
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuCbc0xLKqOdwb-Vi-QOdbZm9ShGVL6V1BcoLgrMCJ3aRNaobT2QFOCFnWF0fp1EdXFif8_exZfOcq5ANfbEtGZ0p1g9KqcNdtOvcbY_uq7jj9I4xYcnoZ4TZr5SEyfXs8ZdKwJ7bWwBwORGdm82ELnptKa1VcaLPNxIuSVLa5FQj6DGoPeTlEPTmiGbswtKYmBST5fc7gxGBIJB4rN1miXSXWb1BJfCvVrJEQtSzC6eoQAJzLD5A9yAUeUeuDEKQUo-oht2W1yKdQ8",
-            userName = "Emily Carter",
-            timeAgo = "3sem",
+            id = "3",
+            profile = profilesDTO[0],
+            createdAt = "2025-06-02",
             content = "Alguém animado para uma trilha no final de semana? Vamos explorar novas trilhas e aproveitar o ar livre juntos!",
             likes = 30,
             comments = 8
         ),
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuDtOZOGqPBmoMIxOJODpUF6L55FFzYzDm-7hdl2NAIn44H2ViOQAGcW_9BLQ1JXgaCtWCA4Faq3I-uU4MF6pDd9ixBDalXweY9q1Tz1CBZe5F0dCHySwJjn21fBCZ-dHBU_lDUbFSItE21a0vIT-wO9bdYw1hPv5ej6XyBzb5sVHP3Lh0hi59j48AntkhtNH0ADIm--kflWd8AZa-ZA7GmULHesWk8EcM98tMB3ebeLOk5LiaU9-dgp-qwq5ouQj3JP4v1mc73v1L8",
-            userName = "Sarah Miller",
-            timeAgo = "2d",
+            id = "4",
+            profile = profilesDTO[2],
+            createdAt = "2025-05-02",
             content = "Acabei de completar minha corrida de 5km! Me sentindo ótima e cheia de energia para o dia. Quem mais está alcançando seus objetivos fitness hoje?",
             likes = 23,
             comments = 5
         ),
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuD38031a9CUlzl_YS565weCOqjozwjPs_D8QhTpnQNCNbreXCZXtJmMNmIYPu0l8vmmXMGS3EMcPwJG-tlMUr_-Y0y3qxdtsG0HyurbO0MBouSoZDdD9dX7QgSFqDi5nyeq3Hrioaln2cG345utbSVfOeEuzmpREIlRnlAJXNB_VTsajQcFh-KuG4hX_vWA1CaeRpIXU-1j-ZH20kzY2vxMbAvV1mpjvFXMgD82P80FTne_XTXi1yd1pVPBpE7GXZ-zHFKHnG1yHqo",
-            userName = "Mark Thompson",
-            timeAgo = "1sem",
+            id = "5",
+            profile = profilesDTO[1],
+            createdAt = "2025-04-02",
             content = "Estou tentando incluir mais treino de força na minha rotina. Alguma dica para iniciantes?",
             likes = 15,
             comments = 3
         ),
         PostDTO(
-            userImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuCbc0xLKqOdwb-Vi-QOdbZm9ShGVL6V1BcoLgrMCJ3aRNaobT2QFOCFnWF0fp1EdXFif8_exZfOcq5ANfbEtGZ0p1g9KqcNdtOvcbY_uq7jj9I4xYcnoZ4TZr5SEyfXs8ZdKwJ7bWwBwORGdm82ELnptKa1VcaLPNxIuSVLa5FQj6DGoPeTlEPTmiGbswtKYmBST5fc7gxGBIJB4rN1miXSXWb1BJfCvVrJEQtSzC6eoQAJzLD5A9yAUeUeuDEKQUo-oht2W1yKdQ8",
-            userName = "Emily Carter",
-            timeAgo = "3sem",
+            id = "6",
+            profile = profilesDTO[0],
+            createdAt = "2025-03-02",
             content = "Alguém animado para uma trilha no final de semana? Vamos explorar novas trilhas e aproveitar o ar livre juntos!",
             likes = 30,
             comments = 8
@@ -350,8 +349,10 @@ object DatabaseFake {
             )
         )
     )
+}
 
-    val profileDto = ProfileDTO(
+val profilesDTO = listOf(
+    ProfileDTO(
         id = "u123",
         name = "Lucas Silva",
         username = "silva021",
@@ -362,5 +363,29 @@ object DatabaseFake {
             following = 0,
             followers = 0
         )
+    ),
+    ProfileDTO(
+        id = "u123",
+        profilePictureUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDtOZOGqPBmoMIxOJODpUF6L55FFzYzDm-7hdl2NAIn44H2ViOQAGcW_9BLQ1JXgaCtWCA4Faq3I-uU4MF6pDd9ixBDalXweY9q1Tz1CBZe5F0dCHySwJjn21fBCZ-dHBU_lDUbFSItE21a0vIT-wO9bdYw1hPv5ej6XyBzb5sVHP3Lh0hi59j48AntkhtNH0ADIm--kflWd8AZa-ZA7GmULHesWk8EcM98tMB3ebeLOk5LiaU9-dgp-qwq5ouQj3JP4v1mc73v1L8",
+        name = "Sarah Miller",
+        username = "SarahMIMI",
+        memberSince = "2025",
+        stats = ProfileStatsDTO(
+            challenges = 3,
+            following = 0,
+            followers = 0
+        )
+    ),
+    ProfileDTO(
+        id = "u123",
+        name = "Mark Thompson",
+        username = "MarkTThompson",
+        profilePictureUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD38031a9CUlzl_YS565weCOqjozwjPs_D8QhTpnQNCNbreXCZXtJmMNmIYPu0l8vmmXMGS3EMcPwJG-tlMUr_-Y0y3qxdtsG0HyurbO0MBouSoZDdD9dX7QgSFqDi5nyeq3Hrioaln2cG345utbSVfOeEuzmpREIlRnlAJXNB_VTsajQcFh-KuG4hX_vWA1CaeRpIXU-1j-ZH20kzY2vxMbAvV1mpjvFXMgD82P80FTne_XTXi1yd1pVPBpE7GXZ-zHFKHnG1yHqo",
+        memberSince = "2025",
+        stats = ProfileStatsDTO(
+            challenges = 3,
+            following = 0,
+            followers = 0
+        )
     )
-}
+)

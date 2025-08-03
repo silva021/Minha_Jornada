@@ -101,9 +101,10 @@ sealed class Routes(val route: String) {
             navController.navigate(CommunityFeedScreen.route.replace("{$COMMUNITY_ID}", communityId))
         }
     }
-    object CommunityPostScreen : Routes("community_post_screen") {
-        fun navigateToCommunityPostScreen(navController: NavController) {
-            navController.navigate(CommunityPostScreen.route)
+    object CommunityPostScreen : Routes("community_post_screen/{postId}") {
+        const val POST_ID = "postId"
+        fun navigateToCommunityPostScreen(navController: NavController, postId: String) {
+            navController.navigate(CommunityPostScreen.route.replace("{$POST_ID}", postId))
         }
     }
 

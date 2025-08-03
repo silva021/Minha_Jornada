@@ -34,6 +34,7 @@ import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.model.SettingsItem
 import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake
+import com.silva021.minhajornada.ui.profilesDTO
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.dividerColor
@@ -236,7 +237,7 @@ fun ProfileListItem(item: SettingsItem) {
 @Preview
 fun ProfileContentPreview() {
     ProfileContent(
-        profile = DatabaseFake.profileDto.toDomain(),
+        profile = profilesDTO.first().toDomain(),
         onContactUsClick = {},
         onHelpClick = {}
     )

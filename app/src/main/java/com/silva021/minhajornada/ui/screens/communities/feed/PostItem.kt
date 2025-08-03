@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.silva021.minhajornada.domain.extension.formatRelativeDate
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
@@ -53,7 +54,7 @@ fun PostItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = post.userImage,
+                model = post.owner.profilePictureUrl,
                 contentDescription = "Foto do usuário",
                 modifier = Modifier
                     .size(32.dp)
@@ -65,13 +66,13 @@ fun PostItem(
 
             Column {
                 Text(
-                    text = post.userName,
+                    text = post.owner.name,
                     color = textPrimary,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = post.timeAgo, color = textSecondary, fontSize = 12.sp
+                    text = post.createdAt.formatRelativeDate(), color = textSecondary, fontSize = 12.sp
                 )
             }
         }
