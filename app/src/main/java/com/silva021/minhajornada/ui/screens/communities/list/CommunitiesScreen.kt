@@ -44,9 +44,3 @@ fun CommunitiesScreen(
         }
     }
 }
-
-sealed class ChallengesUiState {
-    data class Success(val data: Challenges) : ChallengesUiState()
-    object Loading : ChallengesUiState()
-    data class Error(val message: String) : ChallengesUiState()
-}
