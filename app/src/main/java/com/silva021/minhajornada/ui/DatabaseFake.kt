@@ -1,11 +1,17 @@
 package com.silva021.minhajornada.ui
 
+import com.silva021.minhajornada.data.dto.ChallengeDTO
+import com.silva021.minhajornada.data.dto.CheckInDTO
+import com.silva021.minhajornada.data.dto.CommunitiesDTO
+import com.silva021.minhajornada.data.dto.CommunityDTO
+import com.silva021.minhajornada.data.dto.ProfileDTO
+import com.silva021.minhajornada.data.dto.ProfileStatsDTO
 import com.silva021.minhajornada.domain.model.CategoryType
+import com.silva021.minhajornada.domain.model.CheckInStatus
 import com.silva021.minhajornada.domain.model.Comment
+import com.silva021.minhajornada.domain.model.DurationType
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.domain.model.PublicChallenge
-import com.silva021.minhajornada.domain.model.Report
-import com.silva021.minhajornada.domain.model.ReportStatus
 
 object DatabaseFake {
 
@@ -125,31 +131,112 @@ object DatabaseFake {
         )
     )
 
-    val reports = listOf(
-        Report(
-            status = ReportStatus.SUCCESS,
-            day = "Dia 1",
-            date = "20/10/2024",
-//            date = "20 de Outubro, 2024",
-            notes = "Me sentindo ótimo!"
+    val challengesDto = listOf(
+        ChallengeDTO(
+            id = 2,
+            title = "Correr 15 km",
+            description = "Corra um total de 15 km em três dias.",
+            categoryType = CategoryType.FITNESS.name,
+            durationType = DurationType.THREE_DAYS.name,
+            startDate = "2025-08-02",
+            checkins = listOf(
+                CheckInDTO(
+                    day = 1,
+                    date = "2025-07-10",
+                    note = "Corri 3 km no parque hoje cedo. Ritmo bom, mas ainda estou voltando ao hábito.",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 2,
+                    date = "2025-07-11",
+                    note = "Mais 3 km hoje, mas senti um pouco de dor na perna. Vou alongar melhor amanhã.",
+                    status = CheckInStatus.SUCCESS.name
+                )
+            )
         ),
-        Report(
-            status = ReportStatus.SUCCESS,
-            day = "Dia 2",
-            date = "21/10/2024",
-            notes = "Difícil mas valeu a pena."
+        ChallengeDTO(
+            id = 5,
+            title = "Beber 8 copos de água por dia",
+            description = "Hábitos de hidratação saudáveis desenvolvidos.",
+            categoryType = CategoryType.FITNESS.name,
+            durationType = DurationType.SEVEN_DAYS.name,
+            startDate = "2023-06-20",
+            checkins = listOf(
+                CheckInDTO(
+                    day = 1,
+                    date = "2023-06-20",
+                    note = "Comecei bem, bebi os 8 copos. Usei um app pra lembrar.",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 2,
+                    date = "2023-06-21",
+                    note = "Esqueci de manhã, mas recuperei à tarde. Completei!",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 3,
+                    date = "2023-06-22",
+                    note = "Já estou com mais sede natural, o corpo tá pedindo água.",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 4,
+                    date = "2023-06-23",
+                    note = "Fácil hoje. Levei uma garrafa de 2L comigo.",
+                    status = CheckInStatus.FAILURE.name
+                ),
+                CheckInDTO(
+                    day = 5,
+                    date = "2023-06-24",
+                    note = "Tá virando rotina. Só preciso lembrar antes de dormir.",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 6,
+                    date = "2023-06-25",
+                    note = "Quase esqueci no meio do dia, mas deu tempo. Água salva!",
+                    status = CheckInStatus.SUCCESS.name
+                ),
+                CheckInDTO(
+                    day = 7,
+                    date = "2023-06-26",
+                    note = "Último dia! Me sinto mais leve e com menos dor de cabeça.",
+                    status = CheckInStatus.SUCCESS.name
+                )
+            )
+        )
+    )
+
+    val communities = CommunitiesDTO(
+        my = listOf(
+            CommunityDTO(
+                id = "1",
+                imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDG8U7Jgh29H6fv_GzSiE4iDYIGl5VlQae2Izv6y5Blp0DnD6BbcnsQQkBqMJWzZ92QGideUZxYCttOogvRLnGLuS1YQWLxz8VqWCDyPpKAnAeeVPjY97u8s8QyVe2X9HYfGmecxL0tEe9_3D1ULwVckACP7dzopBqwx6n8ifYfLZAL553x3aJPl1XMeeW3Zw-3UlpPxSTQCTpWq1zDhMA9vrwcgBflLecL1g6n5dXYRQg52DjG8_KQYdVTi40RI6DzLIpbY3YXYqA",
+                name = "Fitness Fanáticos",
+                members = 1200
+            )
         ),
-        Report(
-            status = ReportStatus.FAILURE,
-            day = "Dia 3",
-            date = "22/10/2024",
-            notes = "Falhei hoje, vou tentar novamente."
-        ),
-        Report(
-            status = ReportStatus.SUCCESS,
-            day = "Dia 4",
-            date = "23/10/2024",
-            notes = "Difícil mas valeu a pena."
+        featured = listOf(
+            CommunityDTO(
+                id = "2",
+                imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDA4p3n7YAU0tuTTdUX1LXvST81S587HIZyGmvHVPennNBDBO44rX3GtNANF2o61oLDAyXlHfi6JeyLmtbEIvWxXS6CtSaEZtwXSnhdXgcwAsOnV6YjnW4u233WljWwK9R0nEhMKHv_bUknrvg-P8_jGN_uuStHzRRCKGQWvRZjiPew6af3P2SDzvcxQ2D80WZ1es7HpJZo-0dlAEI0uvSH0HiAEtEo7tkGl3rBhrOP1VjT9XpWAYRWl0Qp48KpncrzMxSShunC0iw",
+                name = "Viciados em Leitura",
+                members = 876
+            )
+        )
+    )
+
+    val profileDto = ProfileDTO(
+        id = "u123",
+        name = "Lucas Silva",
+        username = "silva021",
+        profilePictureUrl = "https://media.licdn.com/dms/image/v2/D4D03AQGHu5O7K6BgOA/profile-displayphoto-shrink_800_800/B4DZYRGyL2GwAk-/0/1744043714075?e=1756944000&v=beta&t=1a1Ej8JUBG-Awxu-qDbAXTUjCk3u5bPOGQ3rTsnPEtE",
+        memberSince = "2025",
+        stats = ProfileStatsDTO(
+            challenges = 3,
+            following = 0,
+            followers = 0
         )
     )
 }

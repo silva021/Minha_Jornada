@@ -1,7 +1,6 @@
 package com.silva021.minhajornada.domain.model
 
 import com.silva021.minhajornada.data.dto.ChallengeDTO
-import com.silva021.minhajornada.data.dto.ChallengesDTO
 
 data class Challenges(
     val actives: List<Challenge>,
@@ -12,25 +11,25 @@ data class Challenge(
     val id: Int,
     val title: String,
     val description: String,
-    val progress: Int,
+    val durationType: DurationType,
+    val categoryType: CategoryType,
+    val checkins: List<CheckIn>,
     val startDate: String,
-    val endDate: String? = null
 )
-
-fun ChallengesDTO.toDomain(): Challenges {
-    return Challenges(
-        actives = this.actives.map { it.toDomain() },
-        completed = this.completed.map { it.toDomain() }
-    )
-}
 
 fun ChallengeDTO.toDomain(): Challenge {
     return Challenge(
         id = this.id,
         title = this.title,
         description = this.description,
-        progress = this.progress,
         startDate = this.startDate,
-        endDate = this.endDate
+        checkins = this.checkins?.map { it.toDomain() } ?: emptyList(),
+        categoryType = CategoryType.valueOf(this.categoryType.uppercase()),
+        durationType = DurationType.valueOf(this.durationType.uppercase())
     )
+}
+
+enum class ChallengeResult {
+    SUCCESS,
+    FAILED
 }
