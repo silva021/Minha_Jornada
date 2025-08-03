@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.ui.components
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,15 +21,19 @@ fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     shape: Shape = RoundedCornerShape(50),
+    enabled: Boolean = true
 ) {
     Button(
+        enabled = enabled,
         onClick = onClick,
         modifier = modifier
             .height(48.dp),
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = Palette.primaryColor,
-            contentColor = Palette.backgroundColor
+            contentColor = Palette.backgroundColor,
+            disabledContainerColor = Palette.primaryColor.copy(alpha = 0.5f),
+            disabledContentColor = Palette.backgroundColor,
         )
     ) {
         Text(
