@@ -151,22 +151,22 @@ fun ProfileHeader(profile: Profile) {
 //    }
 //}
 
-@Composable
-fun StatItem(value: String, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = value,
-            color = Palette.textPrimary,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = label,
-            color = textSecondary,
-            fontSize = 14.sp
-        )
-    }
-}
+//@Composable
+//fun StatItem(value: String, label: String) {
+//    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+//        Text(
+//            text = value,
+//            color = Palette.textPrimary,
+//            fontSize = 24.sp,
+//            fontWeight = FontWeight.Bold
+//        )
+//        Text(
+//            text = label,
+//            color = textSecondary,
+//            fontSize = 14.sp
+//        )
+//    }
+//}
 
 @Composable
 fun SectionCard(title: String, items: List<SettingsItem>) {
