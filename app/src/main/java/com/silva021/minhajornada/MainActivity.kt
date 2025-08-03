@@ -35,6 +35,7 @@ import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.routes.Routes
 import com.silva021.minhajornada.ui.routes.Routes.ChallengeCompletedScreen.STATUS_ID
 import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
+import com.silva021.minhajornada.ui.routes.Routes.ExplorerChallengeDetailsScreen.CHALLENGE_ID
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
@@ -81,7 +82,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ChallengesScreen.route,
+                    startDestination = Routes.ExplorerScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -177,14 +178,27 @@ class MainActivity : ComponentActivity() {
                         ExplorerScreen(
                             onChallengeClick = {
                                 Routes.ExplorerChallengeDetailsScreen.navigateToExplorerChallengeDetailsScreen(
-                                    navController
+                                    navController,
+                                    challengeId = it.id
                                 )
                             }
                         )
                     }
 
-                    composable(Routes.ExplorerChallengeDetailsScreen.route) {
+                    composable(
+                        route = Routes.ExplorerChallengeDetailsScreen.route,
+                        arguments = listOf(
+                            navArgument(CHALLENGE_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val challengeId =
+                            backStackEntry.arguments?.getString(CHALLENGE_ID).orEmpty()
+
                         ExplorerChallengeDetailsScreen(
+//                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!,
+                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!.toDomain(),
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ExplorerScreen.route,

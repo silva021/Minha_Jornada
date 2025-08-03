@@ -12,8 +12,11 @@ import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
+import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
+import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
+import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,12 +29,15 @@ val viewModelModule = module {
     viewModel { ChallengesViewModel(get()) }
     viewModel { CommunitiesViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { ExplorerViewModel(get(), get( )) }
 }
 
 val usecasesModule = module {
     factory { GetChallengesUseCase(get()) }
     factory { GetMyProfileUseCase(get()) }
     factory { GetCommunitiesUseCase(get()) }
+    factory { GetPublicChallengesUseCase(get()) }
+    factory { GetPublicChallengesByCategoryUseCase(get()) }
 }
 
 val repositoryModule = module {
