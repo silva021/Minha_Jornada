@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,6 +37,8 @@ import coil3.compose.rememberAsyncImagePainter
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Communities
 import com.silva021.minhajornada.domain.model.Community
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake.communities
 import com.silva021.minhajornada.ui.components.CategoriesFilter
 import com.silva021.minhajornada.ui.components.Search
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
@@ -52,11 +55,13 @@ fun CommunitiesContent(
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
 
-    val communitiesFeatured = communities.featured.subList(0, 3)
-    val communitiesPopular = communities.featured.subList(3, communities.featured.size)
+    val communitiesFeatured = communities.featured.take(3)
+    val communitiesPopular = communities.featured.drop(3)
 
     Column(
-        modifier = Modifier.background(backgroundColor)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
     ) {
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -68,7 +73,8 @@ fun CommunitiesContent(
         )
 
         CategoriesFilter(
-            selectedCategory
+            Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            selectedCategory = selectedCategory
         ) {
             selectedCategory = it
         }
@@ -129,36 +135,38 @@ fun CommunitiesContent(
                     }
                 }
 
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "Todos",
-                        color = textPrimary,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                if (communitiesPopular.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Todos",
+                            color = textPrimary,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
 
-                    communitiesPopular.chunked(2).forEach { rowItems ->
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            rowItems.forEach { community ->
-                                Box(modifier = Modifier.weight(1f)) {
-                                    FeaturedCommunityCard(
-                                        community = community,
-                                        onCommunityClick = onCommunityClick
-                                    )
+                        communitiesPopular.chunked(2).forEach { rowItems ->
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                rowItems.forEach { community ->
+                                    Box(modifier = Modifier.weight(1f)) {
+                                        FeaturedCommunityCard(
+                                            community = community,
+                                            onCommunityClick = onCommunityClick
+                                        )
+                                    }
+                                }
+
+                                if (rowItems.size == 1) {
+                                    Spacer(modifier = Modifier.weight(1f))
                                 }
                             }
-
-                            if (rowItems.size == 1) {
-                                Spacer(modifier = Modifier.weight(1f))
-                            }
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
-                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
@@ -195,7 +203,7 @@ fun FeaturedCommunityCard(
             fontWeight = FontWeight.Medium
         )
         Text(
-            text = community.members,
+            text = "${community.members} membros",
             color = textSecondary,
             fontSize = 14.sp
         )
@@ -206,55 +214,8 @@ fun FeaturedCommunityCard(
 @Composable
 fun CommunitiesContentPreview() {
     MaterialTheme {
-        val communities = Communities(
-            my = listOf(),
-            featured = listOf(
-                Community(
-                    id = "1",
-                    imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDG8U7Jgh29H6fv_GzSiE4iDYIGl5VlQae2Izv6y5Blp0DnD6BbcnsQQkBqMJWzZ92QGideUZxYCttOogvRLnGLuS1YQWLxz8VqWCDyPpKAnAeeVPjY97u8s8QyVe2X9HYfGmecxL0tEe9_3D1ULwVckACP7dzopBqwx6n8ifYfLZAL553x3aJPl1XMeeW3Zw-3UlpPxSTQCTpWq1zDhMA9vrwcgBflLecL1g6n5dXYRQg52DjG8_KQYdVTi40RI6DzLIpbY3YXYqA",
-                    name = "Fitness Fanáticos",
-                    members = "1200 membros"
-                ),
-                Community(
-                    id = "2",
-                    imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDA4p3n7YAU0tuTTdUX1LXvST81S587HIZyGmvHVPennNBDBO44rX3GtNANF2o61oLDAyXlHfi6JeyLmtbEIvWxXS6CtSaEZtwXSnhdXgcwAsOnV6YjnW4u233WljWwK9R0nEhMKHv_bUknrvg-P8_jGN_uuStHzRRCKGQWvRZjiPew6af3P2SDzvcxQ2D80WZ1es7HpJZo-0dlAEI0uvSH0HiAEtEo7tkGl3rBhrOP1VjT9XpWAYRWl0Qp48KpncrzMxSShunC0iw",
-                    name = "Viciados em Leitura", members = "876 membros"
-                ),
-                Community(
-                    id = "3",
-                    imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuABe51cmxUVX373ihvdi_ODisHFTOZxFeUhz9ecuDTGl8QApQy4oR7Y6p3Gey8BT5rBbLDDZOErz5Rtkh986BKch1E8_2JTug-b6beonHXeRlQgQWYSiooiNjYTxSxwwUrDEwxIhJymskaPM5F9kQDyxtwvcG6Wsa6rittQ5ydRq7EHN13fJVS_BhQ6FqRgutL3-vMtpacq05YMUUNGd4aSpLCQUQOnfaeLOQdLMAIIYUDcfa4SzF2CfT7gpCYKvjaCJ1ri9_tn4is",
-                    name = "Criadores Culinários",
-                    members = "2750 membros"
-                ),
-                Community(
-                    id = "4",
-                    imageUrl = "https://assets-sitesdigitais.dasa.com.br/strapi/corpo-em-m_2ab2e62957/corpo-em-m_2ab2e62957.png",
-                    name = "Corpo em Movimento",
-                    members = "1890 membros"
-                ),
-                Community(
-                    id = "5",
-                    imageUrl = "https://www.decoracao.com/wp-content/uploads/2012/10/cozinha-via-lamaisondannag.jpg",
-                    name = "Cozinha de Verdade",
-                    members = "2375 membros"
-                ),
-                Community(
-                    id = "6",
-                    imageUrl = "https://maisexpressao.com.br/imagens/noticias/72189/640x480/whatsapp-image-2023-08-02-at-10.jpeg",
-                    name = "Natureza e Bem - estar",
-                    members = "1622 membros"
-                ),
-                Community(
-                    id = "7",
-                    imageUrl = "https://artritereumatoide.blog.br/wp-content/uploads/2019/11/quer-adotar-uma-culinaria-saudavel-entao-mude-ja-esses-5-habitos31199.jpg",
-                    name = "Culinária Saudável",
-                    members = "2844 membros"
-                )
-            )
-        )
-
         CommunitiesContent(
-            communities = communities,
+            communities = communities.toDomain(),
             onCommunityClick = {},
             onMineCommunityClick = {}
         )
