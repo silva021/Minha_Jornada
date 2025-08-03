@@ -6,7 +6,6 @@ import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.PublicChallenges
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +25,6 @@ class ExplorerViewModel(
         if (_uiState.value.isSuccess().not()) {
             viewModelScope.launch {
                 _uiState.value = ExplorerUiState.Loading
-                delay(2000) // Simulate network delay
                 getPublicChallenges().onSuccess {
                     _uiState.value = ExplorerUiState.Success(it)
                 }.onFailure {
@@ -43,7 +41,6 @@ class ExplorerViewModel(
     ) {
         viewModelScope.launch {
             _uiState.value = ExplorerUiState.Loading
-            delay(2000) // Simulate network delay
             getPublicChallengesByCategory(categoryType).onSuccess {
                 _uiState.value = ExplorerUiState.Success(it)
             }.onFailure {
