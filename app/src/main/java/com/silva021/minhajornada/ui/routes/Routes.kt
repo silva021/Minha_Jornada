@@ -87,9 +87,11 @@ sealed class Routes(val route: String) {
             navController.navigate(ExplorerChallengeDetailsScreen.route.replace("{$CHALLENGE_ID}", challengeId))
         }
     }
-    object CommunityDetailsScreen : Routes("community_details_screen") {
-        fun navigateToCommunityDetailsScreen(navController: NavController) {
-            navController.navigate(CommunityDetailsScreen.route)
+    object CommunityDetailsScreen : Routes("community_details_screen/{communityId}") {
+        const val COMMUNITY_ID = "communityId"
+
+        fun navigateToCommunityDetailsScreen(navController: NavController, communityId: String) {
+            navController.navigate(CommunityDetailsScreen.route.replace("{$COMMUNITY_ID}", communityId))
         }
     }
 

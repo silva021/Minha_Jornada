@@ -7,8 +7,10 @@ data class CommunitiesDTO(
 
 data class CommunityDTO(
     val id: String,
-    val imageUrl: String,
     val name: String,
+    val description: String,
+    val imageUrl: String,
     val category: String,
+    val about: String,
     val members: Int
 )

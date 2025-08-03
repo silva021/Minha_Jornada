@@ -10,9 +10,11 @@ data class Communities(
 
 data class Community(
     val id: String,
-    val imageUrl: String,
     val name: String,
+    val description: String,
+    val imageUrl: String,
     val category: CategoryType,
+    val about: String,
     val members: Int,
 )
 
@@ -25,8 +27,10 @@ fun CommunitiesDTO.toDomain(): Communities {
 
 fun CommunityDTO.toDomain() = Community(
     id = id,
-    imageUrl = imageUrl,
     name = name,
+    description = description,
+    imageUrl = imageUrl,
     category = CategoryType.valueOf(category),
+    about = about,
     members = members
 )
