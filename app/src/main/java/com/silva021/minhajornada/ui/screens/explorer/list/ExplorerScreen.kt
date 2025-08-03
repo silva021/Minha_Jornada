@@ -61,7 +61,8 @@ fun ExplorerScreen(
         )
 
         CategoriesFilter(
-            selectedCategory
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            selectedCategory = selectedCategory
         ) {
             selectedCategory = it
         }
