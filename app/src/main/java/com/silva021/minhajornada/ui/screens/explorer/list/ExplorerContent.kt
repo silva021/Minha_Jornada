@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,8 +36,6 @@ import coil3.compose.AsyncImage
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.PublicChallenge
 import com.silva021.minhajornada.domain.model.PublicChallenges
-import com.silva021.minhajornada.domain.model.toDomain
-import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.CategoriesFilter
 import com.silva021.minhajornada.ui.components.Search
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
@@ -50,7 +49,7 @@ fun ExplorerContent(
     onChallengeClick: (PublicChallenge) -> Unit,
 
     selectedCategory: CategoryType,
-    onCategoryClick: (CategoryType) -> Unit
+    onCategoryClick: (CategoryType) -> Unit,
 ) {
     var searchText by remember { mutableStateOf("") }
 
@@ -72,54 +71,90 @@ fun ExplorerContent(
             onCategoryClick(it)
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .background(backgroundColor)
-        ) {
-            item {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Destaques",
-                        color = textPrimary,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        if (publicChallenges.trendingChallenges.isEmpty() && publicChallenges.popularChallenges.isEmpty()) {
+            Column(
+                Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Nenhum desafio encontrado",
+                    color = textSecondary,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else {
+            LazyColumn {
+                item {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
                     ) {
-                        items(publicChallenges.trendingChallenges) {
-                            FeaturedChallengeCard(it, onChallengeClick)
-                        }
+                        Text(
+                            text = "Descubra novos desafios",
+                            color = textPrimary,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+
+                        Text(
+                            text = "Encontre desafios que se encaixam no seu perfil e comece a participar.",
+                            color = textSecondary,
+                            fontSize = 16.sp
+                        )
                     }
-                }
 
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Populares",
-                        color = textPrimary,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                    if (publicChallenges.trendingChallenges.isNotEmpty()) {
 
-                    publicChallenges.popularChallenges.chunked(2).forEach { rowItems ->
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            rowItems.forEach { challenge ->
-                                Box(modifier = Modifier.weight(1f)) {
-                                    PopularChallengeCard(challenge, onChallengeClick)
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = "Destaques",
+                                color = textPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+
+                            LazyRow(
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(publicChallenges.trendingChallenges) {
+                                    FeaturedChallengeCard(it, onChallengeClick)
                                 }
                             }
+                        }
+                    }
 
-                            if (rowItems.size == 1) {
-                                Spacer(modifier = Modifier.weight(1f))
+                    if (publicChallenges.popularChallenges.isNotEmpty()) {
+
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = "Populares",
+                                color = textPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+
+                            publicChallenges.popularChallenges.chunked(2).forEach { rowItems ->
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    rowItems.forEach { challenge ->
+                                        Box(modifier = Modifier.weight(1f)) {
+                                            PopularChallengeCard(challenge, onChallengeClick)
+                                        }
+                                    }
+
+                                    if (rowItems.size == 1) {
+                                        Spacer(modifier = Modifier.weight(1f))
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(16.dp))
                             }
                         }
-                        Spacer(modifier = Modifier.height(16.dp))
+
                     }
                 }
             }
@@ -225,8 +260,10 @@ private fun PopularChallengeCard(
 fun ExplorerScreenPreview() {
     ExplorerContent(
         publicChallenges = PublicChallenges(
-            trendingChallenges = DatabaseFake.publicChallenges.filter { it.isTrending }.map { it.toDomain() },
-            popularChallenges = DatabaseFake.publicChallenges.filter { it.isTrending.not() }.map { it.toDomain() }
+//            trendingChallenges = DatabaseFake.publicChallenges.filter { it.isTrending }.map { it.toDomain() },
+//            popularChallenges = DatabaseFake.publicChallenges.filter { it.isTrending.not() }.map { it.toDomain() }
+            listOf(),
+            listOf()
         ),
         selectedCategory = CategoryType.READING,
         onChallengeClick = {},
