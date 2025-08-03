@@ -35,6 +35,7 @@ import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.routes.Routes
 import com.silva021.minhajornada.ui.routes.Routes.ChallengeCompletedScreen.STATUS_ID
 import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
+import com.silva021.minhajornada.ui.routes.Routes.CommunityFeedScreen.COMMUNITY_ID
 import com.silva021.minhajornada.ui.routes.Routes.ExplorerChallengeDetailsScreen.CHALLENGE_ID
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ExplorerScreen.route,
+                    startDestination = Routes.CommunitiesScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -156,12 +157,14 @@ class MainActivity : ComponentActivity() {
                         CommunitiesScreen(
                             onCommunityClick = {
                                 CommunityDetailsScreen.navigateToCommunityDetailsScreen(
-                                    navController
+                                    navController,
+                                    it.id
                                 )
                             },
                             onMineCommunityClick = {
                                 Routes.CommunityFeedScreen.navigateToCommunityFeedScreen(
-                                    navController
+                                    navController,
+                                    it.id
                                 )
                             }
                         )
@@ -198,7 +201,8 @@ class MainActivity : ComponentActivity() {
 
                         ExplorerChallengeDetailsScreen(
 //                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!,
-                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!.toDomain(),
+                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!
+                                .toDomain(),
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ExplorerScreen.route,
@@ -208,8 +212,18 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    composable(Routes.CommunityDetailsScreen.route) {
+                    composable(
+                        route = Routes.CommunityDetailsScreen.route,
+                        arguments = listOf(
+                            navArgument(CommunityDetailsScreen.COMMUNITY_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val communityId =
+                            backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID).orEmpty()
                         CommunityDetailsScreen(
+                            communityId = communityId,
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.CommunitiesScreen.route,
@@ -219,7 +233,17 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    composable(Routes.CommunityFeedScreen.route) {
+                    composable(
+                        route = Routes.CommunityFeedScreen.route,
+                        arguments = listOf(
+                            navArgument(COMMUNITY_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val communityId =
+                            backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID)
+                                .orEmpty()
                         CommunityFeedScreen(
                             onBackPressed = {
                                 navController.popBackStack(
