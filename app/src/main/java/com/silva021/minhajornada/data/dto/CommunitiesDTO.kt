@@ -9,11 +9,6 @@ data class CommunityDTO(
     val id: String,
     val imageUrl: String,
     val name: String,
+    val category: String,
     val members: Int
-)
-
-data class CategoryDTO(
-    val id: String,
-    val type: String,
-    val name: String
 )

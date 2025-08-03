@@ -1,6 +1,5 @@
 package com.silva021.minhajornada.domain.model
 
-import com.silva021.minhajornada.data.dto.CategoryDTO
 import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
 
@@ -13,15 +12,9 @@ data class Community(
     val id: String,
     val imageUrl: String,
     val name: String,
+    val category: CategoryType,
     val members: Int,
 )
-
-data class Category(
-    val id: String,
-    val type: CategoryType,
-    val name: String,
-)
-
 
 fun CommunitiesDTO.toDomain(): Communities {
     return Communities(
@@ -34,11 +27,6 @@ fun CommunityDTO.toDomain() = Community(
     id = id,
     imageUrl = imageUrl,
     name = name,
+    category = CategoryType.valueOf(category),
     members = members
-)
-
-fun CategoryDTO.toDomain() = Category(
-    id = id,
-    type = CategoryType.valueOf(type.uppercase()),
-    name = name
 )

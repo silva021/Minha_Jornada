@@ -19,6 +19,7 @@ fun CommunitiesScreen(
     onMineCommunityClick: (Community) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val category by viewModel.selectedCategory.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchCommunities()
@@ -34,7 +35,11 @@ fun CommunitiesScreen(
             CommunitiesContent(
                 state.communities,
                 onCommunityClick = onCommunityClick,
-                onMineCommunityClick = onMineCommunityClick
+                onMineCommunityClick = onMineCommunityClick,
+                selectedCategory = category,
+                onCategoryClick = { category ->
+                    viewModel.onCategorySelected(category)
+                }
             )
         }
     }

@@ -10,6 +10,7 @@ import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
 import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
+import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
     viewModel { ChallengesViewModel(get()) }
-    viewModel { CommunitiesViewModel(get()) }
+    viewModel { CommunitiesViewModel(get(), get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get( )) }
 }
@@ -36,6 +37,7 @@ val usecasesModule = module {
     factory { GetChallengesUseCase(get()) }
     factory { GetMyProfileUseCase(get()) }
     factory { GetCommunitiesUseCase(get()) }
+    factory { GetCommunitiesByCategoryUseCase(get()) }
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }
 }

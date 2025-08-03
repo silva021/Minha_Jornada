@@ -49,12 +49,13 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @Composable
 fun CommunitiesContent(
     communities: Communities,
+    selectedCategory: CategoryType,
+    onCategoryClick: (CategoryType) -> Unit,
+
     onMineCommunityClick: (Community) -> Unit,
     onCommunityClick: (Community) -> Unit,
 ) {
     var searchText by remember { mutableStateOf("") }
-    var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
-
     val communitiesFeatured = communities.featured.take(3)
     val communitiesPopular = communities.featured.drop(3)
 
@@ -76,96 +77,110 @@ fun CommunitiesContent(
             Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             selectedCategory = selectedCategory
         ) {
-            selectedCategory = it
+            onCategoryClick(it)
         }
 
-        LazyColumn {
-            item {
-
-                if (communities.my.isNotEmpty()) {
-                    Column(
-                        Modifier.padding(horizontal = 16.dp),
-                    ) {
-                        Text(
-                            text = "Minhas comunidades",
-                            color = textPrimary,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        if (communities.my.isEmpty() && communities.featured.isEmpty()) {
+            Column(
+                Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Nenhuma comunidade encontrada",
+                    color = textSecondary,
+                    fontSize = 16.sp
+                )
+            }
+        } else {
+            LazyColumn {
+                item {
+                    if (communities.my.isNotEmpty()) {
+                        Column(
+                            Modifier.padding(horizontal = 16.dp),
                         ) {
-                            items(communities.my) { community ->
-                                FeaturedCommunityCard(
-                                    community = community,
-                                    onCommunityClick = onMineCommunityClick
-                                )
+                            Text(
+                                text = "Minhas comunidades",
+                                color = textPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(communities.my) { community ->
+                                    FeaturedCommunityCard(
+                                        community = community,
+                                        onCommunityClick = onMineCommunityClick
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-
-                Column(
-                    Modifier.padding(horizontal = 16.dp),
-                ) {
-                    Text(
-                        text = "Em destaque",
-                        color = textPrimary,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
-
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(communitiesFeatured) { community ->
-                            FeaturedCommunityCard(
-                                community = community,
-                                onCommunityClick = onCommunityClick
+                    if (communitiesFeatured.isNotEmpty()) {
+                        Column(
+                            Modifier.padding(horizontal = 16.dp),
+                        ) {
+                            Text(
+                                text = "Em destaque",
+                                color = textPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(vertical = 8.dp)
                             )
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(communitiesFeatured) { community ->
+                                    FeaturedCommunityCard(
+                                        community = community,
+                                        onCommunityClick = onCommunityClick
+                                    )
+                                }
+                            }
                         }
                     }
-                }
 
-                if (communitiesPopular.isNotEmpty()) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = "Todos",
-                            color = textPrimary,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        )
+                    if (communitiesPopular.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Text(
+                                text = "Todos",
+                                color = textPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
 
-                        communitiesPopular.chunked(2).forEach { rowItems ->
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                rowItems.forEach { community ->
-                                    Box(modifier = Modifier.weight(1f)) {
-                                        FeaturedCommunityCard(
-                                            community = community,
-                                            onCommunityClick = onCommunityClick
-                                        )
+                            communitiesPopular.chunked(2).forEach { rowItems ->
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    rowItems.forEach { community ->
+                                        Box(modifier = Modifier.weight(1f)) {
+                                            FeaturedCommunityCard(
+                                                community = community,
+                                                onCommunityClick = onCommunityClick
+                                            )
+                                        }
+                                    }
+
+                                    if (rowItems.size == 1) {
+                                        Spacer(modifier = Modifier.weight(1f))
                                     }
                                 }
-
-                                if (rowItems.size == 1) {
-                                    Spacer(modifier = Modifier.weight(1f))
-                                }
+                                Spacer(modifier = Modifier.height(16.dp))
                             }
-                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }
@@ -216,6 +231,25 @@ fun CommunitiesContentPreview() {
     MaterialTheme {
         CommunitiesContent(
             communities = communities.toDomain(),
+            onCommunityClick = {},
+            onCategoryClick = {},
+            selectedCategory = CategoryType.FITNESS,
+            onMineCommunityClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun CommunitiesEmptyContentPreview() {
+    MaterialTheme {
+        CommunitiesContent(
+            communities = Communities(
+                featured = emptyList(),
+                my = emptyList()
+            ),
+            selectedCategory = CategoryType.FITNESS,
+            onCategoryClick = {},
             onCommunityClick = {},
             onMineCommunityClick = {}
         )
