@@ -8,7 +8,7 @@ data class Profile(
     val name: String,
     val username: String,
     val profilePictureUrl: String,
-    val memberSince: String,
+    val createdAt: String,
     val stats: ProfileStats
 )
 
@@ -24,7 +24,7 @@ fun ProfileDTO.toDomain(): Profile {
         name = this.name,
         username = this.username,
         profilePictureUrl = this.profilePictureUrl,
-        memberSince = this.memberSince,
+        createdAt = this.createdAt,
         stats = this.stats.toDomain()
     )
 }

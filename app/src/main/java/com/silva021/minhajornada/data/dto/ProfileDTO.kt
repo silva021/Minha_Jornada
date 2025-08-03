@@ -5,6 +5,6 @@ data class ProfileDTO(
     val name: String,
     val username: String,
     val profilePictureUrl: String,
-    val memberSince: String,
+    val createdAt: String,
     val stats: ProfileStatsDTO
 )

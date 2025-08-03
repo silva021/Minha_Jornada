@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.silva021.minhajornada.domain.extension.getYears
 import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.model.SettingsItem
 import com.silva021.minhajornada.domain.model.toDomain
@@ -132,7 +133,7 @@ fun ProfileHeader(profile: Profile) {
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = "Membro desde 2021",
+            text = "Membro desde " + profile.createdAt.getYears(),
             color = textSecondary,
             fontSize = 14.sp
         )
