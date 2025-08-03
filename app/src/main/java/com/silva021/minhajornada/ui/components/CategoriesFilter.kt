@@ -19,13 +19,14 @@ import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 
 @Composable
 fun CategoriesFilter(
+    modifier: Modifier = Modifier,
     selectedCategory: CategoryType,
     onCategorySelected: (CategoryType) -> Unit
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+
     ) {
         CategoryType.entries.forEach { category ->
             FilterChip(
