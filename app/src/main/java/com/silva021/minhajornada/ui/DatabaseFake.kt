@@ -12,7 +12,6 @@ import com.silva021.minhajornada.domain.model.CheckInStatus
 import com.silva021.minhajornada.domain.model.Comment
 import com.silva021.minhajornada.domain.model.DurationType
 import com.silva021.minhajornada.domain.model.Post
-import com.silva021.minhajornada.domain.model.PublicChallenge
 
 object DatabaseFake {
 
@@ -309,6 +308,7 @@ object DatabaseFake {
                 id = "1",
                 imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDG8U7Jgh29H6fv_GzSiE4iDYIGl5VlQae2Izv6y5Blp0DnD6BbcnsQQkBqMJWzZ92QGideUZxYCttOogvRLnGLuS1YQWLxz8VqWCDyPpKAnAeeVPjY97u8s8QyVe2X9HYfGmecxL0tEe9_3D1ULwVckACP7dzopBqwx6n8ifYfLZAL553x3aJPl1XMeeW3Zw-3UlpPxSTQCTpWq1zDhMA9vrwcgBflLecL1g6n5dXYRQg52DjG8_KQYdVTi40RI6DzLIpbY3YXYqA",
                 name = "Fitness Fanáticos",
+                category = CategoryType.FITNESS.name,
                 members = 1200
             )
         ),
@@ -317,6 +317,7 @@ object DatabaseFake {
                 id = "2",
                 imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDA4p3n7YAU0tuTTdUX1LXvST81S587HIZyGmvHVPennNBDBO44rX3GtNANF2o61oLDAyXlHfi6JeyLmtbEIvWxXS6CtSaEZtwXSnhdXgcwAsOnV6YjnW4u233WljWwK9R0nEhMKHv_bUknrvg-P8_jGN_uuStHzRRCKGQWvRZjiPew6af3P2SDzvcxQ2D80WZ1es7HpJZo-0dlAEI0uvSH0HiAEtEo7tkGl3rBhrOP1VjT9XpWAYRWl0Qp48KpncrzMxSShunC0iw",
                 name = "Viciados em Leitura",
+                category = CategoryType.EDUCATION.name,
                 members = 876
             )
         )
