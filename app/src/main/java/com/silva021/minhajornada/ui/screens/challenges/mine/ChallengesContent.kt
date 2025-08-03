@@ -211,12 +211,13 @@ fun CompletedChallengeItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(Palette.cardBackground)
-            .padding(16.dp)
             .clickable {
                 onClick.invoke()
             }
+            .clip(RoundedCornerShape(8.dp))
+            .background(Palette.cardBackground)
+            .padding(16.dp)
+
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -229,6 +230,9 @@ fun CompletedChallengeItem(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium
                 )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
                 Text(
                     text = completionDate,
                     color = Palette.textSecondary,
