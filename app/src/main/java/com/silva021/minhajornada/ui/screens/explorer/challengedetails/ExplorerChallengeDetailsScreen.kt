@@ -29,6 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.silva021.minhajornada.domain.model.PublicChallenge
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
@@ -37,27 +40,27 @@ import com.silva021.minhajornada.ui.theme.Palette.primaryColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
-
 @Composable
 fun ExplorerChallengeDetailsScreen(
+    challenge: PublicChallenge,
     onBackPressed: () -> Unit,
 ) {
     Column(
         modifier = Modifier.background(backgroundColor)
     ) {
+        Header(
+            "Detalhes do Desafio",
+            onBackPressed
+        )
         Column(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            Header(
-                "Detalhes do Desafio",
-                onBackPressed
-            )
-            ChallengeImage()
-            ChallengeDescription()
-            RulesAndBenefitsSection()
-            DurationSection()
+            ChallengeImage(challenge)
+            ChallengeDescription(challenge)
+            RulesAndBenefitsSection(challenge)
+            DurationSection(challenge)
         }
         JoinButton()
     }
@@ -65,7 +68,7 @@ fun ExplorerChallengeDetailsScreen(
 
 
 @Composable
-private fun ChallengeImage() {
+private fun ChallengeImage(challenge: PublicChallenge) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +76,7 @@ private fun ChallengeImage() {
             .padding(16.dp)
     ) {
         AsyncImage(
-            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAkc7caumNKguxFQi23XXLIF2nAooak9zqJPurvCUxusrtDiHPpgIn2G4GDo37dIR_ml1-FdqEvvUrA98xI9Tx2YSkx9uzWHllghd9h0-zICGTGjcFQJUMvDnArQRq5Vh_hSg8dyVPucLX5oh8kVn6eAvUO-bicp50aUqpkT_HhbEWPMqluI0-UBp1I-PZuMNsDfcISibPj6ZcP8j1sM90poD2kDfuSSEpzv7R9HdCpTyCL8aRgFy4S816kJxN_vQjPcAW8dNIHPpI",
+            model = challenge.imageUrl,
             contentDescription = "Imagem do desafio",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -88,7 +91,7 @@ private fun ChallengeImage() {
                 .padding(16.dp)
         ) {
             Text(
-                text = "Corra 5km todos os dias por um mês",
+                text = challenge.title,
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -99,9 +102,9 @@ private fun ChallengeImage() {
 }
 
 @Composable
-private fun ChallengeDescription() {
+private fun ChallengeDescription(challenge: PublicChallenge) {
     Text(
-        text = "Este desafio foi projetado para ajudá-lo a construir um hábito consistente de corrida. Ao correr 5km todos os dias durante um mês, você melhorará sua saúde cardiovascular, aumentará sua resistência e alcançará um marco significativo de condicionamento físico.",
+        text = challenge.description,
         color = textSecondary,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         lineHeight = 24.sp
@@ -109,7 +112,9 @@ private fun ChallengeDescription() {
 }
 
 @Composable
-private fun RulesAndBenefitsSection() {
+private fun RulesAndBenefitsSection(
+    challenge: PublicChallenge
+) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -117,36 +122,36 @@ private fun RulesAndBenefitsSection() {
             .background(cardBackground)
             .padding(16.dp)
     ) {
-        // Regras
-        Column(modifier = Modifier.padding(bottom = 16.dp)) {
-            Text(
-                text = "Regras",
-                color = primaryColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+        if (challenge.rules.isNotEmpty()) {
+            Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                Text(
+                    text = "Regras",
+                    color = primaryColor,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
 
-            BulletPoint(text = "Corra 5km (3.1 milhas) todos os dias")
-            BulletPoint(text = "Registre suas corridas usando um aplicativo ou dispositivo de fitness")
-            BulletPoint(text = "Compartilhe seu progresso com a comunidade")
+                challenge.rules.forEach { rule ->
+                    BulletPoint(text = rule)
+                }
+            }
         }
 
-        // Benefícios
-        Column(modifier = Modifier.padding(bottom = 16.dp)) {
-            Text(
-                text = "Benefícios",
-                color = primaryColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+        if (challenge.benefits.isNotEmpty()) {
+            Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                Text(
+                    text = "Benefícios",
+                    color = primaryColor,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
 
-            BulletPoint(text = "Melhora da saúde cardiovascular")
-            BulletPoint(text = "Aumento da resistência e stamina")
-            BulletPoint(text = "Controle de peso")
-            BulletPoint(text = "Clareza mental e redução do estresse")
-            BulletPoint(text = "Senso de realização")
+                challenge.benefits.forEach { benefit ->
+                    BulletPoint(text = benefit)
+                }
+            }
         }
     }
 }
@@ -171,7 +176,7 @@ private fun BulletPoint(text: String) {
 }
 
 @Composable
-private fun DurationSection() {
+private fun DurationSection(challenge: PublicChallenge) {
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -198,7 +203,7 @@ private fun DurationSection() {
                     .padding(end = 4.dp)
             )
             Text(
-                text = "30 dias",
+                text = "${challenge.duration.days} dias",
                 color = textPrimary,
                 fontWeight = FontWeight.Bold
             )
@@ -222,6 +227,7 @@ private fun JoinButton() {
 @Composable
 fun ExplorerChallengeDetailsPreview() {
     ExplorerChallengeDetailsScreen(
+        DatabaseFake.publicChallenges.first().toDomain(),
         onBackPressed = {}
     )
 }
