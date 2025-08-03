@@ -23,13 +23,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.silva021.minhajornada.domain.model.ChallengeResult
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.routes.Routes
+import com.silva021.minhajornada.ui.routes.Routes.ChallengeCompletedScreen.STATUS_ID
 import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
+import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.summary.ChallengeSummaryScreen
@@ -123,6 +130,19 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Routes.UpdateChallengeProgressScreen.route) {
                         UpdateChallengeProgressScreen(
+                            challenge = DatabaseFake.challengesDto.first().toDomain(),
+                            onCompleteChallenge = {
+                                Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
+                                    navController,
+                                    it
+                                )
+                            },
+                            onCompletedDay = {
+                                Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
+                                    navController,
+                                    it
+                                )
+                            },
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ChallengesScreen.route,
@@ -207,6 +227,27 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.ChallengeSummaryScreen.route) {
                         ChallengeSummaryScreen(
+                            challenge = DatabaseFake.challengesDto.last().toDomain(),
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.ChallengesScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
+
+                    composable(
+                        Routes.ChallengeCompletedScreen.route,
+                        arguments = listOf(
+                            navArgument(STATUS_ID) { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        val status = ChallengeResult.valueOf(
+                            backStackEntry.arguments?.getString(STATUS_ID).orEmpty()
+                        )
+                        ChallengeCompletedScreen(
+                            challengeResult = status,
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ChallengesScreen.route,

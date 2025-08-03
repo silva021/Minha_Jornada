@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.ui.routes
 
 import androidx.navigation.NavController
+import com.silva021.minhajornada.domain.model.ChallengeResult
 
 sealed class Routes(val route: String) {
     fun popBackStack(navController: NavController) {
@@ -104,6 +105,20 @@ sealed class Routes(val route: String) {
     object ChallengeSummaryScreen : Routes("challenge_summary_screen") {
         fun navigateToChallengeSummaryScreen(navController: NavController) {
             navController.navigate(ChallengeSummaryScreen.route)
+        }
+    }
+
+    object ChallengeCompletedScreen : Routes("challenge_completed_screen/{status}") {
+        const val STATUS_ID = "status"
+
+        fun navigateToChallengeCompletedScreen(navController: NavController, challengeResult: ChallengeResult) {
+            navController.navigate(ChallengeCompletedScreen.route.replace("{$STATUS_ID}", challengeResult.name))
+        }
+    }
+
+    object ChallengeFailedScreen : Routes("challenge_failed_screen") {
+        fun navigateToChallengeFailedScreen(navController: NavController) {
+            navController.navigate(ChallengeFailedScreen.route)
         }
     }
 
