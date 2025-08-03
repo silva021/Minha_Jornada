@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.domain.model.Challenge
+import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.domain.model.CheckInStatus
-import com.silva021.minhajornada.domain.model.DurationType
 import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.CustomTextField
@@ -41,6 +41,8 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @Composable
 fun UpdateChallengeProgressScreen(
     challenge: Challenge,
+    onCompletedDay: (ChallengeResult) -> Unit,
+    onCompleteChallenge: (ChallengeResult) -> Unit,
     onBackPressed: () -> Unit,
 ) {
     val observationText = remember { mutableStateOf("") }
@@ -126,7 +128,9 @@ fun UpdateChallengeProgressScreen(
                 value = observationText.value,
                 onValueChange = { observationText.value = it },
                 placeholder = "Como foi? Alguma dificuldade ou observação?",
-                modifier = Modifier.fillMaxWidth().height(120.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -143,23 +147,27 @@ fun UpdateChallengeProgressScreen(
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 checkInStatusSelected = statusSelected,
-                onCheckInStatusSelected = { statusSelected = it}
+                onCheckInStatusSelected = { statusSelected = it }
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
             PrimaryButton(
                 text = "Concluir o dia",
-                onClick = { /* Ação ao marcar como concluído */ },
+                onClick = {
+                    onCompletedDay.invoke(ChallengeResult.SUCCESS)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
 
             SecondButton(
                 text = "Concluir desafio",
-                onClick = { /* Ação ao marcar como concluído */ },
+                onClick = {
+                    onCompleteChallenge.invoke(ChallengeResult.FAILED)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -175,6 +183,8 @@ fun UpdateChallengeProgressScreen(
 fun UpdateChallengeProgressScreenPreview() {
     UpdateChallengeProgressScreen(
         challenge = DatabaseFake.challengesDto[0].toDomain(),
-        onBackPressed = {}
+        onBackPressed = {},
+        onCompletedDay = {},
+        onCompleteChallenge = {}
     )
 }
