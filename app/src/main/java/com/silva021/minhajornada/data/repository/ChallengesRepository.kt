@@ -8,8 +8,8 @@ class ChallengesRepositoryImpl(
     val challengesApi: ChallengesApi,
 ) : ChallengeRepository {
     override suspend fun getChallenges(): List<ChallengeDTO> {
-//        return challengesApi.getChallenges()
-        return DatabaseFake.challengesDto
+        return challengesApi.getChallenges()
+//        return DatabaseFake.challengesDto
     }
 
 }
