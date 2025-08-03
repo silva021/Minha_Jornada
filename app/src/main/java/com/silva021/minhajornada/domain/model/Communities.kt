@@ -13,7 +13,7 @@ data class Community(
     val id: String,
     val imageUrl: String,
     val name: String,
-    val members: String,
+    val members: Int,
 )
 
 data class Category(
@@ -34,7 +34,7 @@ fun CommunityDTO.toDomain() = Community(
     id = id,
     imageUrl = imageUrl,
     name = name,
-    members = "$members membros"
+    members = members
 )
 
 fun CategoryDTO.toDomain() = Category(
