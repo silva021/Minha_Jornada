@@ -11,15 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.silva021.minhajornada.domain.model.Profile
-import com.silva021.minhajornada.domain.model.ProfileStats
 import com.silva021.minhajornada.domain.model.SettingsItem
+import com.silva021.minhajornada.domain.model.toDomain
+import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.dividerColor
@@ -188,7 +187,7 @@ fun SectionCard(title: String, items: List<SettingsItem>) {
         items.forEachIndexed { index, item ->
             ProfileListItem(item = item)
             if (index < items.lastIndex) {
-                Divider(
+                HorizontalDivider(
                     color = dividerColor,
                     thickness = 1.dp,
                     modifier = Modifier.padding(horizontal = 16.dp)
@@ -223,7 +222,7 @@ fun ProfileListItem(item: SettingsItem) {
             )
         } else {
             Icon(
-                imageVector = Icons.Default.ArrowForward,
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = "Ir",
                 tint = textSecondary,
                 modifier = Modifier.size(20.dp)
@@ -237,18 +236,7 @@ fun ProfileListItem(item: SettingsItem) {
 @Preview
 fun ProfileContentPreview() {
     ProfileContent(
-        Profile(
-            id = "1",
-            name = "João Silva",
-            username = "@joaosilva",
-            profilePictureUrl = "",
-            memberSince = "Membro desde 2021",
-            stats = ProfileStats(
-                challenges = 12,
-                following = 3,
-                followers = 2
-            )
-        ),
+        profile = DatabaseFake.profileDto.toDomain(),
         onContactUsClick = {},
         onHelpClick = {}
     )
