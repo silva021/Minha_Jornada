@@ -245,6 +245,7 @@ class MainActivity : ComponentActivity() {
                             backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID)
                                 .orEmpty()
                         CommunityFeedScreen(
+                            communityId = communityId,
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.CommunitiesScreen.route,

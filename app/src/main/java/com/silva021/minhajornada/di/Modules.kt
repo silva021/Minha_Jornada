@@ -14,10 +14,12 @@ import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
+import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsViewModel
+import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
@@ -34,6 +36,7 @@ val viewModelModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get( )) }
     viewModel { CommunityDetailsViewModel(get()) }
+    viewModel { CommunityFeedViewModel(get(), get(), get()) }
 }
 
 val usecasesModule = module {
@@ -43,6 +46,7 @@ val usecasesModule = module {
     factory { GetCommunitiesUseCase(get()) }
     factory { GetCommunitiesByCategoryUseCase(get()) }
     factory { GetCommunityByIdUseCase(get()) }
+    factory { GetCommunityPostsUseCase(get()) }
 
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }

@@ -6,7 +6,6 @@ import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Communities
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

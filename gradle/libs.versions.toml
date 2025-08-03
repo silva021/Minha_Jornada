@@ -1,6 +1,7 @@
 [versions]
 agp = "8.9.2"
 coilCompose = "3.3.0"
+composeShimmer = "1.0.5"
 converterGson = "2.11.0"
 koinAndroid = "4.0.0"
 koinAndroidxCompose = "4.0.0"
@@ -23,6 +24,7 @@ retrofit = "2.11.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
+compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "composeShimmer" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
