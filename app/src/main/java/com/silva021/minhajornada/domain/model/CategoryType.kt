@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.domain.model
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.NaturePeople
@@ -22,7 +23,7 @@ enum class CategoryType(
     ),
     READING(
         "Leitura",
-        Icons.Default.MenuBook,
+        Icons.AutoMirrored.Filled.MenuBook,
         Color(0xFF3F51B5)
     ),
     CULINARY(
