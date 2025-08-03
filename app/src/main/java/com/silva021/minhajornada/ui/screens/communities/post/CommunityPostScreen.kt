@@ -52,13 +52,15 @@ import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
 @Composable
-fun CommunityPostScreen() {
+fun CommunityPostScreen(
+    onBackPressed: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        Header("Postagem") { }
+        Header("Postagem", onBackPressed)
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
@@ -287,5 +289,7 @@ private fun CommentInput() {
 @Preview
 @Composable
 fun CommunityPostScreenPreview() {
-    CommunityPostScreen()
+    CommunityPostScreen(
+        onBackPressed = {}
+    )
 }

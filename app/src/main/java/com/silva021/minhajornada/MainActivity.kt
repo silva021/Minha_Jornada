@@ -236,7 +236,11 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(Routes.CommunityPostScreen.route) {
-                        CommunityPostScreen()
+                        CommunityPostScreen(
+                            onBackPressed = {
+                                navController.popBackStack()
+                            }
+                        )
                     }
 
                     composable(Routes.ChallengeSummaryScreen.route) {
