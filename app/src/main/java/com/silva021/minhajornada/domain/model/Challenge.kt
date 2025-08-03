@@ -1,6 +1,6 @@
 package com.silva021.minhajornada.domain.model
 
-open class Challenge(
+data class Challenge(
     val id: Int,
     val title: String,
     val description: String,
