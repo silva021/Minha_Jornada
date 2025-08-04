@@ -182,7 +182,7 @@ fun SectionCard(title: String, items: List<SettingsItem>) {
             text = title,
             color = Palette.textPrimary,
             fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
 
