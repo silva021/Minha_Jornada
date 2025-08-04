@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake
@@ -55,10 +56,12 @@ import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.login.LoginScreen
 import com.silva021.minhajornada.ui.screens.login.SignUpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
+import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
 import com.silva021.minhajornada.ui.screens.profile.edit.EditProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.utils.hasNavigationToRoute
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -85,9 +88,11 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             ) { padding ->
+                val profileViewModel: ProfileViewModel = koinViewModel()
+
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.CommunitiesScreen.route,
+                    startDestination = Routes.ChallengesScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -114,19 +119,45 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
-                    composable(Routes.ProfileScreen.route) {
-                        ProfileScreen(
-                            onContactUsClick = {
-                                Routes.FeedbackScreen.navigateToFeedbackScreen(navController)
-                            },
-                            onHelpClick = {
-                                Routes.HelpScreen.navigateToHelpScreen(navController)
-                            },
-                            onEditProfileClick = {
-                                Routes.EditProfileScreen.navigateToEditProfileScreen(navController)
-                            }
-                        )
+
+                    navigation(
+                        startDestination = Routes.ProfileScreen.route,
+                        route = Routes.ProfileGraph.route
+                    ) {
+
+                        composable(Routes.ProfileScreen.route) { backStackEntry ->
+                            ProfileScreen(
+                                viewModel = profileViewModel,
+                                onContactUsClick = {
+                                    Routes.FeedbackScreen.navigateToFeedbackScreen(navController)
+                                },
+                                onHelpClick = {
+                                    Routes.HelpScreen.navigateToHelpScreen(navController)
+                                },
+                                onEditProfileClick = {
+                                    Routes.EditProfileScreen.navigateToEditProfileScreen(
+                                        navController
+                                    )
+                                }
+                            )
+                        }
+
+                        composable(Routes.EditProfileScreen.route) { backStackEntry ->
+                            EditProfileScreen(
+                                profileViewModel,
+                                onEditProfilePicture = {
+                                    // Handle profile picture edit
+                                },
+                                onSaveProfileChanges = {
+
+                                },
+                                onBackPressed = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
                     }
+
                     composable(Routes.CreateChallengesScreen.route) {
                         CreateChallengesScreen(
                             onBackPressed = {
@@ -220,7 +251,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = Routes.CommunityDetailsScreen.route,
+                        route = CommunityDetailsScreen.route,
                         arguments = listOf(
                             navArgument(CommunityDetailsScreen.COMMUNITY_ID) {
                                 type = NavType.StringType
@@ -301,20 +332,6 @@ class MainActivity : ComponentActivity() {
                                     Routes.ChallengesScreen.route,
                                     inclusive = false
                                 )
-                            }
-                        )
-                    }
-
-                    composable(Routes.EditProfileScreen.route) {
-                        EditProfileScreen(
-                            onEditProfilePicture = {
-                                // Handle profile picture edit
-                            },
-                            onSaveProfileChanges = {
-
-                            },
-                            onBackPressed = {
-                                navController.popBackStack()
                             }
                         )
                     }

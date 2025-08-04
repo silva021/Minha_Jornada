@@ -9,12 +9,11 @@ import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileUiState
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(
-    viewModel: ProfileViewModel = koinViewModel(),
+    viewModel: ProfileViewModel,
     onEditProfilePicture: () -> Unit,
     onSaveProfileChanges: () -> Unit,
     onBackPressed: () -> Unit,
@@ -22,7 +21,8 @@ fun EditProfileScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchProfile()
+        if (viewModel.uiState.value is ProfileUiState.Loading)
+            viewModel.fetchProfile()
     }
 
     when (val state = uiState) {
@@ -30,6 +30,7 @@ fun EditProfileScreen(
         is ProfileUiState.Error -> ErrorScreen(
             onRetry = { viewModel.fetchProfile() }
         )
+
         is ProfileUiState.Success -> EditProfileContent(
             profile = state.profile,
             onEditProfilePicture = onEditProfilePicture,

@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.ui.screens.profile
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -10,7 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel = koinViewModel(),
+    viewModel: ProfileViewModel,
     onContactUsClick: () -> Unit,
     onHelpClick: () -> Unit,
     onEditProfileClick: () -> Unit,
