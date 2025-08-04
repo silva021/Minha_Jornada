@@ -8,4 +8,5 @@ data class Challenge(
     val categoryType: CategoryType,
     val checkins: List<CheckIn>,
     val startDate: String,
+    val owner: Profile
 )

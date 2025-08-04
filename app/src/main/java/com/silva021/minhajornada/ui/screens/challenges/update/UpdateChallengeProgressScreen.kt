@@ -82,7 +82,7 @@ fun UpdateChallengeProgressScreen(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Criado por Alex",
+                    text = "Criado(a) por " + challenge.owner.name,
                     color = textSecondary,
                     fontSize = 14.sp
                 )

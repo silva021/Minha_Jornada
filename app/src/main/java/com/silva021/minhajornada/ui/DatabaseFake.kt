@@ -256,6 +256,7 @@ object DatabaseFake {
             categoryType = CategoryType.FITNESS.name,
             durationType = DurationType.THREE_DAYS.name,
             startDate = "2025-08-02",
+            owner = profilesDTO.first(),
             checkins = listOf(
                 CheckInDTO(
                     day = 1,
@@ -278,6 +279,7 @@ object DatabaseFake {
             categoryType = CategoryType.FITNESS.name,
             durationType = DurationType.SEVEN_DAYS.name,
             startDate = "2023-06-20",
+            owner = profilesDTO.first(),
             checkins = listOf(
                 CheckInDTO(
                     day = 1,

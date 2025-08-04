@@ -15,6 +15,7 @@ fun ChallengeDTO.toDomain(): Challenge {
         startDate = this.startDate,
         checkins = this.checkins?.map { it.toDomain() } ?: emptyList(),
         categoryType = CategoryType.valueOf(this.categoryType.uppercase()),
-        durationType = DurationType.valueOf(this.durationType.uppercase())
+        durationType = DurationType.valueOf(this.durationType.uppercase()),
+        owner = this.owner.toDomain()
     )
 }
