@@ -51,6 +51,8 @@ import com.silva021.minhajornada.ui.screens.explorer.challengedetails.ExplorerCh
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerScreen
 import com.silva021.minhajornada.ui.screens.feedback.FeedbackScreen
 import com.silva021.minhajornada.ui.screens.help.HelpScreen
+import com.silva021.minhajornada.ui.screens.login.LoginScreen
+import com.silva021.minhajornada.ui.screens.login.SignUpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
@@ -83,7 +85,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.CommunitiesScreen.route,
+                    startDestination = Routes.LoginScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -308,6 +310,28 @@ class MainActivity : ComponentActivity() {
                                     Routes.ChallengesScreen.route,
                                     inclusive = false
                                 )
+                            }
+                        )
+                    }
+
+                    composable(Routes.SignUpScreen.route) {
+                        SignUpScreen(
+                            onBackPressed = {
+                                navController.popBackStack(
+                                    Routes.LoginScreen.route,
+                                    inclusive = false
+                                )
+                            }
+                        )
+                    }
+
+                    composable(Routes.LoginScreen.route) {
+                        LoginScreen(
+                            onLogin = {
+                                Routes.ChallengesScreen.navigateToChallengesScreen(navController)
+                            },
+                            onSignUp = {
+                                Routes.SignUpScreen.navigateToSignUpScreen(navController)
                             }
                         )
                     }

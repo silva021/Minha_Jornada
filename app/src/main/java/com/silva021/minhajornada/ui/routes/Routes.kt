@@ -122,9 +122,15 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object ChallengeFailedScreen : Routes("challenge_failed_screen") {
-        fun navigateToChallengeFailedScreen(navController: NavController) {
-            navController.navigate(ChallengeFailedScreen.route)
+    object SignUpScreen : Routes("signup_screen") {
+        fun navigateToSignUpScreen(navController: NavController) {
+            navController.navigate(SignUpScreen.route)
+        }
+    }
+
+    object LoginScreen : Routes("login_screen") {
+        fun navigateToLoginScreen(navController: NavController) {
+            navController.navigate(LoginScreen.route)
         }
     }
 
