@@ -10,6 +10,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
@@ -25,14 +26,13 @@ fun CustomTextField(
     readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     TextField(
+        visualTransformation = visualTransformation,
         value = value,
         onValueChange = { onValueChange(it) },
         modifier = modifier,
-//            Modifier
-//            .fillMaxWidth()
-//            .height(120.dp),
         placeholder = {
             Text(
                 text = placeholder,
