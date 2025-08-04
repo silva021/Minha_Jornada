@@ -49,7 +49,7 @@ fun HelpScreen(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        Header { onBackPressed.invoke() }
+        Header("Ajuda") { onBackPressed.invoke() }
 
         LazyColumn(
             modifier = Modifier

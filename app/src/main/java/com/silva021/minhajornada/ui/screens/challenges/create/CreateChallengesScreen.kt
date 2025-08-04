@@ -59,7 +59,10 @@ fun CreateChallengesScreen(
         modifier = Modifier
             .background(Palette.backgroundColor)
     ) {
-        Header(onBackPressed = onBackPressed)
+        Header(
+            title = "Criar Desafio",
+            onBackPressed = onBackPressed
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()

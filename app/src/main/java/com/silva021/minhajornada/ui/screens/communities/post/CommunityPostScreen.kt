@@ -80,10 +80,16 @@ fun CommunityPostScreen(
 
         when (val state = userState) {
             is UserInfoUiState.Loading -> NewPostAreaSkeleton()
-            is UserInfoUiState.Error -> {}
+            is UserInfoUiState.Error -> InputArea(
+                placeholder = "Adicionar um comentário...",
+                profilePictureUrl = null,
+                postText = inputText,
+                onPostTextChange = { inputText = it }
+            )
             is UserInfoUiState.Success -> {
                 InputArea(
-                    state.profile,
+                    placeholder = "Adicionar um comentário...",
+                    profilePictureUrl = state.profile.profilePictureUrl,
                     postText = inputText,
                     onPostTextChange = { inputText = it }
                 )

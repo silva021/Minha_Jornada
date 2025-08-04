@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,9 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.model.toDomain
-import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.profilesDTO
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.cardBackground
@@ -38,9 +37,10 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
 @Composable
 fun InputArea(
-    profile: Profile,
+    profilePictureUrl: String? = null,
     postText: String,
     onPostTextChange: (String) -> Unit,
+    placeholder: String
 ) {
     Row(
         modifier = Modifier
@@ -49,16 +49,17 @@ fun InputArea(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = profile.profilePictureUrl,
-            contentDescription = "Seu perfil",
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
+        profilePictureUrl?.let {
+            AsyncImage(
+                model = profilePictureUrl,
+                contentDescription = "Seu perfil",
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+        }
 
         BasicTextField(
             value = postText,
@@ -71,7 +72,7 @@ fun InputArea(
             decorationBox = { innerTextField ->
                 if (postText.isEmpty()) {
                     Text(
-                        "Adicionar um comentário...",
+                        placeholder,
                         color = textSecondary,
                         fontSize = 14.sp
                     )
@@ -88,7 +89,7 @@ fun InputArea(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,
                 contentDescription = "Adicionar imagem",
-                tint = if(postText.isEmpty()) textSecondary else primaryColor,
+                tint = if (postText.isEmpty()) textSecondary else primaryColor,
             )
         }
     }
@@ -97,9 +98,20 @@ fun InputArea(
 @Composable
 @Preview
 fun NewPostAreaPreview() {
-    val profile = profilesDTO.first().toDomain()
-    InputArea(
-        profile = profile,
-        postText = ""
-    ) { /* Ação de mudança de texto */ }
+    Column {
+        val profile = profilesDTO.first().toDomain()
+        InputArea(
+            profilePictureUrl = profile.profilePictureUrl,
+            postText = "",
+            placeholder = "O que você está pensando?",
+            onPostTextChange = {}
+        )
+
+        InputArea(
+            profilePictureUrl = null,
+            postText = "",
+            placeholder = "O que você está pensando?",
+            onPostTextChange = {}
+        )
+    }
 }

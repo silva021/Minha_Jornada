@@ -100,7 +100,7 @@ private fun ProgressSummary(challenge: Challenge) {
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 32.dp)
+            .padding(bottom = 16.dp)
     )
 }
 
@@ -108,17 +108,12 @@ private fun ProgressSummary(challenge: Challenge) {
 private fun ColumnScope.DailyReports(
     checkIns: List<CheckIn>,
 ) {
-    Column(
-        modifier = Modifier
-            .padding(bottom = 32.dp)
-            .weight(1f)
-    ) {
+    Column(modifier = Modifier.weight(1f)) {
         Text(
             text = "Relatórios Diários",
             color = textPrimary,
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(bottom = 16.dp)
         )
 
         LazyColumn {

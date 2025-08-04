@@ -52,7 +52,10 @@ fun UpdateChallengeProgressScreen(
         modifier = Modifier
             .background(Palette.backgroundColor)
     ) {
-        Header(onBackPressed = onBackPressed)
+        Header(
+            title = "Atualizar Progresso",
+            onBackPressed = onBackPressed
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()

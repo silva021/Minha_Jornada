@@ -52,7 +52,7 @@ fun FeedbackScreen(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        Header { onBackPressed.invoke() }
+        Header("Contate-nos") { onBackPressed.invoke() }
 
         Spacer(modifier = Modifier.height(16.dp))
 

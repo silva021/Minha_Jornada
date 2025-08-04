@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.InputArea
@@ -50,7 +49,7 @@ fun CommunityFeedScreen(
 
         when (val state = communityState) {
             is CommunityHeaderUiState.Loading -> CommunityHeaderSkeleton()
-            is CommunityHeaderUiState.Error -> {}
+            is CommunityHeaderUiState.Error -> CommunityHeaderSkeleton()
             is CommunityHeaderUiState.Success -> CommunityHeader(state.community)
         }
 
@@ -76,10 +75,18 @@ fun CommunityFeedScreen(
 
         when (val state = userState) {
             is UserInfoUiState.Loading -> NewPostAreaSkeleton()
-            is UserInfoUiState.Error -> {}
+            is UserInfoUiState.Error -> {
+                InputArea(
+                    placeholder = "Escreva algo...",
+                    profilePictureUrl = null,
+                    postText = inputText,
+                    onPostTextChange = { inputText = it }
+                )
+            }
             is UserInfoUiState.Success -> {
                 InputArea(
-                    state.profile,
+                    placeholder = "Escreva algo...",
+                    profilePictureUrl = state.profile.profilePictureUrl,
                     postText = inputText,
                     onPostTextChange = { inputText = it }
                 )
