@@ -128,11 +128,20 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object LoginScreen : Routes("login_screen") {
-        fun navigateToLoginScreen(navController: NavController) {
-            navController.navigate(LoginScreen.route)
+    object EditPostScreen : Routes("edit_post_screen/{postId}") {
+        const val POST_ID = "postId"
+
+        fun navigateToEditPostScreen(navController: NavController, postId: String) {
+            navController.navigate(EditPostScreen.route.replace("{$POST_ID}", postId))
         }
     }
 
+    object EditProfileScreen : Routes("edit_profile_screen") {
+        fun navigateToEditProfileScreen(navController: NavController) {
+            navController.navigate(EditProfileScreen.route)
+        }
+    }
+
+    object LoginScreen : Routes("login_screen")
     object WelcomeScreen : Routes("welcome_screen")
 }

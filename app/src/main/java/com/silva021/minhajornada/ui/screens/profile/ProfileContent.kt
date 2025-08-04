@@ -45,6 +45,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @Composable
 fun ProfileContent(
     profile: Profile,
+    onEditProfileClick: () -> Unit,
     onHelpClick: () -> Unit,
     onContactUsClick: () -> Unit
 ) {
@@ -67,7 +68,7 @@ fun ProfileContent(
             SectionCard(
                 title = "Conta",
                 items = listOf(
-                    SettingsItem("Editar Perfil"),
+                    SettingsItem("Editar Perfil", onClick = onEditProfileClick),
                     SettingsItem("Notificações"),
                     SettingsItem("Privacidade")
                 )
@@ -240,6 +241,7 @@ fun ProfileContentPreview() {
     ProfileContent(
         profile = profilesDTO.first().toDomain(),
         onContactUsClick = {},
-        onHelpClick = {}
+        onHelpClick = {},
+        onEditProfileClick = {}
     )
 }
