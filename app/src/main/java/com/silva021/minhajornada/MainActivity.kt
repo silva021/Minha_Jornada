@@ -47,6 +47,7 @@ import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetails
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedScreen
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesScreen
 import com.silva021.minhajornada.ui.screens.communities.post.CommunityPostScreen
+import com.silva021.minhajornada.ui.screens.communities.post.edit.EditPostScreen
 import com.silva021.minhajornada.ui.screens.explorer.challengedetails.ExplorerChallengeDetailsScreen
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerScreen
 import com.silva021.minhajornada.ui.screens.feedback.FeedbackScreen
@@ -54,6 +55,7 @@ import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.login.LoginScreen
 import com.silva021.minhajornada.ui.screens.login.SignUpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
+import com.silva021.minhajornada.ui.screens.profile.edit.EditProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.utils.hasNavigationToRoute
@@ -85,7 +87,7 @@ class MainActivity : ComponentActivity() {
             ) { padding ->
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ChallengesScreen.route,
+                    startDestination = Routes.CommunitiesScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -119,6 +121,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onHelpClick = {
                                 Routes.HelpScreen.navigateToHelpScreen(navController)
+                            },
+                            onEditProfileClick = {
+                                Routes.EditProfileScreen.navigateToEditProfileScreen(navController)
                             }
                         )
                     }
@@ -254,8 +259,14 @@ class MainActivity : ComponentActivity() {
                                     inclusive = false
                                 )
                             },
-                            onClickPostItem = {
+                            onClickPost = {
                                 Routes.CommunityPostScreen.navigateToCommunityPostScreen(
+                                    navController,
+                                    it.id
+                                )
+                            },
+                            onEditPost = {
+                                Routes.EditPostScreen.navigateToEditPostScreen(
                                     navController,
                                     it.id
                                 )
@@ -348,6 +359,26 @@ class MainActivity : ComponentActivity() {
                                 Routes.SignUpScreen.navigateToSignUpScreen(navController)
                             }
                         )
+                    }
+
+                    composable(
+                        route = Routes.EditPostScreen.route,
+                        arguments = listOf(
+                            navArgument(Routes.EditPostScreen.POST_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val postId =
+                            backStackEntry.arguments?.getString(Routes.EditPostScreen.POST_ID)
+                                .orEmpty()
+                        EditPostScreen(
+                            postId = postId,
+                            onBackPressed = {
+                                navController.popBackStack()
+                            }
+                        )
+
                     }
                 }
             }

@@ -27,7 +27,8 @@ fun CommunityFeedScreen(
     viewModel: CommunityFeedViewModel = koinViewModel(),
     communityId: String,
     onBackPressed: () -> Unit,
-    onClickPostItem: (Post) -> Unit,
+    onClickPost: (Post) -> Unit,
+    onEditPost: (Post) -> Unit,
 ) {
     val communityState by viewModel.communityState.collectAsState()
     val feedState by viewModel.feedState.collectAsState()
@@ -65,9 +66,15 @@ fun CommunityFeedScreen(
                     modifier = Modifier.weight(1f)
                 ) {
                     items(state.posts) {
-                        PostItem(it) {
-                            onClickPostItem(it)
-                        }
+                        PostItem(
+                            post = it,
+                            onPostClick = {
+                                onClickPost.invoke(it)
+                            },
+                            onEditPost = {
+                                onEditPost.invoke(it)
+                            }
+                        )
                     }
                 }
             }

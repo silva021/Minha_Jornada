@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -38,6 +40,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 fun PostItem(
     post: Post,
     onPostClick: () -> Unit,
+    onEditPost: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -123,10 +126,11 @@ fun PostItem(
             }
 
             IconButton(
-                onClick = { /* Mostrar opções */ }, modifier = Modifier.size(24.dp)
+                onClick = onEditPost,
+                modifier = Modifier.size(18.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.MoreHoriz,
+                    imageVector = Icons.Default.Edit,
                     contentDescription = "Mais opções",
                     tint = textSecondary
                 )
