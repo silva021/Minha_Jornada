@@ -31,9 +31,9 @@ fun PrimaryButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = Palette.primaryColor,
-            contentColor = Palette.backgroundColor,
+            contentColor = Palette.textPrimary,
             disabledContainerColor = Palette.primaryColor.copy(alpha = 0.5f),
-            disabledContentColor = Palette.backgroundColor,
+            disabledContentColor = Palette.textPrimary.copy(alpha = 0.5f),
         )
     ) {
         Text(
