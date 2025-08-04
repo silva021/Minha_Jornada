@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -54,16 +56,16 @@ fun SignUpScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Palette.backgroundColor)
+            .verticalScroll(rememberScrollState())
     ) {
         Header("Criar sua Conta", onBackPressed = onBackPressed)
 
         Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
@@ -133,7 +135,13 @@ fun SignUpScreen(
                     visualTransformation = PasswordVisualTransformation()
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Ao se cadastrar, você concorda com nossos <b>Termos de Serviço</b> e <b>Política de Privacidade.</b>".fromHtml(),
+                    color = textSecondary,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
 
                 PrimaryButton(
                     onClick = { /* Cadastrar */ },
@@ -165,20 +173,11 @@ fun SignUpScreen(
                     )
                 }
 
-                // Botão do Google
                 SecondButton(
                     onClick = { /* Login com Google */ },
                     modifier = Modifier.fillMaxWidth(),
                     painter = painterResource(id = R.drawable.ic_google),
                     text = "Google",
-                )
-
-                Text(
-                    text = "Ao se cadastrar, você concorda com nossos <b>Termos de Serviço</b> e <b>Política de Privacidade.</b>".fromHtml(),
-                    color = textSecondary,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 16.dp)
                 )
 
                 Spacer(Modifier.weight(1f))
