@@ -46,19 +46,16 @@ fun StatusFilter(
                             FAILURE -> Icons.Default.Error
                         },
                         contentDescription = null,
-                        tint = when (checkInStatus) {
-                            SUCCESS -> Color(0xFF00796B)
-                            FAILURE -> Color(0xFFC62828)
-                        }
+                        tint = White
                     )
                 },
                 label = { Text(checkInStatus.label) },
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = when (checkInStatus) {
-                        SUCCESS -> Color(0xFFE0F2F1)
-                        FAILURE -> Color(0xFFFFEBEE)
+                        SUCCESS -> Color(0xFF00796B)
+                        FAILURE -> Color(0xFFC62828)
                     },
-                    selectedLabelColor = accentColor,
+                    selectedLabelColor = White,
                     containerColor = cardBackground,
                     labelColor = White
                 ),
