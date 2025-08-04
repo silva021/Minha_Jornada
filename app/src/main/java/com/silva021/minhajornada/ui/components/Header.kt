@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,7 +29,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 @Composable
 fun Header(
     title: String? = null,
-    onBackPressed: () -> Unit,
+    onBackPressed: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
@@ -39,18 +38,21 @@ fun Header(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        IconButton(
-            onClick = onBackPressed,
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(cardBackground)
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Voltar",
-                tint = Color.White
-            )
+        onBackPressed?.let {
+            IconButton(
+                onClick = onBackPressed,
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(cardBackground)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Voltar",
+                    tint = Color.White
+                )
+            }
+
         }
 
         title?.let {
