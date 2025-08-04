@@ -294,6 +294,20 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+                    composable(Routes.EditProfileScreen.route) {
+                        EditProfileScreen(
+                            onEditProfilePicture = {
+                                // Handle profile picture edit
+                            },
+                            onSaveProfileChanges = {
+
+                            },
+                            onBackPressed = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
                     composable(
                         Routes.ChallengeCompletedScreen.route,
                         arguments = listOf(
