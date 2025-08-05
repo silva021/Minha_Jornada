@@ -398,7 +398,7 @@ val profilesDTO = listOf(
 
 val mockReminders = listOf(
     ReminderDTO(
-        id = "reminder_1",
+        id = 1,
         challengeId = "1",
         hour = 10,
         minute = 12,
@@ -407,7 +407,7 @@ val mockReminders = listOf(
         isActive = true
     ),
     ReminderDTO(
-        id = "reminder_2",
+        id = 2,
         challengeId = "1",
         hour = 11,
         minute = 12,
@@ -416,7 +416,7 @@ val mockReminders = listOf(
         isActive = true
     ),
     ReminderDTO(
-        id = "reminder_3",
+        id = 3,
         challengeId = "1",
         hour = 12,
         minute = 12,
@@ -425,12 +425,39 @@ val mockReminders = listOf(
         isActive = false
     ),
     ReminderDTO(
-        id = "reminder_4",
+        id = 4,
         challengeId = "1",
         hour = 13,
         minute = 12,
         weekday = "WEDNESDAY",
         frequency = ReminderFrequency.WEEKENDS.name,
         isActive = true
+    ),
+    ReminderDTO(
+        id = 5,
+        challengeId = "1",
+        hour = 14,
+        minute = 12,
+        weekday = "MONDAY",
+        frequency = ReminderFrequency.WEEKLY.name,
+        isActive = true
+    ),
+    ReminderDTO(
+        id = 6,
+        challengeId = "1",
+        hour = 15,
+        minute = 12,
+        weekday = "SATURDAY",
+        frequency = ReminderFrequency.WEEKDAYS.name,
+        isActive = false
+    ),
+    ReminderDTO(
+        id = 7,
+        challengeId = "1",
+        hour = 16,
+        minute = 12,
+        weekday = "WEDNESDAY",
+        frequency = ReminderFrequency.WEEKENDS.name,
+        isActive = true
     )
-)
+).take(3)
