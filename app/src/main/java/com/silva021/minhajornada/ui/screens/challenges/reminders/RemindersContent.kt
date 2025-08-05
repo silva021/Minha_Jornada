@@ -1,6 +1,8 @@
 package com.silva021.minhajornada.ui.screens.challenges.reminders
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,17 +14,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +58,9 @@ fun RemindersContent(
     reminders: List<Reminder>,
     onBackPressed: () -> Unit,
     onAddReminderClick: () -> Unit,
+    onEditReminder: (Reminder) -> Unit,
     onUpdateReminder: (Reminder) -> Unit,
+    onDeleteReminder: (Int) -> Unit,
     onSaveSettingsClick: () -> Unit,
 ) {
     Column(
@@ -69,7 +77,7 @@ fun RemindersContent(
         ) {
             Text(
                 text = "Desafio",
-                color = Color(0xFFE0E0E0),
+                color = Palette.textPrimary,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -86,7 +94,7 @@ fun RemindersContent(
                 Box(
                     modifier = Modifier
                         .size(56.dp)
-                        .background(Color(0xFF333333), RoundedCornerShape(12.dp)),
+                        .background(Palette.cardBackground, RoundedCornerShape(12.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -145,19 +153,18 @@ fun RemindersContent(
                         .background(Palette.cardBackground, RoundedCornerShape(16.dp))
                         .clip(RoundedCornerShape(16.dp))
                 ) {
-                    itemsIndexed(reminders) { index, reminder ->
-                        ReminderItem(
-                            index = index,
+                    items(
+                        items = reminders,
+                        key = { reminder -> reminder.id }
+                    ) { reminder ->
+                        Log.d("lucas-debug", "Rendering reminder: ${reminder}")
+                        SwipeableReminderItem(
                             reminder = reminder,
-                            onCheckedChange = {
-                                onUpdateReminder(reminder.copy(isActive = it))
-                            }
-                        )
-
-                        HorizontalDivider(
-                            color = Color(0xFF333333),
-                            thickness = 1.dp,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            onCardClick = { reminder -> onEditReminder(reminder) },
+                            onCheckedChange = { isChecked -> onUpdateReminder(reminder.copy(isActive = isChecked)) },
+                            onDeleteClick = {
+                                onDeleteReminder.invoke(it)
+                            },
                         )
                     }
                 }
@@ -177,26 +184,73 @@ fun RemindersContent(
 }
 
 @Composable
-fun ReminderItem(
-    index: Int,
+fun SwipeableReminderItem(
     reminder: Reminder,
+    onCardClick: (Reminder) -> Unit,
+    onCheckedChange: (Boolean) -> Unit,
+    onDeleteClick: (Int) -> Unit,
+) {
+    val dismissState = rememberSwipeToDismissBoxState(
+        positionalThreshold = { totalWidth -> totalWidth * 0.5f },
+        confirmValueChange = { dismissValue ->
+            when (dismissValue) {
+                SwipeToDismissBoxValue.EndToStart -> {
+                    onDeleteClick(reminder.id)
+                    false
+                }
+
+                else -> false
+            }
+        }
+    )
+
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = false,
+        backgroundContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFF44336))
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        },
+        content = {
+            ReminderItem(
+                reminder = reminder,
+                onCheckedChange = onCheckedChange,
+                onCardClick = onCardClick
+            )
+        }
+    )
+}
+
+@Composable
+fun ReminderItem(
+    reminder: Reminder,
+    onCardClick: (Reminder) -> Unit,
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .background(Palette.cardBackground)
+            .padding(16.dp)
+            .clickable{
+                onCardClick(reminder)
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            Text(
-                text = "Lembrete ${index.inc()}",
-                color = Color(0xFFE0E0E0),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-
             val frequencyText = when (reminder.frequency) {
                 DAILY -> "Todos os dias"
                 WEEKLY -> reminder.weekday.fullName
@@ -212,7 +266,14 @@ fun ReminderItem(
             )
 
             Text(
-                text = "$frequencyText ás $timeText",
+                text = timeText,
+                color = Palette.textPrimary,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = frequencyText,
                 color = Palette.textSecondary,
                 fontSize = 14.sp
             )
@@ -243,7 +304,9 @@ fun RemindersScreenPreview() {
             onBackPressed = {},
             onAddReminderClick = {},
             onSaveSettingsClick = {},
-            onUpdateReminder = {}
+            onUpdateReminder = {},
+            onEditReminder = {},
+            onDeleteReminder = {}
         )
     }
 }

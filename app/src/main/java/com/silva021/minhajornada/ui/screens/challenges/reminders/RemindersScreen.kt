@@ -12,7 +12,8 @@ fun RemindersScreen(
     viewModel: RemindersViewModel,
     challengeId: Int,
     onBackPressed: () -> Unit,
-    onAddReminderClick: () -> Unit
+    onAddReminderClick: () -> Unit,
+    onEditReminder: (Int) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -26,6 +27,7 @@ fun RemindersScreen(
         is RemindersUiState.Error -> ErrorScreen(
             onRetry = { viewModel.loadChallengeById(challengeId) },
         )
+
         is RemindersUiState.Success -> {
             RemindersContent(
                 challenge = state.challenge,
@@ -34,6 +36,12 @@ fun RemindersScreen(
                 onAddReminderClick = onAddReminderClick,
                 onUpdateReminder = { reminder ->
                     viewModel.updateReminder(reminder)
+                },
+                onDeleteReminder = { reminderId ->
+                    viewModel.deleteReminder(reminderId)
+                },
+                onEditReminder = {
+                    onEditReminder.invoke(it.id)
                 },
                 onSaveSettingsClick = {}
             )

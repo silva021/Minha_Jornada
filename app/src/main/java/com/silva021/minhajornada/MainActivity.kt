@@ -97,7 +97,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ChallengesScreen.route,
+                    startDestination = Routes.ProfileGraph.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -443,6 +443,12 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack(
                                         Routes.ActiveChallengesScreen.route,
                                         inclusive = false
+                                    )
+                                },
+                                onEditReminder = {
+                                    Routes.CreateReminderScreen.navigateToCreateReminderScreen(
+                                        navController,
+                                        it
                                     )
                                 },
                                 onAddReminderClick = {
