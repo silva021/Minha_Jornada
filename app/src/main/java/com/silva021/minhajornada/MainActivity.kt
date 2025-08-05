@@ -459,9 +459,22 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(Routes.CreateReminderScreen.route) {
+                        composable(
+                            route = Routes.CreateReminderScreen.route,
+                            arguments = listOf(
+                                navArgument(Routes.CreateReminderScreen.REMINDER_ID) {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) { backStackEntry ->
+                            val reminderId =
+                                backStackEntry.arguments?.getInt(
+                                    Routes.CreateReminderScreen.REMINDER_ID
+                                )
+
                             CreateReminderScreen(
                                 viewModel = remindersViewModel,
+                                reminderId = reminderId,
                                 onBackPressed = {
                                     navController.popBackStack(
                                         Routes.RemindersScreen.route,

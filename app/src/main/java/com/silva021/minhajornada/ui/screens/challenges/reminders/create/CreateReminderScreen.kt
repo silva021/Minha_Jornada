@@ -6,11 +6,12 @@ import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewMo
 @Composable
 fun CreateReminderScreen(
     viewModel: RemindersViewModel,
+    reminderId: Int? = null,
     onBackPressed: () -> Unit ,
 ) {
     CreateReminderContent(
         onBackPressed = onBackPressed,
-        existingReminder = null,
+        existingReminder = viewModel.getReminder(reminderId),
         onSave = {
             viewModel.addReminder(it).also {
                 onBackPressed()

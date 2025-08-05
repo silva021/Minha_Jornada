@@ -35,8 +35,6 @@ import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.components.WeekDayFilter
 import com.silva021.minhajornada.ui.theme.Palette
 import java.util.Calendar
-import java.util.UUID
-import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,8 +72,8 @@ fun CreateReminderContent(
             val currentTime = Calendar.getInstance()
 
             val timePickerState = rememberTimePickerState(
-                initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
-                initialMinute = currentTime.get(Calendar.MINUTE),
+                initialHour = existingReminder?.hour ?: currentTime.get(Calendar.HOUR_OF_DAY),
+                initialMinute = existingReminder?.minute ?:currentTime.get(Calendar.MINUTE),
                 is24Hour = true,
             )
 
@@ -144,7 +142,7 @@ fun CreateReminderContent(
                 onClick = {
                     onSave(
                         Reminder(
-                            id = UUID.randomUUID().toString(),
+                            id = 1,
                             frequency = reminderFrequencySelected,
                             isActive = true,
                             challengeId = "challengeId_placeholder",
