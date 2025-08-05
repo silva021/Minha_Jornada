@@ -2,7 +2,6 @@ package com.silva021.minhajornada.ui.screens.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +33,6 @@ import com.silva021.minhajornada.domain.extension.getYears
 import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.model.SettingsItem
 import com.silva021.minhajornada.domain.model.toDomain
-import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.profilesDTO
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
@@ -47,7 +45,8 @@ fun ProfileContent(
     profile: Profile,
     onEditProfileClick: () -> Unit,
     onHelpClick: () -> Unit,
-    onContactUsClick: () -> Unit
+    onContactUsClick: () -> Unit,
+    onRemindersClick: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -59,18 +58,12 @@ fun ProfileContent(
             ProfileHeader(profile)
         }
 
-//        item {
-//            StatsRow()
-//            Spacer(modifier = Modifier.height(24.dp))
-//        }
-
         item {
             SectionCard(
                 title = "Conta",
                 items = listOf(
                     SettingsItem("Editar Perfil", onClick = onEditProfileClick),
-                    SettingsItem("Notificações"),
-                    SettingsItem("Privacidade")
+                    SettingsItem("Lembretes", onClick = onRemindersClick),
                 )
             )
         }
@@ -140,35 +133,6 @@ fun ProfileHeader(profile: Profile) {
         )
     }
 }
-
-//@Composable
-//fun StatsRow() {
-//    Row(
-//        modifier = Modifier.fillMaxWidth(),
-//        horizontalArrangement = Arrangement.SpaceEvenly
-//    ) {
-//        StatItem(value = "12", label = "Desafios")
-//        StatItem(value = "3", label = "Seguindo")
-//        StatItem(value = "2", label = "Seguidores")
-//    }
-//}
-
-//@Composable
-//fun StatItem(value: String, label: String) {
-//    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//        Text(
-//            text = value,
-//            color = Palette.textPrimary,
-//            fontSize = 24.sp,
-//            fontWeight = FontWeight.Bold
-//        )
-//        Text(
-//            text = label,
-//            color = textSecondary,
-//            fontSize = 14.sp
-//        )
-//    }
-//}
 
 @Composable
 fun SectionCard(title: String, items: List<SettingsItem>) {
@@ -242,6 +206,7 @@ fun ProfileContentPreview() {
         profile = profilesDTO.first().toDomain(),
         onContactUsClick = {},
         onHelpClick = {},
-        onEditProfileClick = {}
+        onEditProfileClick = {},
+        onRemindersClick = {}
     )
 }

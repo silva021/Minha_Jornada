@@ -7,6 +7,7 @@ data class Challenge(
     val durationType: DurationType,
     val categoryType: CategoryType,
     val checkins: List<CheckIn>,
+    val reminders: List<Reminder>,
     val startDate: String,
     val owner: Profile
 )

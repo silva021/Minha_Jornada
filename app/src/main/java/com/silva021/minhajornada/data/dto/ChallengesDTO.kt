@@ -7,6 +7,7 @@ data class ChallengeDTO(
     val categoryType: String,
     val durationType: String,
     val checkins: List<CheckInDTO>? = null,
+    val reminders: List<ReminderDTO> = emptyList(),
     val startDate: String,
     val owner: ProfileDTO
 )

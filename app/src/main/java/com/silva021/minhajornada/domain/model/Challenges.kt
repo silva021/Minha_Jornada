@@ -16,6 +16,7 @@ fun ChallengeDTO.toDomain(): Challenge {
         checkins = this.checkins?.map { it.toDomain() } ?: emptyList(),
         categoryType = CategoryType.valueOf(this.categoryType.uppercase()),
         durationType = DurationType.valueOf(this.durationType.uppercase()),
+        reminders = this.reminders.map { it.toDomain() },
         owner = this.owner.toDomain()
     )
 }

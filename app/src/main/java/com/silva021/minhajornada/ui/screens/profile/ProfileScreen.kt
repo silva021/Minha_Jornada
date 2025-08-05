@@ -15,6 +15,7 @@ fun ProfileScreen(
     onContactUsClick: () -> Unit,
     onHelpClick: () -> Unit,
     onEditProfileClick: () -> Unit,
+    onRemindersClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -31,7 +32,8 @@ fun ProfileScreen(
             profile = state.profile,
             onEditProfileClick = onEditProfileClick,
             onContactUsClick = onContactUsClick,
-            onHelpClick = onHelpClick
+            onHelpClick = onHelpClick,
+            onRemindersClick = onRemindersClick
         )
     }
 }
