@@ -29,11 +29,11 @@ class RemindersViewModel(
         if (index != -1) _reminders[index] = updated
     }
 
-    fun deleteReminder(id: String) {
+    fun deleteReminder(id: Int) {
         _reminders.removeAll { it.id == id }
     }
 
-    fun getReminder(id: String): Reminder? {
+    fun getReminder(id: Int?): Reminder? {
         return _reminders.find { it.id == id }
     }
 
