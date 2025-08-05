@@ -209,7 +209,7 @@ fun CreateChallengesScreen(
                         reminders = if (notificationsEnabled)
                             listOf(
                                 Reminder(
-                                    id = Random.nextInt(0, 1000).toString(),
+                                    id = 1,
                                     hour = 8,
                                     minute = 0,
                                     isActive = true,
