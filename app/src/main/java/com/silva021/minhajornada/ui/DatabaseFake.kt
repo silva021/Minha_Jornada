@@ -9,9 +9,11 @@ import com.silva021.minhajornada.data.dto.PostDTO
 import com.silva021.minhajornada.data.dto.ProfileDTO
 import com.silva021.minhajornada.data.dto.ProfileStatsDTO
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
+import com.silva021.minhajornada.data.dto.ReminderDTO
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.CheckInStatus
 import com.silva021.minhajornada.domain.model.DurationType
+import com.silva021.minhajornada.domain.model.ReminderFrequency
 
 object DatabaseFake {
 
@@ -250,12 +252,12 @@ object DatabaseFake {
 
     val challengesDto = listOf(
         ChallengeDTO(
-            id = 2,
+            id = 1,
             title = "Correr 15 km",
             description = "Corra um total de 15 km em três dias.",
             categoryType = CategoryType.FITNESS.name,
             durationType = DurationType.THREE_DAYS.name,
-            startDate = "2025-08-02",
+            startDate = "2025-08-05",
             owner = profilesDTO.first(),
             checkins = listOf(
                 CheckInDTO(
@@ -270,10 +272,11 @@ object DatabaseFake {
                     note = "Mais 3 km hoje, mas senti um pouco de dor na perna. Vou alongar melhor amanhã.",
                     status = CheckInStatus.SUCCESS.name
                 )
-            )
+            ),
+            reminders = mockReminders.filter { it.challengeId == "1" }
         ),
         ChallengeDTO(
-            id = 5,
+            id = 2,
             title = "Beber 8 copos de água por dia",
             description = "Hábitos de hidratação saudáveis desenvolvidos.",
             categoryType = CategoryType.FITNESS.name,
@@ -323,7 +326,8 @@ object DatabaseFake {
                     note = "Último dia! Me sinto mais leve e com menos dor de cabeça.",
                     status = CheckInStatus.SUCCESS.name
                 )
-            )
+            ),
+            reminders = mockReminders.filter { it.challengeId == "2" }
         )
     )
 
@@ -389,5 +393,44 @@ val profilesDTO = listOf(
             following = 0,
             followers = 0
         )
+    )
+)
+
+val mockReminders = listOf(
+    ReminderDTO(
+        id = "reminder_1",
+        challengeId = "1",
+        hour = 10,
+        minute = 12,
+        weekday = "SATURDAY",
+        frequency = ReminderFrequency.DAILY.name,
+        isActive = true
+    ),
+    ReminderDTO(
+        id = "reminder_2",
+        challengeId = "1",
+        hour = 11,
+        minute = 12,
+        weekday = "MONDAY",
+        frequency = ReminderFrequency.WEEKLY.name,
+        isActive = true
+    ),
+    ReminderDTO(
+        id = "reminder_3",
+        challengeId = "1",
+        hour = 12,
+        minute = 12,
+        weekday = "SATURDAY",
+        frequency = ReminderFrequency.WEEKDAYS.name,
+        isActive = false
+    ),
+    ReminderDTO(
+        id = "reminder_4",
+        challengeId = "1",
+        hour = 13,
+        minute = 12,
+        weekday = "WEDNESDAY",
+        frequency = ReminderFrequency.WEEKENDS.name,
+        isActive = true
     )
 )
