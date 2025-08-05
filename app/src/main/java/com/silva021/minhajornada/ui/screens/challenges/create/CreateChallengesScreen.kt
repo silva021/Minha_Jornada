@@ -31,16 +31,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.domain.model.CategoryType
+import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.DurationType
+import com.silva021.minhajornada.domain.model.Reminder
+import com.silva021.minhajornada.domain.model.ReminderFrequency
+import com.silva021.minhajornada.domain.model.Weekday
+import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.components.CategoriesFilter
 import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.DurationFilter
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
+import com.silva021.minhajornada.ui.profilesDTO
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+import kotlin.random.Random
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,8 +57,7 @@ fun CreateChallengesScreen(
 ) {
     val title = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
-    val duration = remember { mutableStateOf("") }
-    val notificationsEnabled = remember { mutableStateOf(false) }
+    var notificationsEnabled by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
     var selectedDuration by remember { mutableStateOf(DurationType.THREE_DAYS) }
 
@@ -104,7 +110,7 @@ fun CreateChallengesScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Duração",
@@ -115,14 +121,13 @@ fun CreateChallengesScreen(
 
             DurationFilter(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .fillMaxWidth(),
                 selectedDuration = selectedDuration
             ) {
                 selectedDuration = it
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Categorias",
@@ -133,12 +138,13 @@ fun CreateChallengesScreen(
 
             CategoriesFilter(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .fillMaxWidth(),
                 selectedCategory = selectedCategory
             ) {
                 selectedCategory = it
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Configurações",
@@ -164,19 +170,19 @@ fun CreateChallengesScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Notificações",
+                            text = "Notificações Diárias",
                             color = textPrimary,
                             fontWeight = FontWeight.Medium
                         )
                         Text(
-                            text = if (notificationsEnabled.value) "Ativadas" else "Desativadas",
+                            text = if (notificationsEnabled) "Ativadas" else "Desativadas",
                             color = textSecondary,
                             fontSize = 14.sp
                         )
                     }
                     Switch(
-                        checked = notificationsEnabled.value,
-                        onCheckedChange = { notificationsEnabled.value = it },
+                        checked = notificationsEnabled,
+                        onCheckedChange = { notificationsEnabled = it },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = Palette.primaryColor,
@@ -190,10 +196,34 @@ fun CreateChallengesScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             PrimaryButton(
-                onClick = { /* Salvar alterações */ },
+                onClick = {
+                    Challenge(
+                        id = Random.nextInt(0, 1000),
+                        title = title.value,
+                        description = description.value,
+                        durationType = selectedDuration,
+                        categoryType = selectedCategory,
+                        checkins = listOf(),
+                        startDate = "",
+                        owner = profilesDTO.first().toDomain(),
+                        reminders = if (notificationsEnabled)
+                            listOf(
+                                Reminder(
+                                    id = Random.nextInt(0, 1000).toString(),
+                                    hour = 8,
+                                    minute = 0,
+                                    isActive = true,
+                                    challengeId = "",
+                                    weekday = Weekday.MONDAY,
+                                    frequency = ReminderFrequency.DAILY
+                                )
+                            )
+                        else emptyList(),
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 text = "Salvar Alterações",
-                enabled = title.value.isNotBlank() && description.value.isNotBlank() && duration.value.isNotBlank(),
+                enabled = title.value.isNotBlank() && description.value.isNotBlank(),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
