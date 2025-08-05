@@ -1,7 +1,7 @@
 package com.silva021.minhajornada.data.dto
 
 data class ReminderDTO(
-    val id: String,
+    val id: Int,
     val challengeId: String,
     val hour: Int,
     val minute: Int,

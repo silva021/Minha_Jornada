@@ -4,7 +4,7 @@ import com.silva021.minhajornada.data.dto.ReminderDTO
 import kotlin.Int
 
 data class Reminder(
-    val id: String,
+    val id: Int,
     val challengeId: String,
     val hour: Int,
     val minute: Int,
