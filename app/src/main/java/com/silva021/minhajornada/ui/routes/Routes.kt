@@ -144,4 +144,26 @@ sealed class Routes(val route: String) {
 
     object LoginScreen : Routes("login_screen")
     object WelcomeScreen : Routes("welcome_screen")
+
+    object CreateReminderScreen : Routes("create_reminder_screen") {
+        fun navigateToCreateReminderScreen(navController: NavController) {
+            navController.navigate(CreateReminderScreen.route)
+        }
+    }
+    object RemindersScreen : Routes("reminders_screen/{challengeId}") {
+        const val CHALLENGE_ID = "challengeId"
+
+        fun navigateToRemindersScreen(navController: NavController, challengeId: Int) {
+            navController.navigate(RemindersScreen.route.replace("{$CHALLENGE_ID}", challengeId.toString()))
+        }
+    }
+
+    object ProfileGraph: Routes("profile_graph")
+    object RemindersGraph: Routes("reminders_graph")
+
+    object ActiveChallengesScreen : Routes("active_challenges_screen") {
+        fun navigateToActiveChallengesScreen(navController: NavController) {
+            navController.navigate(ActiveChallengesScreen.route)
+        }
+    }
 }

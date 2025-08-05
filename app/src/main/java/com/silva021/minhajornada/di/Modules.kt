@@ -9,6 +9,7 @@ import com.silva021.minhajornada.data.repository.CommunitiesRepository
 import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
 import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
+import com.silva021.minhajornada.domain.usecases.GetChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommentsByPostIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
@@ -20,6 +21,7 @@ import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
+import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewModel
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsViewModel
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
@@ -41,10 +43,13 @@ val viewModelModule = module {
     viewModel { CommunityDetailsViewModel(get()) }
     viewModel { CommunityFeedViewModel(get(), get(), get()) }
     viewModel { CommunityPostViewModel(get(), get(), get()) }
+    viewModel { RemindersViewModel(get()) }
 }
 
 val usecasesModule = module {
     factory { GetChallengesUseCase(get()) }
+    factory { GetChallengeByIdUseCase(get()) }
+
     factory { GetMyProfileUseCase(get()) }
 
     factory { GetCommunitiesUseCase(get()) }

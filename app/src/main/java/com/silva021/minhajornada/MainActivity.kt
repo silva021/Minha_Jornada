@@ -39,9 +39,13 @@ import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.CommunityFeedScreen.COMMUNITY_ID
 import com.silva021.minhajornada.ui.routes.Routes.ExplorerChallengeDetailsScreen.CHALLENGE_ID
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
+import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesContent
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersScreen
+import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewModel
+import com.silva021.minhajornada.ui.screens.challenges.reminders.create.CreateReminderScreen
 import com.silva021.minhajornada.ui.screens.challenges.summary.ChallengeSummaryScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsScreen
@@ -89,6 +93,7 @@ class MainActivity : ComponentActivity() {
                 }
             ) { padding ->
                 val profileViewModel: ProfileViewModel = koinViewModel()
+                val remindersViewModel: RemindersViewModel = koinViewModel()
 
                 NavHost(
                     navController = navController,
@@ -136,6 +141,11 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onEditProfileClick = {
                                     Routes.EditProfileScreen.navigateToEditProfileScreen(
+                                        navController
+                                    )
+                                },
+                                onRemindersClick = {
+                                    Routes.ActiveChallengesScreen.navigateToActiveChallengesScreen(
                                         navController
                                     )
                                 }
@@ -395,7 +405,65 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             }
                         )
+                    }
 
+                    composable(Routes.ActiveChallengesScreen.route) {
+                        ActiveChallengesContent(
+                            challenges = DatabaseFake.challengesDto.map { it.toDomain() },
+                            onChallengeClick = {
+                                Routes.RemindersScreen.navigateToRemindersScreen(
+                                    navController,
+                                    it.id
+                                )
+                            },
+                            onBackPressed = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+                    navigation(
+                        startDestination = Routes.RemindersScreen.route,
+                        route = Routes.RemindersGraph.route
+                    ) {
+                        composable(
+                            route = Routes.RemindersScreen.route,
+                            arguments = listOf(
+                                navArgument(Routes.RemindersScreen.CHALLENGE_ID) {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
+                            val challengeId =
+                                it.arguments?.getInt(Routes.RemindersScreen.CHALLENGE_ID)
+                                    ?: 0
+                            RemindersScreen(
+                                viewModel = remindersViewModel,
+                                challengeId = challengeId,
+                                onBackPressed = {
+                                    navController.popBackStack(
+                                        Routes.ActiveChallengesScreen.route,
+                                        inclusive = false
+                                    )
+                                },
+                                onAddReminderClick = {
+                                    Routes.CreateReminderScreen.navigateToCreateReminderScreen(
+                                        navController
+                                    )
+                                }
+                            )
+                        }
+
+                        composable(Routes.CreateReminderScreen.route) {
+                            CreateReminderScreen(
+                                viewModel = remindersViewModel,
+                                onBackPressed = {
+                                    navController.popBackStack(
+                                        Routes.RemindersScreen.route,
+                                        inclusive = false
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
