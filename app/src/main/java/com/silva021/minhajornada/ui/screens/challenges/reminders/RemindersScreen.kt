@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.silva021.minhajornada.domain.model.Reminder
 import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 
@@ -14,6 +15,7 @@ fun RemindersScreen(
     onBackPressed: () -> Unit,
     onAddReminderClick: () -> Unit,
     onEditReminder: (Int) -> Unit,
+    onSaveReminders: (List<Reminder>) -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -43,7 +45,7 @@ fun RemindersScreen(
                 onEditReminder = {
                     onEditReminder.invoke(it.id)
                 },
-                onSaveSettingsClick = {}
+                onSaveReminders = onSaveReminders
             )
         }
     }

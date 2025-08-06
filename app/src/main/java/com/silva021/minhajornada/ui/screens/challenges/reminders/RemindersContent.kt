@@ -28,7 +28,6 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,7 +60,7 @@ fun RemindersContent(
     onEditReminder: (Reminder) -> Unit,
     onUpdateReminder: (Reminder) -> Unit,
     onDeleteReminder: (Int) -> Unit,
-    onSaveSettingsClick: () -> Unit,
+    onSaveReminders: (List<Reminder>) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -174,7 +173,7 @@ fun RemindersContent(
                 PrimaryButton(
                     text = "Salvar Configurações",
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { /* Salvar configurações */ },
+                    onClick = { onSaveReminders.invoke(reminders) },
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -303,7 +302,7 @@ fun RemindersScreenPreview() {
             reminders = mockReminders.map { it.toDomain() },
             onBackPressed = {},
             onAddReminderClick = {},
-            onSaveSettingsClick = {},
+            onSaveReminders = {},
             onUpdateReminder = {},
             onEditReminder = {},
             onDeleteReminder = {}
