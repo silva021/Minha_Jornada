@@ -170,7 +170,7 @@ fun CreateChallengesScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Notificações Diárias",
+                            text = "Lembretes Diárias",
                             color = textPrimary,
                             fontWeight = FontWeight.Medium
                         )
