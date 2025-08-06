@@ -1,4 +1,4 @@
-package com.silva021.minhajornada
+package com.silva021.minhajornada.application
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -455,6 +455,9 @@ class MainActivity : ComponentActivity() {
                                     Routes.CreateReminderScreen.navigateToCreateReminderScreen(
                                         navController
                                     )
+                                },
+                                onSaveReminders = { reminders ->
+
                                 }
                             )
                         }

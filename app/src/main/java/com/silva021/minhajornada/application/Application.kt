@@ -1,4 +1,4 @@
-package com.silva021.minhajornada
+package com.silva021.minhajornada.application
 
 import android.app.Application
 import com.silva021.minhajornada.di.repositoryModule
