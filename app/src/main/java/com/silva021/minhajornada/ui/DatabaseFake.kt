@@ -1,19 +1,22 @@
 package com.silva021.minhajornada.ui
 
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.data.dto.ChallengeDTO
-import com.silva021.minhajornada.data.dto.CheckInDTO
 import com.silva021.minhajornada.data.dto.CommentDTO
 import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
 import com.silva021.minhajornada.data.dto.PostDTO
 import com.silva021.minhajornada.data.dto.ProfileDTO
-import com.silva021.minhajornada.data.dto.ProfileStatsDTO
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 import com.silva021.minhajornada.data.dto.ReminderDTO
 import com.silva021.minhajornada.domain.model.CategoryType
+import com.silva021.minhajornada.domain.model.Challenge
+import com.silva021.minhajornada.domain.model.CheckIn
 import com.silva021.minhajornada.domain.model.CheckInStatus
 import com.silva021.minhajornada.domain.model.DurationType
+import com.silva021.minhajornada.domain.model.Reminder
 import com.silva021.minhajornada.domain.model.ReminderFrequency
+import com.silva021.minhajornada.domain.model.Weekday
 
 object DatabaseFake {
 
@@ -250,81 +253,79 @@ object DatabaseFake {
         )
     )
 
-    val challengesDto = listOf(
-        ChallengeDTO(
-            id = 1,
+    val challenges = listOf(
+        Challenge(
+            id = "1",
             title = "Correr 15 km",
             description = "Corra um total de 15 km em três dias.",
-            categoryType = CategoryType.FITNESS.name,
-            durationType = DurationType.THREE_DAYS.name,
-            startDate = "2025-08-05",
-            owner = profilesDTO.first(),
+            categoryType = CategoryType.FITNESS,
+            durationType = DurationType.THREE_DAYS,
+            startDate = Timestamp.now(),
             checkins = listOf(
-                CheckInDTO(
+                CheckIn(
                     day = 1,
                     date = "2025-07-10",
                     note = "Corri 3 km no parque hoje cedo. Ritmo bom, mas ainda estou voltando ao hábito.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 2,
                     date = "2025-07-11",
                     note = "Mais 3 km hoje, mas senti um pouco de dor na perna. Vou alongar melhor amanhã.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 )
             ),
             reminders = mockReminders.filter { it.challengeId == "1" }
         ),
-        ChallengeDTO(
-            id = 2,
+        Challenge(
+            id = "2",
             title = "Beber 8 copos de água por dia",
             description = "Hábitos de hidratação saudáveis desenvolvidos.",
-            categoryType = CategoryType.FITNESS.name,
-            durationType = DurationType.SEVEN_DAYS.name,
-            startDate = "2023-06-20",
-            owner = profilesDTO.first(),
+            categoryType = CategoryType.FITNESS,
+            durationType = DurationType.SEVEN_DAYS,
+            startDate = Timestamp.now(),
             checkins = listOf(
-                CheckInDTO(
+                CheckIn(
                     day = 1,
                     date = "2023-06-20",
                     note = "Comecei bem, bebi os 8 copos. Usei um app pra lembrar.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 2,
                     date = "2023-06-21",
                     note = "Esqueci de manhã, mas recuperei à tarde. Completei!",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 3,
                     date = "2023-06-22",
                     note = "Já estou com mais sede natural, o corpo tá pedindo água.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 4,
                     date = "2023-06-23",
                     note = "Fácil hoje. Levei uma garrafa de 2L comigo.",
-                    status = CheckInStatus.FAILURE.name
+                    status = CheckInStatus.FAILURE
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 5,
                     date = "2023-06-24",
                     note = "Tá virando rotina. Só preciso lembrar antes de dormir.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 6,
                     date = "2023-06-25",
                     note = "Quase esqueci no meio do dia, mas deu tempo. Água salva!",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 ),
-                CheckInDTO(
+                CheckIn(
                     day = 7,
                     date = "2023-06-26",
                     note = "Último dia! Me sinto mais leve e com menos dor de cabeça.",
-                    status = CheckInStatus.SUCCESS.name
+                    status = CheckInStatus.SUCCESS
                 )
             ),
             reminders = mockReminders.filter { it.challengeId == "2" }
@@ -385,67 +386,67 @@ val profilesDTO = listOf(
 )
 
 val mockReminders = listOf(
-    ReminderDTO(
+    Reminder(
         id = 1,
         challengeId = "1",
         hour = 10,
         minute = 12,
-        weekday = "SATURDAY",
-        frequency = ReminderFrequency.DAILY.name,
+        weekday = Weekday.SATURDAY,
+        frequency = ReminderFrequency.DAILY,
         isActive = true
     ),
-    ReminderDTO(
+    Reminder(
         id = 2,
         challengeId = "1",
         hour = 11,
         minute = 12,
-        weekday = "MONDAY",
-        frequency = ReminderFrequency.WEEKLY.name,
+        weekday = Weekday.MONDAY,
+        frequency = ReminderFrequency.WEEKLY,
         isActive = true
     ),
-    ReminderDTO(
+    Reminder(
         id = 3,
         challengeId = "1",
         hour = 12,
         minute = 12,
-        weekday = "SATURDAY",
-        frequency = ReminderFrequency.WEEKDAYS.name,
+        weekday = Weekday.SATURDAY,
+        frequency = ReminderFrequency.WEEKDAYS,
         isActive = false
     ),
-    ReminderDTO(
+    Reminder(
         id = 4,
         challengeId = "1",
         hour = 13,
         minute = 12,
-        weekday = "WEDNESDAY",
-        frequency = ReminderFrequency.WEEKENDS.name,
+        weekday = Weekday.WEDNESDAY,
+        frequency = ReminderFrequency.WEEKENDS,
         isActive = true
     ),
-    ReminderDTO(
+    Reminder(
         id = 5,
         challengeId = "1",
         hour = 14,
         minute = 12,
-        weekday = "MONDAY",
-        frequency = ReminderFrequency.WEEKLY.name,
+        weekday = Weekday.MONDAY,
+        frequency = ReminderFrequency.WEEKLY,
         isActive = true
     ),
-    ReminderDTO(
+    Reminder(
         id = 6,
         challengeId = "1",
         hour = 15,
         minute = 12,
-        weekday = "SATURDAY",
-        frequency = ReminderFrequency.WEEKDAYS.name,
+        weekday = Weekday.SATURDAY,
+        frequency = ReminderFrequency.WEEKDAYS,
         isActive = false
     ),
-    ReminderDTO(
+    Reminder(
         id = 7,
         challengeId = "1",
         hour = 16,
         minute = 12,
-        weekday = "WEDNESDAY",
-        frequency = ReminderFrequency.WEEKENDS.name,
+        weekday = Weekday.WEDNESDAY,
+        frequency = ReminderFrequency.WEEKENDS,
         isActive = true
     )
 ).take(3)
