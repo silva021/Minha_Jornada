@@ -364,11 +364,7 @@ val profilesDTO = listOf(
         username = "silva021",
         profilePictureUrl = "https://media.licdn.com/dms/image/v2/D4D03AQGHu5O7K6BgOA/profile-displayphoto-shrink_800_800/B4DZYRGyL2GwAk-/0/1744043714075?e=1756944000&v=beta&t=1a1Ej8JUBG-Awxu-qDbAXTUjCk3u5bPOGQ3rTsnPEtE",
         createdAt = "2025-03-02",
-        stats = ProfileStatsDTO(
-            challenges = 3,
-            following = 0,
-            followers = 0
-        )
+        email = "lucas@gmail.com"
     ),
     ProfileDTO(
         id = "u123",
@@ -376,11 +372,7 @@ val profilesDTO = listOf(
         name = "Sarah Miller",
         username = "SarahMIMI",
         createdAt = "2023-03-02",
-        stats = ProfileStatsDTO(
-            challenges = 3,
-            following = 0,
-            followers = 0
-        )
+        email = "sara@gmail.com"
     ),
     ProfileDTO(
         id = "u123",
@@ -388,11 +380,7 @@ val profilesDTO = listOf(
         username = "MarkTThompson",
         profilePictureUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD38031a9CUlzl_YS565weCOqjozwjPs_D8QhTpnQNCNbreXCZXtJmMNmIYPu0l8vmmXMGS3EMcPwJG-tlMUr_-Y0y3qxdtsG0HyurbO0MBouSoZDdD9dX7QgSFqDi5nyeq3Hrioaln2cG345utbSVfOeEuzmpREIlRnlAJXNB_VTsajQcFh-KuG4hX_vWA1CaeRpIXU-1j-ZH20kzY2vxMbAvV1mpjvFXMgD82P80FTne_XTXi1yd1pVPBpE7GXZ-zHFKHnG1yHqo",
         createdAt = "2024-03-02",
-        stats = ProfileStatsDTO(
-            challenges = 3,
-            following = 0,
-            followers = 0
-        )
+        email = "mark@gmail.com"
     )
 )
 
