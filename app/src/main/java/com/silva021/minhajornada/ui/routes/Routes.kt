@@ -22,12 +22,9 @@ sealed class Routes(val route: String) {
 
     object ChallengesScreen : Routes("challenges_screen") {
         fun navigateToChallengesScreen(navController: NavController) {
-            navController.navigate(ChallengesScreen.route) {
-                popUpTo(navController.graph.startDestinationId) {
-                    saveState = true
-                }
+            navController.navigate(ChallengesScreen.route){
                 launchSingleTop = true
-                restoreState = true
+                popUpTo(Routes.ChallengesScreen.route) { inclusive = true }
             }
         }
     }
