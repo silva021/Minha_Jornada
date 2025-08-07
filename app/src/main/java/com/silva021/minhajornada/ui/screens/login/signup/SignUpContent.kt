@@ -1,4 +1,4 @@
-package com.silva021.minhajornada.ui.screens.login
+package com.silva021.minhajornada.ui.screens.login.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.R
+import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
@@ -40,17 +40,20 @@ import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 import com.silva021.minhajornada.ui.utils.fromHtml
 import com.silva021.minhajornada.ui.utils.isValidEmail
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(
+fun SignUpContent(
+    errorMessage: String? = null,
     onBackPressed: () -> Unit,
+    onRegister: (Profile, String) -> Unit
 ) {
-    var fullName by remember { mutableStateOf("") }
-    var userName by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("Lucas Silva") }
+    var userName by remember { mutableStateOf("silva021") }
+    var email by remember { mutableStateOf("lucasssilva021@gmail.com") }
+    var password by remember { mutableStateOf("123456789") }
+    var confirmPassword by remember { mutableStateOf("123456789") }
 
     Column(
         modifier = Modifier
@@ -135,6 +138,18 @@ fun SignUpScreen(
                     visualTransformation = PasswordVisualTransformation()
                 )
 
+                errorMessage?.let {
+                    Text(
+                        text = it,
+                        color = Color.Red,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                    )
+                }
+
                 Text(
                     text = "Ao se cadastrar, você concorda com nossos <b>Termos de Serviço</b> e <b>Política de Privacidade.</b>".fromHtml(),
                     color = textSecondary,
@@ -144,7 +159,19 @@ fun SignUpScreen(
                 )
 
                 PrimaryButton(
-                    onClick = { /* Cadastrar */ },
+                    onClick = {
+                        onRegister.invoke(
+                            Profile(
+                                id = "",
+                                name = fullName,
+                                email = email,
+                                username = userName,
+                                profilePictureUrl = "",
+                                createdAt = Date().toString()
+                            ),
+                            password
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
                     text = "Cadastrar",
@@ -205,10 +232,11 @@ fun SignUpScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpScreenPreview() {
+fun SignUpContentPreview() {
     MaterialTheme {
-        SignUpScreen(
-            onBackPressed = { /* No action */ }
+        SignUpContent(
+            onBackPressed = { /* No action */ },
+            onRegister = { _,_ -> /* No action */ }
         )
     }
 }

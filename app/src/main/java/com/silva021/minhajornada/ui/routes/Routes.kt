@@ -142,7 +142,11 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object LoginScreen : Routes("login_screen")
+    object LoginScreen : Routes("login_screen") {
+        fun navigateToLoginScreen(navController: NavController) {
+            navController.navigate(LoginScreen.route)
+        }
+    }
     object WelcomeScreen : Routes("welcome_screen")
 
     object CreateReminderScreen : Routes("create_reminder_screen/{reminderId}") {
