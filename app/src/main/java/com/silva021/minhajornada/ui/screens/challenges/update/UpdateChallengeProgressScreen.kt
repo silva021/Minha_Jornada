@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.domain.model.CheckInStatus
@@ -84,11 +86,13 @@ fun UpdateChallengeProgressScreen(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Text(
-                    text = "Criado(a) por " + challenge.owner.name,
-                    color = textSecondary,
-                    fontSize = 14.sp
-                )
+                Firebase.auth.currentUser?.displayName?.let {
+                    Text(
+                        text = "Criado(a) por $it",
+                        color = textSecondary,
+                        fontSize = 14.sp
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
