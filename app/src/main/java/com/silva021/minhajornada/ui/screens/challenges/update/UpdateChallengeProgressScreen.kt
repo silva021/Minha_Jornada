@@ -189,7 +189,7 @@ fun UpdateChallengeProgressScreen(
 @Composable
 fun UpdateChallengeProgressScreenPreview() {
     UpdateChallengeProgressScreen(
-        challenge = DatabaseFake.challengesDto[0].toDomain(),
+        challenge = DatabaseFake.challenges.first(),
         onBackPressed = {},
         onCompletedDay = {},
         onCompleteChallenge = {}
