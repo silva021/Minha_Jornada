@@ -18,6 +18,7 @@ class SignUpViewModel(
 
     fun register(profile: Profile, password: String) {
         viewModelScope.launch {
+            _uiState.value = RegisterScreenState.Loading
             createProfile.invoke(
                 profile = profile,
                 password = password
