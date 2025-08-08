@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.domain.model.Challenge
+import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.domain.model.Reminder
 import com.silva021.minhajornada.domain.model.ReminderFrequency.DAILY
 import com.silva021.minhajornada.domain.model.ReminderFrequency.WEEKDAYS
@@ -54,13 +55,11 @@ import java.util.Locale
 @Composable
 fun RemindersContent(
     challenge: Challenge,
-    reminders: List<Reminder>,
     onBackPressed: () -> Unit,
     onAddReminderClick: () -> Unit,
     onEditReminder: (Reminder) -> Unit,
     onUpdateReminder: (Reminder) -> Unit,
-    onDeleteReminder: (Int) -> Unit,
-    onSaveReminders: (List<Reminder>) -> Unit,
+    onDeleteReminder: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -74,51 +73,7 @@ fun RemindersContent(
         Column(
             modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
         ) {
-            Text(
-                text = "Desafio",
-                color = Palette.textPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Palette.cardBackground, RoundedCornerShape(16.dp))
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(56.dp)
-                        .background(Palette.cardBackground, RoundedCornerShape(12.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.FitnessCenter,
-                        contentDescription = "Desafio de Fitness",
-                        tint = Color(0xFF50D22C),
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-
-                Column {
-                    Text(
-                        text = challenge.title,
-                        color = Palette.textPrimary,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-                    Text(
-                        text = challenge.description,
-                        color = Palette.textSecondary,
-                        fontSize = 14.sp
-                    )
-                }
-            }
+            ChallengeHeader(challenge)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -148,36 +103,75 @@ fun RemindersContent(
 
                 LazyColumn(
                     modifier = Modifier
-                        .weight(1f)
+//                        .weight(1f)
                         .background(Palette.cardBackground, RoundedCornerShape(16.dp))
                         .clip(RoundedCornerShape(16.dp))
                 ) {
                     items(
-                        items = reminders,
+                        items = challenge.reminders,
                         key = { reminder -> reminder.id }
                     ) { reminder ->
                         Log.d("lucas-debug", "Rendering reminder: ${reminder}")
                         SwipeableReminderItem(
                             reminder = reminder,
                             onCardClick = { reminder -> onEditReminder(reminder) },
-                            onCheckedChange = { isChecked -> onUpdateReminder(reminder.copy(isActive = isChecked)) },
+                            onCheckedChange = { isChecked -> onUpdateReminder(reminder.copy(active = isChecked)) },
                             onDeleteClick = {
                                 onDeleteReminder.invoke(it)
                             },
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                PrimaryButton(
-                    text = "Salvar Configurações",
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { onSaveReminders.invoke(reminders) },
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
             }
+        }
+    }
+}
+
+@Composable
+private fun ChallengeHeader(challenge: Challenge) {
+    Text(
+        text = "Desafio",
+        color = Palette.textPrimary,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(bottom = 16.dp)
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Palette.cardBackground, RoundedCornerShape(16.dp))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(56.dp)
+                .background(Palette.cardBackground, RoundedCornerShape(12.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.FitnessCenter,
+                contentDescription = "Desafio de Fitness",
+                tint = Color(0xFF50D22C),
+                modifier = Modifier.size(32.dp)
+            )
+        }
+
+        Column {
+            Text(
+                text = challenge.title,
+                color = Palette.textPrimary,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Text(
+                text = challenge.description,
+                color = Palette.textSecondary,
+                fontSize = 14.sp
+            )
         }
     }
 }
@@ -187,7 +181,7 @@ fun SwipeableReminderItem(
     reminder: Reminder,
     onCardClick: (Reminder) -> Unit,
     onCheckedChange: (Boolean) -> Unit,
-    onDeleteClick: (Int) -> Unit,
+    onDeleteClick: (String) -> Unit,
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { totalWidth -> totalWidth * 0.5f },
@@ -279,7 +273,7 @@ fun ReminderItem(
         }
 
         Switch(
-            checked = reminder.isActive,
+            checked = reminder.active,
             onCheckedChange = { isChecked ->
                 onCheckedChange.invoke(isChecked)
             },
@@ -298,11 +292,9 @@ fun ReminderItem(
 fun RemindersScreenPreview() {
     MaterialTheme {
         RemindersContent(
-            challenge = DatabaseFake.challengesDto.first().toDomain(),
-            reminders = mockReminders.map { it.toDomain() },
+            challenge = DatabaseFake.challenges.first(),
             onBackPressed = {},
             onAddReminderClick = {},
-            onSaveReminders = {},
             onUpdateReminder = {},
             onEditReminder = {},
             onDeleteReminder = {}
