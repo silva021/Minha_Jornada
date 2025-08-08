@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)

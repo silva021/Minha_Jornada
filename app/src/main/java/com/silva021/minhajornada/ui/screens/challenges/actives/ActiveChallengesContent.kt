@@ -162,7 +162,7 @@ fun AllActiveChallengesContentPreview() {
         ActiveChallengesContent(
             onBackPressed = {},
             onChallengeClick = {},
-            challenges = DatabaseFake.challengesDto.map { it.toDomain() }
+            challenges = DatabaseFake.challenges
         )
     }
 }
