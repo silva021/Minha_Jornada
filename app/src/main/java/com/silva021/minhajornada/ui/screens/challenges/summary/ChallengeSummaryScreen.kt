@@ -202,7 +202,7 @@ fun FinalThoughts() {
 @Preview
 fun ChallengeSummaryScreenPreview() {
     ChallengeSummaryScreen(
-        challenge = DatabaseFake.challengesDto.first().toDomain(),
+        challenge = DatabaseFake.challenges.first(),
         onBackPressed = {}
     )
 }

@@ -36,12 +36,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.domain.extension.calculateChallengeDaysLeft
 import com.silva021.minhajornada.domain.extension.calculateChallengeEndDate
 import com.silva021.minhajornada.domain.extension.calculateChallengeProgress
+import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.domain.model.toDomain
-import com.silva021.minhajornada.ui.DatabaseFake.challengesDto
+import com.silva021.minhajornada.ui.DatabaseFake.challenges
 import com.silva021.minhajornada.ui.theme.Palette
 
 @Composable
@@ -85,29 +85,44 @@ fun ChallengesContent(
             }
         }
 
-        items(challenges.actives) {
-            ChallengeItem(
-                icon = Icons.Default.LocalFireDepartment,
-                title = it.title,
-                progress = it.calculateChallengeProgress(),
-                daysLeft = it.calculateChallengeDaysLeft(),
-                onClick = {
-                    onUpdateChallengeProgress()
-                }
-            )
-        }
+        if (challenges.actives.isNotEmpty()) {
+            items(challenges.actives) {
+                ChallengeItem(
+                    icon = Icons.Default.LocalFireDepartment,
+                    title = it.title,
+                    progress = it.calculateChallengeProgress(),
+                    daysLeft = it.calculateChallengeDaysLeft(),
+                    onClick = {
+                        onUpdateChallengeProgress()
+                    }
+                )
+            }
 
-        item {
-            Text(
-                text = "Continue assim, você está indo bem!",
-                color = Palette.textSecondary,
-                fontSize = 14.sp,
-                fontStyle = FontStyle.Italic,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                textAlign = TextAlign.Center
-            )
+            item {
+                Text(
+                    text = "Continue assim, você está indo bem!",
+                    color = Palette.textSecondary,
+                    fontSize = 14.sp,
+                    fontStyle = FontStyle.Italic,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+        } else {
+            item {
+                Text(
+                    text = "Você ainda não tem desafios ativos.",
+                    color = Palette.textSecondary,
+                    fontSize = 14.sp,
+                    fontStyle = FontStyle.Italic,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
 
         item {
@@ -120,14 +135,29 @@ fun ChallengesContent(
             )
         }
 
-        items(challenges.completed) {
-            CompletedChallengeItem(
-                title = it.title,
-                completionDate = "Concluído em ${it.calculateChallengeEndDate()}",
-                onClick = {
-                    onSummaryChallengeClick()
-                }
-            )
+        if (challenges.completed.isNotEmpty()) {
+            items(challenges.completed) {
+                CompletedChallengeItem(
+                    title = it.title,
+                    completionDate = "Concluído em ${it.calculateChallengeEndDate()}",
+                    onClick = {
+                        onSummaryChallengeClick()
+                    }
+                )
+            }
+        } else {
+            item {
+                Text(
+                    text = "Você ainda não tem desafios concluídos.",
+                    color = Palette.textSecondary,
+                    fontSize = 14.sp,
+                    fontStyle = FontStyle.Italic,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
@@ -271,10 +301,10 @@ fun ChallengesContentPreview() {
     ChallengesContent(
         challenges = Challenges(
             actives = listOf(
-                challengesDto.last().toDomain(),
+                challenges.last()
             ),
             completed = listOf(
-                challengesDto.first().toDomain()
+                challenges.first()
             )
         ),
         onCreateChallenge = {},
