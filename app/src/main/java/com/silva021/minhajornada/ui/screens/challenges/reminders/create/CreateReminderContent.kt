@@ -35,6 +35,7 @@ import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.components.WeekDayFilter
 import com.silva021.minhajornada.ui.theme.Palette
 import java.util.Calendar
+import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,15 +142,23 @@ fun CreateReminderContent(
                 text = "Salvar",
                 onClick = {
                     onSave(
-                        Reminder(
-                            id = 1,
-                            frequency = reminderFrequencySelected,
-                            isActive = true,
-                            challengeId = "challengeId_placeholder",
-                            weekday = Weekday.SATURDAY,
-                            hour = timePickerState.hour,
-                            minute = timePickerState.minute
-                        )
+                        if (existingReminder == null) {
+                            Reminder(
+                                id = UUID.randomUUID().toString(),
+                                frequency = reminderFrequencySelected,
+                                active = true,
+                                weekday = weekdaySelected,
+                                hour = timePickerState.hour,
+                                minute = timePickerState.minute
+                            )
+                        } else {
+                            existingReminder.copy(
+                                frequency = reminderFrequencySelected,
+                                weekday = weekdaySelected,
+                                hour = timePickerState.hour,
+                                minute = timePickerState.minute
+                            )
+                        }
                     )
                 }
             )
