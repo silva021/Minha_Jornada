@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 object FireStoreHelper {
 
-    private val db by lazy { FirebaseFirestore.getInstance() }
+    val db by lazy { FirebaseFirestore.getInstance() }
 
     private fun getCollection(collectionName: String): CollectionReference {
         return db.collection(collectionName)
