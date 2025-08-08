@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -26,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.DurationType
@@ -47,16 +45,20 @@ import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+import okhttp3.internal.http.toHttpDateString
+import java.util.Date
+import java.util.UUID
 import kotlin.random.Random
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateChallengesScreen(
+fun CreateChallengeContent(
     onBackPressed: () -> Unit,
+    onSave: (Challenge) -> Unit,
 ) {
-    val title = remember { mutableStateOf("") }
-    val description = remember { mutableStateOf("") }
+    val title = remember { mutableStateOf("teste") }
+    val description = remember { mutableStateOf("teste") }
     var notificationsEnabled by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
     var selectedDuration by remember { mutableStateOf(DurationType.THREE_DAYS) }
@@ -197,28 +199,27 @@ fun CreateChallengesScreen(
 
             PrimaryButton(
                 onClick = {
-                    Challenge(
-                        id = Random.nextInt(0, 1000),
-                        title = title.value,
-                        description = description.value,
-                        durationType = selectedDuration,
-                        categoryType = selectedCategory,
-                        checkins = listOf(),
-                        startDate = "",
-                        owner = profilesDTO.first().toDomain(),
-                        reminders = if (notificationsEnabled)
-                            listOf(
-                                Reminder(
-                                    id = 1,
-                                    hour = 8,
-                                    minute = 0,
-                                    isActive = true,
-                                    challengeId = "",
-                                    weekday = Weekday.MONDAY,
-                                    frequency = ReminderFrequency.DAILY
+                    onSave.invoke(
+                        Challenge(
+                            title = title.value,
+                            description = description.value,
+                            durationType = selectedDuration,
+                            categoryType = selectedCategory,
+                            checkins = listOf(),
+                            startDate = Timestamp.now(),
+                            reminders = if (notificationsEnabled)
+                                listOf(
+                                    Reminder(
+                                        id = UUID.randomUUID().toString(),
+                                        hour = 8,
+                                        minute = 0,
+                                        active = true,
+                                        weekday = Weekday.MONDAY,
+                                        frequency = ReminderFrequency.DAILY
+                                    )
                                 )
-                            )
-                        else emptyList(),
+                            else emptyList(),
+                        )
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -233,8 +234,9 @@ fun CreateChallengesScreen(
 
 @Preview
 @Composable
-fun CreateChallengesScreenPreview() {
-    CreateChallengesScreen(
-        onBackPressed = {}
+fun CreateChallengeContentPreview() {
+    CreateChallengeContent(
+        onBackPressed = {},
+        onSave = {}
     )
 }
