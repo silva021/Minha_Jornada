@@ -18,6 +18,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -30,6 +31,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake
@@ -40,8 +44,9 @@ import com.silva021.minhajornada.ui.routes.Routes.CommunityFeedScreen.COMMUNITY_
 import com.silva021.minhajornada.ui.routes.Routes.ExplorerChallengeDetailsScreen.CHALLENGE_ID
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
 import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesContent
+import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
-import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengesScreen
+import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengeScreen
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersScreen
 import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewModel
@@ -58,7 +63,7 @@ import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerScreen
 import com.silva021.minhajornada.ui.screens.feedback.FeedbackScreen
 import com.silva021.minhajornada.ui.screens.help.HelpScreen
 import com.silva021.minhajornada.ui.screens.login.LoginScreen
-import com.silva021.minhajornada.ui.screens.login.SignUpScreen
+import com.silva021.minhajornada.ui.screens.login.signup.SignUpScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileScreen
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
 import com.silva021.minhajornada.ui.screens.profile.edit.EditProfileScreen
@@ -74,9 +79,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+            val systemUiController = rememberSystemUiController()
             val currentRoute = currentRoute(navController)
 
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.Transparent,
+                    darkIcons = false
+                )
+            }
             Scaffold(
+                containerColor = Palette.backgroundColor,
                 bottomBar = {
                     if (currentRoute in listOf(
                             Routes.ChallengesScreen.route,
@@ -93,34 +106,19 @@ class MainActivity : ComponentActivity() {
                 }
             ) { padding ->
                 val profileViewModel: ProfileViewModel = koinViewModel()
-                val remindersViewModel: RemindersViewModel = koinViewModel()
-
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.ProfileGraph.route,
+                    startDestination =
+                        if (Firebase.auth.currentUser != null)
+                            Routes.ChallengesScreen.route
+                        else
+                            Routes.WelcomeScreen.route,
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
                         WelcomeScreen(
                             onGetStartedClicked = {
-                                Routes.ChallengesScreen.navigateToChallengesScreen(navController)
-                            }
-                        )
-                    }
-                    composable(Routes.ChallengesScreen.route) {
-                        ChallengesScreen(
-                            onCreateChallenge = {
-                                Routes.CreateChallengesScreen.navigateToCreateChallengesScreen(
-                                    navController
-                                )
-                            },
-                            onUpdateChallengeProgress = {
-                                navigateToUpdateChallengeProgressScreen(navController)
-                            },
-                            onSummaryChallengeClick = {
-                                Routes.ChallengeSummaryScreen.navigateToChallengeSummaryScreen(
-                                    navController
-                                )
+                                Routes.LoginScreen.navigateToLoginScreen(navController)
                             }
                         )
                     }
@@ -168,19 +166,38 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
+                    composable(
+                        Routes.ChallengesScreen.route,
+                    ) {
+                        ChallengesScreen(
+                            onCreateChallenge = {
+                                Routes.CreateChallengesScreen.navigateToCreateChallengesScreen(
+                                    navController
+                                )
+                            },
+                            onUpdateChallengeProgress = {
+                                navigateToUpdateChallengeProgressScreen(navController)
+                            },
+                            onSummaryChallengeClick = {
+                                Routes.ChallengeSummaryScreen.navigateToChallengeSummaryScreen(
+                                    navController
+                                )
+                            }
+                        )
+                    }
+
                     composable(Routes.CreateChallengesScreen.route) {
-                        CreateChallengesScreen(
+                        CreateChallengeScreen(
                             onBackPressed = {
-                                navController.popBackStack(
-                                    Routes.ChallengesScreen.route,
-                                    inclusive = false
+                                Routes.ChallengesScreen.navigateToChallengesScreen(
+                                    navController
                                 )
                             }
                         )
                     }
                     composable(Routes.UpdateChallengeProgressScreen.route) {
                         UpdateChallengeProgressScreen(
-                            challenge = DatabaseFake.challengesDto.first().toDomain(),
+                            challenge = DatabaseFake.challenges.first(),
                             onCompleteChallenge = {
                                 Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
                                     navController,
@@ -269,7 +286,8 @@ class MainActivity : ComponentActivity() {
                         )
                     ) { backStackEntry ->
                         val communityId =
-                            backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID).orEmpty()
+                            backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID)
+                                .orEmpty()
                         CommunityDetailsScreen(
                             communityId = communityId,
                             onBackPressed = {
@@ -336,7 +354,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.ChallengeSummaryScreen.route) {
                         ChallengeSummaryScreen(
-                            challenge = DatabaseFake.challengesDto.last().toDomain(),
+                            challenge = DatabaseFake.challenges.last(),
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ChallengesScreen.route,
@@ -368,6 +386,9 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.SignUpScreen.route) {
                         SignUpScreen(
+                            onNavigateChallenge = {
+                                Routes.ChallengesScreen.navigateToChallengesScreen(navController)
+                            },
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.LoginScreen.route,
@@ -379,7 +400,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.LoginScreen.route) {
                         LoginScreen(
-                            onLogin = {
+                            onLoginSuccess = {
                                 Routes.ChallengesScreen.navigateToChallengesScreen(navController)
                             },
                             onSignUp = {
@@ -408,8 +429,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(Routes.ActiveChallengesScreen.route) {
-                        ActiveChallengesContent(
-                            challenges = DatabaseFake.challengesDto.map { it.toDomain() },
+                        ActiveChallengesScreen(
                             onChallengeClick = {
                                 Routes.RemindersScreen.navigateToRemindersScreen(
                                     navController,
@@ -429,36 +449,33 @@ class MainActivity : ComponentActivity() {
                             route = Routes.RemindersScreen.route,
                             arguments = listOf(
                                 navArgument(Routes.RemindersScreen.CHALLENGE_ID) {
-                                    type = NavType.IntType
+                                    type = NavType.StringType
                                 }
                             )
                         ) {
-                            val challengeId =
-                                it.arguments?.getInt(Routes.RemindersScreen.CHALLENGE_ID)
-                                    ?: 0
+                            val challengeId = it.arguments?.getString(Routes.RemindersScreen.CHALLENGE_ID)
                             RemindersScreen(
-                                viewModel = remindersViewModel,
-                                challengeId = challengeId,
+                                challengeId = challengeId.orEmpty(),
                                 onBackPressed = {
                                     navController.popBackStack(
                                         Routes.ActiveChallengesScreen.route,
                                         inclusive = false
                                     )
                                 },
-                                onEditReminder = {
+                                onEditReminder = { reminderId ->
                                     Routes.CreateReminderScreen.navigateToCreateReminderScreen(
                                         navController,
-                                        it
+                                        reminderId = reminderId,
+                                        challengeId = challengeId.orEmpty()
                                     )
                                 },
                                 onAddReminderClick = {
                                     Routes.CreateReminderScreen.navigateToCreateReminderScreen(
-                                        navController
+                                        navController = navController,
+                                        reminderId = null,
+                                        challengeId = challengeId.orEmpty()
                                     )
                                 },
-                                onSaveReminders = { reminders ->
-
-                                }
                             )
                         }
 
@@ -466,18 +483,26 @@ class MainActivity : ComponentActivity() {
                             route = Routes.CreateReminderScreen.route,
                             arguments = listOf(
                                 navArgument(Routes.CreateReminderScreen.REMINDER_ID) {
-                                    type = NavType.IntType
+                                    type = NavType.StringType
+                                },
+                                navArgument(Routes.CreateReminderScreen.REMINDER_ID) {
+                                    type = NavType.StringType
                                 }
                             )
                         ) { backStackEntry ->
                             val reminderId =
-                                backStackEntry.arguments?.getInt(
+                                backStackEntry.arguments?.getString(
                                     Routes.CreateReminderScreen.REMINDER_ID
                                 )
 
+                            val challengeId =
+                                backStackEntry.arguments?.getString(
+                                    Routes.CreateReminderScreen.CHALLENGE_ID
+                                ).orEmpty()
+
                             CreateReminderScreen(
-                                viewModel = remindersViewModel,
                                 reminderId = reminderId,
+                                challengeId = challengeId,
                                 onBackPressed = {
                                     navController.popBackStack(
                                         Routes.RemindersScreen.route,

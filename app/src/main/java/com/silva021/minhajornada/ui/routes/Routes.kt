@@ -22,7 +22,7 @@ sealed class Routes(val route: String) {
 
     object ChallengesScreen : Routes("challenges_screen") {
         fun navigateToChallengesScreen(navController: NavController) {
-            navController.navigate(ChallengesScreen.route){
+            navController.navigate(ChallengesScreen.route) {
                 launchSingleTop = true
                 popUpTo(Routes.ChallengesScreen.route) { inclusive = true }
             }
@@ -77,27 +77,48 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object ExplorerChallengeDetailsScreen : Routes("explorer_challenge_details_screen/{challengeId}") {
+    object ExplorerChallengeDetailsScreen :
+        Routes("explorer_challenge_details_screen/{challengeId}") {
         const val CHALLENGE_ID = "challengeId"
 
-        fun navigateToExplorerChallengeDetailsScreen(navController: NavController, challengeId: String) {
-            navController.navigate(ExplorerChallengeDetailsScreen.route.replace("{$CHALLENGE_ID}", challengeId))
+        fun navigateToExplorerChallengeDetailsScreen(
+            navController: NavController,
+            challengeId: String,
+        ) {
+            navController.navigate(
+                ExplorerChallengeDetailsScreen.route.replace(
+                    "{$CHALLENGE_ID}",
+                    challengeId
+                )
+            )
         }
     }
+
     object CommunityDetailsScreen : Routes("community_details_screen/{communityId}") {
         const val COMMUNITY_ID = "communityId"
 
         fun navigateToCommunityDetailsScreen(navController: NavController, communityId: String) {
-            navController.navigate(CommunityDetailsScreen.route.replace("{$COMMUNITY_ID}", communityId))
+            navController.navigate(
+                CommunityDetailsScreen.route.replace(
+                    "{$COMMUNITY_ID}",
+                    communityId
+                )
+            )
         }
     }
 
     object CommunityFeedScreen : Routes("community_feed_screen/{communityId}") {
         const val COMMUNITY_ID = "communityId"
         fun navigateToCommunityFeedScreen(navController: NavController, communityId: String) {
-            navController.navigate(CommunityFeedScreen.route.replace("{$COMMUNITY_ID}", communityId))
+            navController.navigate(
+                CommunityFeedScreen.route.replace(
+                    "{$COMMUNITY_ID}",
+                    communityId
+                )
+            )
         }
     }
+
     object CommunityPostScreen : Routes("community_post_screen/{postId}") {
         const val POST_ID = "postId"
         fun navigateToCommunityPostScreen(navController: NavController, postId: String) {
@@ -114,8 +135,16 @@ sealed class Routes(val route: String) {
     object ChallengeCompletedScreen : Routes("challenge_completed_screen/{status}") {
         const val STATUS_ID = "status"
 
-        fun navigateToChallengeCompletedScreen(navController: NavController, challengeResult: ChallengeResult) {
-            navController.navigate(ChallengeCompletedScreen.route.replace("{$STATUS_ID}", challengeResult.name))
+        fun navigateToChallengeCompletedScreen(
+            navController: NavController,
+            challengeResult: ChallengeResult,
+        ) {
+            navController.navigate(
+                ChallengeCompletedScreen.route.replace(
+                    "{$STATUS_ID}",
+                    challengeResult.name
+                )
+            )
         }
     }
 
@@ -144,24 +173,35 @@ sealed class Routes(val route: String) {
             navController.navigate(LoginScreen.route)
         }
     }
+
     object WelcomeScreen : Routes("welcome_screen")
 
-    object CreateReminderScreen : Routes("create_reminder_screen/{reminderId}") {
+    object CreateReminderScreen : Routes("create_reminder_screen/{reminderId}/{challengeId}") {
         const val REMINDER_ID = "reminderId"
-        fun navigateToCreateReminderScreen(navController: NavController, reminderId: Int? = null) {
-            navController.navigate(CreateReminderScreen.route.replace("{reminderId}", reminderId?.toString() ?: "0"))
+        const val CHALLENGE_ID = "challengeId"
+        fun navigateToCreateReminderScreen(
+            navController: NavController,
+            reminderId: String? = null,
+            challengeId: String
+        ) {
+            navController.navigate(
+                CreateReminderScreen.route
+                    .replace("{$REMINDER_ID}", reminderId ?: "0")
+                    .replace("{$CHALLENGE_ID}", challengeId ?: "0")
+            )
         }
     }
+
     object RemindersScreen : Routes("reminders_screen/{challengeId}") {
         const val CHALLENGE_ID = "challengeId"
 
-        fun navigateToRemindersScreen(navController: NavController, challengeId: Int) {
-            navController.navigate(RemindersScreen.route.replace("{$CHALLENGE_ID}", challengeId.toString()))
+        fun navigateToRemindersScreen(navController: NavController, challengeId: String) {
+            navController.navigate(RemindersScreen.route.replace("{$CHALLENGE_ID}", challengeId))
         }
     }
 
-    object ProfileGraph: Routes("profile_graph")
-    object RemindersGraph: Routes("reminders_graph")
+    object ProfileGraph : Routes("profile_graph")
+    object RemindersGraph : Routes("reminders_graph")
 
     object ActiveChallengesScreen : Routes("active_challenges_screen") {
         fun navigateToActiveChallengesScreen(navController: NavController) {
