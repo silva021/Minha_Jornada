@@ -5,10 +5,10 @@ import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.toDomain
 
 class GetChallengeByIdUseCase(
-    val repository: ChallengeRepository,
+    private val repository: ChallengeRepository,
 ) {
     suspend operator fun invoke(
-        id: Int
+        id: String
     ): Result<Challenge> = runCatching {
         repository.getChallenges().find { it.id == id }!!.toDomain()
     }
