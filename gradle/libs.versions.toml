@@ -1,4 +1,5 @@
 [versions]
+accompanistSystemuicontroller = "0.33.2-alpha"
 agp = "8.9.2"
 coilCompose = "3.3.0"
 composeShimmer = "1.0.5"
@@ -23,6 +24,7 @@ navigationVersion = "2.9.0"
 retrofit = "2.11.0"
 
 [libraries]
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
