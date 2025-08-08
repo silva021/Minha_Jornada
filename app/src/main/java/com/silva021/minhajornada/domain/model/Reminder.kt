@@ -4,23 +4,21 @@ import com.silva021.minhajornada.data.dto.ReminderDTO
 import kotlin.Int
 
 data class Reminder(
-    val id: Int,
-    val challengeId: String,
+    val id: String,
     val hour: Int,
     val minute: Int,
     val weekday: Weekday,
     val frequency: ReminderFrequency,
-    val isActive: Boolean = false
+    val active: Boolean = false
 )
 
 fun ReminderDTO.toDomain(): Reminder {
     return Reminder(
         id = id,
-        challengeId = challengeId,
-        hour = hour,
-        minute = minute,
+        hour = hour.toInt(),
+        minute = minute.toInt(),
         weekday = Weekday.valueOf(weekday),
         frequency = ReminderFrequency.valueOf(frequency),
-        isActive = isActive
+        active = active
     )
 }

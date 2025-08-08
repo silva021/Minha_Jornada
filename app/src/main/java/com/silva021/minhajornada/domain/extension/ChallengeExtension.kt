@@ -23,11 +23,10 @@ fun Challenge.calculateChallengeProgress(): Int {
 }
 
 fun Challenge.calculateChallengeDaysLeft(): Int {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val start = dateFormat.parse(startDate) ?: return 0
+    val startDate = this.startDate.toDate()
 
     val startCal = Calendar.getInstance().apply {
-        time = start
+        time = startDate
         add(Calendar.DAY_OF_YEAR, durationType.days)
     }
 
@@ -40,12 +39,11 @@ fun Challenge.calculateChallengeDaysLeft(): Int {
 }
 
 fun Challenge.calculateChallengeEndDate(): String {
+    val startDate = this.startDate.toDate()
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-    val start = dateFormat.parse(startDate) ?: return startDate
-
     val calendar = Calendar.getInstance().apply {
-        time = start
+        time = startDate
         add(Calendar.DAY_OF_YEAR, durationType.days)
     }
 

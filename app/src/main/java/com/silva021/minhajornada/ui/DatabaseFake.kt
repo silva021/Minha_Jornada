@@ -275,7 +275,7 @@ object DatabaseFake {
                     status = CheckInStatus.SUCCESS
                 )
             ),
-            reminders = mockReminders.filter { it.challengeId == "1" }
+            reminders = mockReminders
         ),
         Challenge(
             id = "2",
@@ -328,7 +328,7 @@ object DatabaseFake {
                     status = CheckInStatus.SUCCESS
                 )
             ),
-            reminders = mockReminders.filter { it.challengeId == "2" }
+            reminders = mockReminders
         )
     )
 
@@ -387,66 +387,59 @@ val profilesDTO = listOf(
 
 val mockReminders = listOf(
     Reminder(
-        id = 1,
-        challengeId = "1",
+        id = "1",
         hour = 10,
         minute = 12,
         weekday = Weekday.SATURDAY,
         frequency = ReminderFrequency.DAILY,
-        isActive = true
+        active = true
     ),
     Reminder(
-        id = 2,
-        challengeId = "1",
+        id = "2",
         hour = 11,
         minute = 12,
         weekday = Weekday.MONDAY,
         frequency = ReminderFrequency.WEEKLY,
-        isActive = true
+        active = true
     ),
     Reminder(
-        id = 3,
-        challengeId = "1",
+        id = "3",
         hour = 12,
         minute = 12,
         weekday = Weekday.SATURDAY,
         frequency = ReminderFrequency.WEEKDAYS,
-        isActive = false
+        active = false
     ),
     Reminder(
-        id = 4,
-        challengeId = "1",
+        id = "4",
         hour = 13,
         minute = 12,
         weekday = Weekday.WEDNESDAY,
         frequency = ReminderFrequency.WEEKENDS,
-        isActive = true
+        active = true
     ),
     Reminder(
-        id = 5,
-        challengeId = "1",
+        id = "5",
         hour = 14,
         minute = 12,
         weekday = Weekday.MONDAY,
         frequency = ReminderFrequency.WEEKLY,
-        isActive = true
+        active = true
     ),
     Reminder(
-        id = 6,
-        challengeId = "1",
+        id = "6",
         hour = 15,
         minute = 12,
         weekday = Weekday.SATURDAY,
         frequency = ReminderFrequency.WEEKDAYS,
-        isActive = false
+        active = false
     ),
     Reminder(
-        id = 7,
-        challengeId = "1",
+        id = "7",
         hour = 16,
         minute = 12,
         weekday = Weekday.WEDNESDAY,
         frequency = ReminderFrequency.WEEKENDS,
-        isActive = true
+        active = true
     )
-).take(3)
+).take(5)
