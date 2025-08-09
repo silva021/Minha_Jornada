@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -182,7 +183,7 @@ fun ChallengeItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-//            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(Palette.cardBackground)
             .padding(16.dp)
             .clickable {
