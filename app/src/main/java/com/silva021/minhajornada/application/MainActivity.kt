@@ -34,8 +34,6 @@ import androidx.navigation.navigation
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.silva021.minhajornada.domain.model.toDomain
-import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.routes.Routes
 import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.CommunityFeedScreen.COMMUNITY_ID
@@ -201,7 +199,8 @@ class MainActivity : ComponentActivity() {
                         )
                     ) {
                         UpdateChallengeProgressScreen(
-                            challengeId = it.arguments?.getString(Routes.UpdateChallengeProgressScreen.CHALLENGE_ID) ?: "",
+                            challengeId = it.arguments?.getString(Routes.UpdateChallengeProgressScreen.CHALLENGE_ID)
+                                ?: "",
                             onCompleteChallenge = { challengeId ->
                                 Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
                                     navController,
@@ -283,11 +282,19 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) { backStackEntry ->
-                        val communityId =
-                            backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID)
-                                .orEmpty()
+                        val communityId = backStackEntry
+                            .arguments
+                            ?.getString(CommunityDetailsScreen.COMMUNITY_ID)
+                            .orEmpty()
+
                         CommunityDetailsScreen(
                             communityId = communityId,
+                            navigateToCommunity = {
+                                Routes.CommunityFeedScreen.navigateToCommunityFeedScreen(
+                                    navController,
+                                    it
+                                )
+                            },
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.CommunitiesScreen.route,
@@ -378,7 +385,8 @@ class MainActivity : ComponentActivity() {
                             navArgument(CHALLENGE_ID) { type = NavType.StringType }
                         )
                     ) { backStackEntry ->
-                        val challengeId = backStackEntry.arguments?.getString(CHALLENGE_ID).orEmpty()
+                        val challengeId =
+                            backStackEntry.arguments?.getString(CHALLENGE_ID).orEmpty()
 
                         ChallengeCompletedScreen(
                             challengeId = challengeId,
@@ -459,7 +467,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-                            val challengeId = it.arguments?.getString(Routes.RemindersScreen.CHALLENGE_ID)
+                            val challengeId =
+                                it.arguments?.getString(Routes.RemindersScreen.CHALLENGE_ID)
                             RemindersScreen(
                                 challengeId = challengeId.orEmpty(),
                                 onBackPressed = {

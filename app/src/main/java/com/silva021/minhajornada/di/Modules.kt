@@ -37,6 +37,7 @@ import com.silva021.minhajornada.domain.usecases.GetPublicChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetReminderByIdUseCase
+import com.silva021.minhajornada.domain.usecases.JoinCommunityUseCase
 import com.silva021.minhajornada.domain.usecases.LoginUseCase
 import com.silva021.minhajornada.domain.usecases.UpdateReminderUseCase
 import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesViewModel
@@ -68,7 +69,7 @@ val viewModelModule = module {
     viewModel { CommunitiesViewModel(get(), get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get()) }
-    viewModel { CommunityDetailsViewModel(get()) }
+    viewModel { CommunityDetailsViewModel(get(), get()) }
     viewModel { CommunityFeedViewModel(get(), get(), get()) }
     viewModel { CommunityPostViewModel(get(), get(), get()) }
     viewModel { RemindersViewModel(get(), get()) }
@@ -102,6 +103,7 @@ val usecasesModule = module {
     factory { CreatePublicChallengeUseCase(get()) }
     factory { AcceptPublicChallengeUseCase(get(), get()) }
     factory { GetCommunitiesUseCase(get()) }
+    factory { JoinCommunityUseCase(get()) }
     factory { GetCommunitiesByCategoryUseCase(get()) }
     factory { GetCommunityByIdUseCase(get()) }
     factory { GetCommunityPostsUseCase(get()) }
@@ -134,7 +136,7 @@ val repositoryModule = module {
 
     single<ChallengeRepository> { ChallengesRepositoryImpl() }
     single<ProfileRepository> { ProfileRepositoryImpl() }
-    single<CommunitiesRepository> { CommunitiesRepositoryImpl(get()) }
+    single<CommunitiesRepository> { CommunitiesRepositoryImpl() }
     single<CheckInRepository> { CheckInRepositoryImpl() }
     single<ReminderRepository> { ReminderRepositoryImpl() }
     single<PublicChallengeRepository> { PublicChallengeRepositoryImpl() }

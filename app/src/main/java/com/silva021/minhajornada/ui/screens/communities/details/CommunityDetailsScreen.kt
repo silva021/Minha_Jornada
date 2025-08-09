@@ -11,6 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CommunityDetailsScreen(
     viewModel: CommunityDetailsViewModel = koinViewModel(),
+    navigateToCommunity: (String) -> Unit,
     communityId: String,
     onBackPressed: () -> Unit,
 ) {
@@ -18,6 +19,14 @@ fun CommunityDetailsScreen(
 
     LaunchedEffect(Unit) {
         viewModel.fetchCommunityDetails(communityId)
+
+        viewModel.eventFlow.collect {
+            when (it) {
+                NavigationEvent.NavigateToCommunityFeed -> {
+                    navigateToCommunity.invoke(communityId)
+                }
+            }
+        }
     }
 
     when (val state = uiState) {
@@ -32,6 +41,7 @@ fun CommunityDetailsScreen(
         is CommunityDetailsUiState.Success -> {
             CommunityDetailsContent(
                 community = state.community,
+                joinCommunityClick = { viewModel.joinCommunity(communityId) },
                 onBackPressed = onBackPressed,
             )
         }

@@ -34,6 +34,7 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 @Composable
 fun CommunityDetailsContent(
     community: Community,
+    joinCommunityClick: () -> Unit,
     onBackPressed: () -> Unit,
 ) {
     Column(
@@ -46,13 +47,16 @@ fun CommunityDetailsContent(
             "Comunidade",
             onBackPressed = onBackPressed,
         )
-        CommunityProfileSection(community)
+        CommunityProfileSection(community, joinCommunityClick)
         AboutSection(community)
     }
 }
 
 @Composable
-private fun CommunityProfileSection(community: Community) {
+private fun CommunityProfileSection(
+    community: Community,
+    joinedCommunityClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,7 +65,6 @@ private fun CommunityProfileSection(community: Community) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         AsyncImage(
-//            model = "https://lh3.googleusercontent.com/aida-public/AB6AXuDKDEhBCipEPfz0qcXTQPr6WRA_CYY9b1T-IpAc5UP7VuWlKzOrUe60aHLSNGpmtE8nDPeyN5B113RtWEFTmOxWFoa0NSMAXGh-EfjvX1qKIuuv7XinJ33a-DA45lb2fSM6cU73r5m144bqXCcXlDv0I4PD-9USokm6toxz-CnagrWdJ49NplSX26M9xrRTSFZso6nVepnEw_mDIwZca3yAzzd__c902iIJV-Z4nHudIGFa_fiogWkK2twq1EaxuCy_QcNPk8tB4fg",
             model = community.imageUrl,
             contentDescription = "Foto da comunidade",
             modifier = Modifier
@@ -75,7 +78,6 @@ private fun CommunityProfileSection(community: Community) {
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-//                text = "Buscadores de Desafios",
                 text = community.name,
                 color = textPrimary,
                 fontSize = 24.sp,
@@ -83,7 +85,6 @@ private fun CommunityProfileSection(community: Community) {
             )
             Text(
                 text = community.description,
-//                text = "Uma comunidade para quem ama desafiar a si mesmo e aos outros.",
                 color = textSecondary,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
@@ -91,7 +92,7 @@ private fun CommunityProfileSection(community: Community) {
         }
 
         PrimaryButton(
-            onClick = { /* Participar da comunidade */ },
+            onClick = joinedCommunityClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp),
@@ -116,7 +117,6 @@ private fun AboutSection(community: Community) {
         )
         Text(
             text = community.about,
-//            text = "Esta comunidade é para pessoas que amam desafiar a si mesmas e aos outros. Compartilhe seus desafios, obtenha apoio e encontre inspiração.",
             color = textSecondary,
             fontSize = 16.sp,
             lineHeight = 24.sp
@@ -129,6 +129,7 @@ private fun AboutSection(community: Community) {
 fun CommunityDetailsContentPreview() {
     CommunityDetailsContent(
         community = DatabaseFake.communities.my.first().toDomain(),
+        joinCommunityClick = {},
         onBackPressed = {}
     )
 }

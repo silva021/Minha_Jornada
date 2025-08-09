@@ -8,16 +8,6 @@ class GetCommunityByIdUseCase(
     private val repository: CommunitiesRepository,
 ) {
     suspend operator fun invoke(id: String): Result<Community> = runCatching {
-        val communities = repository.getCommunities().toDomain()
-
-        communities.my.find { it.id == id }?.let {
-            return Result.success(it)
-        }
-
-        communities.featured.find { it.id == id }?.let {
-            return Result.success(it)
-        } ?: run {
-            throw Exception("Community with id $id not found")
-        }
+        repository.getCommunityById(id).toDomain()
     }
 }

@@ -27,7 +27,7 @@ class CommunitiesViewModel(
             viewModelScope.launch {
                 _uiState.value = CommunitiesUiState.Loading
                 getCommunities().onSuccess {
-                    _uiState.value = CommunitiesUiState.Success(it)
+                    _uiState.value = CommunitiesUiState.Success(Communities( featured = it, listOf()))
                 }.onFailure {
                     _uiState.value = CommunitiesUiState.Error(
                         it.message ?: "Erro ao carregar comunidades"
