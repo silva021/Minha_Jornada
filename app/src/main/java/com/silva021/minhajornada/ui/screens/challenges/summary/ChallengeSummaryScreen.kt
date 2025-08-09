@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.ui.screens.challenges.summary
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
@@ -14,6 +15,10 @@ fun ChallengeSummaryScreen(
     onBackPressed: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getChallenge(challengeId)
+    }
 
     when (val state = uiState) {
         is ChallengeSummaryUiState.Loading -> LoadingScreen()

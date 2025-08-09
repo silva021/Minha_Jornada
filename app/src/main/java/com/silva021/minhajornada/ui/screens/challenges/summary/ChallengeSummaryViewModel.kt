@@ -17,9 +17,9 @@ class ChallengeSummaryViewModel(
     fun getChallenge(challengeId: String) {
         viewModelScope.launch {
             getChallengeById(challengeId).onSuccess { challenge ->
-                ChallengeSummaryUiState.Success(challenge)
+                _uiState.value = ChallengeSummaryUiState.Success(challenge)
             }.onFailure { error ->
-                ChallengeSummaryUiState.Error(error.message ?: "Unknown error")
+                _uiState.value = ChallengeSummaryUiState.Error(error.message ?: "Unknown error")
             }
         }
     }
