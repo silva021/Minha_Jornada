@@ -1,14 +1,12 @@
 package com.silva021.minhajornada.ui
 
 import com.google.firebase.Timestamp
-import com.silva021.minhajornada.data.dto.ChallengeDTO
 import com.silva021.minhajornada.data.dto.CommentDTO
 import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
 import com.silva021.minhajornada.data.dto.PostDTO
 import com.silva021.minhajornada.data.dto.ProfileDTO
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
-import com.silva021.minhajornada.data.dto.ReminderDTO
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.CheckIn
@@ -278,6 +276,7 @@ object DatabaseFake {
                 )
             ),
             ownerName = "Lucas Silva",
+            isCompleted = true,
             reminders = mockReminders
         ),
         Challenge(
@@ -339,6 +338,7 @@ object DatabaseFake {
                 )
             ),
             reminders = mockReminders,
+            isCompleted = true,
             ownerName = "Lucas Silva",
         )
     )
