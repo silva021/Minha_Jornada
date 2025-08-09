@@ -3,6 +3,7 @@ package com.silva021.minhajornada.ui.screens.challenges.mine
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silva021.minhajornada.domain.model.Challenges
+import com.silva021.minhajornada.domain.usecases.DeleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class ChallengesViewModel(
     private val getChallenges: GetChallengesUseCase,
+    private val deleteChallenge: DeleteChallengeUseCase
 ) : ViewModel() {
     private val _uiState =
         MutableStateFlow<ChallengesUiState>(ChallengesUiState.Loading)
@@ -28,6 +30,19 @@ class ChallengesViewModel(
                         message = it.message ?: "An error occurred while fetching challenges"
                     )
                 }
+            }
+        }
+    }
+
+    fun delete(challengeId: String) {
+        viewModelScope.launch {
+            _uiState.value = ChallengesUiState.Loading
+            deleteChallenge(challengeId).onSuccess {
+                getChallenges()
+            }.onFailure {
+                _uiState.value = ChallengesUiState.Error(
+                    message = it.message ?: "An error occurred while deleting the challenge"
+                )
             }
         }
     }

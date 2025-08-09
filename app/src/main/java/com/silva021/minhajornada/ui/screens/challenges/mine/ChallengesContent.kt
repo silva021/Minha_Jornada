@@ -48,6 +48,7 @@ import com.silva021.minhajornada.ui.theme.Palette
 fun ChallengesContent(
     challenges: Challenges,
     onCreateChallenge: () -> Unit,
+    onDeleteClick: (String) -> Unit,
     onUpdateChallengeProgress: (String) -> Unit,
     onSummaryChallengeClick: (String) -> Unit,
 ) {
@@ -88,7 +89,9 @@ fun ChallengesContent(
         if (challenges.actives.isNotEmpty()) {
             items(challenges.actives) {
                 SwipeableItem(
-                    onDeleteClick = {},
+                    onDeleteClick = {
+                        onDeleteClick.invoke(it.id)
+                    },
                     content = {
                         ChallengeItem(
                             icon = Icons.Default.LocalFireDepartment,
@@ -174,7 +177,7 @@ fun ChallengeItem(
     title: String,
     progress: Int,
     daysLeft: Int,
-    onClick: () -> Unit = { /* Default action */ },
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -316,6 +319,7 @@ fun ChallengesContentPreview() {
             )
         ),
         onCreateChallenge = {},
+        onDeleteClick = {},
         onUpdateChallengeProgress = {},
         onSummaryChallengeClick = {}
     )

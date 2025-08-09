@@ -58,7 +58,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
-    viewModel { ChallengesViewModel(get()) }
+    viewModel { ChallengesViewModel(get(), get()) }
     viewModel { CommunitiesViewModel(get(), get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get()) }

@@ -41,7 +41,10 @@ fun ChallengesScreen(
                 challenges = state.challenges,
                 onCreateChallenge = onCreateChallenge,
                 onUpdateChallengeProgress = onUpdateChallengeProgress,
-                onSummaryChallengeClick = onSummaryChallengeClick
+                onSummaryChallengeClick = onSummaryChallengeClick,
+                onDeleteClick = {
+                    viewModel.delete(it)
+                }
             )
         }
     }
