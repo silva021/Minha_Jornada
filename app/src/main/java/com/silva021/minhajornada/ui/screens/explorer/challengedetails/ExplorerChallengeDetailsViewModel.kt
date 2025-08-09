@@ -3,6 +3,7 @@ package com.silva021.minhajornada.ui.screens.explorer.challengedetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silva021.minhajornada.domain.model.PublicChallenge
+import com.silva021.minhajornada.domain.usecases.AcceptPublicChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengeByIdUseCase
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ExplorerChallengeDetailsViewModel(
-    private val getPublicChallengeById: GetPublicChallengeByIdUseCase
+    private val getPublicChallengeById: GetPublicChallengeByIdUseCase,
+    private val acceptChallenge: AcceptPublicChallengeUseCase,
 ) : ViewModel() {
     private var _uiState =
         MutableStateFlow<ExplorerChallengeDetailsUiState>(ExplorerChallengeDetailsUiState.Loading)
@@ -40,7 +42,14 @@ class ExplorerChallengeDetailsViewModel(
     }
 
     fun acceptChallenge(challenge: PublicChallenge) {
-
+        viewModelScope.launch {
+            _uiState.value = ExplorerChallengeDetailsUiState.Loading
+            acceptChallenge.invoke(challenge).onSuccess {
+                _eventFlow.emit(NavigationEvent.NavigateToChallengeScreen)
+            }.onFailure {
+                _uiState.value = ExplorerChallengeDetailsUiState.Error(it.message ?: "Failed to accept challenge")
+            }
+        }
     }
 }
 

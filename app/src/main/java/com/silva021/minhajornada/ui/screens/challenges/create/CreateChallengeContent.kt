@@ -206,6 +206,7 @@ fun CreateChallengeContent(
                             checkins = listOf(),
                             startDate = Timestamp.now(),
                             isCompleted = false,
+                            isPublic = false,
                             ownerName = Firebase.auth.currentUser?.displayName.orEmpty(),
                             reminders = if (notificationsEnabled)
                                 listOf(
