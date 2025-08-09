@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.R
 import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.ui.components.CustomTextField
@@ -167,7 +168,7 @@ fun SignUpContent(
                                 email = email,
                                 username = userName,
                                 profilePictureUrl = "",
-                                createdAt = Date().toString()
+                                createdAt = Timestamp.now()
                             ),
                             password
                         )
