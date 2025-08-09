@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -61,6 +62,8 @@ fun ExplorerChallengeDetailsContent(
             ChallengeImage(challenge)
             ChallengeDescription(challenge)
             RulesAndBenefitsSection(challenge)
+            Spacer(Modifier.weight(1f))
+            ParticipantsSection(challenge)
             DurationSection(challenge)
         }
         JoinButton(
@@ -77,7 +80,7 @@ private fun ChallengeImage(challenge: PublicChallenge) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(160.dp)
     ) {
         AsyncImage(
             model = challenge.imageUrl,
@@ -95,7 +98,7 @@ private fun ChallengeImage(challenge: PublicChallenge) {
             Text(
                 text = challenge.title,
                 color = Color.White,
-                fontSize = 24.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.BottomStart)
             )
@@ -119,7 +122,7 @@ private fun RulesAndBenefitsSection(
 ) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(cardBackground)
             .padding(16.dp)
@@ -141,7 +144,7 @@ private fun RulesAndBenefitsSection(
         }
 
         if (challenge.benefits.isNotEmpty()) {
-            Column(modifier = Modifier.padding(bottom = 16.dp)) {
+            Column {
                 Text(
                     text = "Benefícios",
                     color = primaryColor,
@@ -181,7 +184,7 @@ private fun BulletPoint(text: String) {
 private fun DurationSection(challenge: PublicChallenge) {
     Row(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -205,7 +208,45 @@ private fun DurationSection(challenge: PublicChallenge) {
                     .padding(end = 4.dp)
             )
             Text(
-                text = "${challenge.duration.days} dias",
+                text = "${challenge.durationType.days}",
+                color = textPrimary,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+@Composable
+private fun ParticipantsSection(
+    challenge: PublicChallenge
+) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Participantes",
+            color = primaryColor,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.People,
+                contentDescription = "Participantes",
+                tint = primaryColor,
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(end = 4.dp)
+            )
+            Text(
+                text = "${challenge.participantsCount}",
                 color = textPrimary,
                 fontWeight = FontWeight.Bold
             )
