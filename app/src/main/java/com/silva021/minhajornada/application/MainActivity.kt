@@ -212,12 +212,6 @@ class MainActivity : ComponentActivity() {
                                     it
                                 )
                             },
-                            onCompletedDay = {
-                                Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
-                                    navController,
-                                    it
-                                )
-                            },
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ChallengesScreen.route,
