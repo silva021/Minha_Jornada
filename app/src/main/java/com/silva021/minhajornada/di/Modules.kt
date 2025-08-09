@@ -18,6 +18,7 @@ import com.silva021.minhajornada.domain.usecases.CreateChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateCheckInUseCase
 import com.silva021.minhajornada.domain.usecases.CreateProfileUseCase
 import com.silva021.minhajornada.domain.usecases.CreateReminderUseCase
+import com.silva021.minhajornada.domain.usecases.DeleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
@@ -83,6 +84,7 @@ val usecasesModule = module {
     factory { CreateChallengeUseCase(get()) }
     factory { CreateReminderUseCase(get()) }
     factory { DeleteReminderUseCase(get()) }
+    factory { DeleteChallengeUseCase(get()) }
     factory { GetReminderByIdUseCase(get()) }
     factory { UpdateReminderUseCase(get()) }
     factory { CompleteChallengeUseCase(get(), get()) }
@@ -124,7 +126,7 @@ val repositoryModule = module {
     single<ProfileApi> { get<Retrofit>().create(ProfileApi::class.java) }
     single<CommunitiesApi> { get<Retrofit>().create(CommunitiesApi::class.java) }
 
-    single<ChallengeRepository> { ChallengesRepositoryImpl(get()) }
+    single<ChallengeRepository> { ChallengesRepositoryImpl() }
     single<ProfileRepository> { ProfileRepositoryImpl(get()) }
     single<CommunitiesRepository> { CommunitiesRepositoryImpl(get()) }
     single<CheckInRepository> { CheckInRepositoryImpl() }

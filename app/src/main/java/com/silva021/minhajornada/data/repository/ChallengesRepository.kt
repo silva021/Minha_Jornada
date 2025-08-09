@@ -8,9 +8,7 @@ import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 import com.silva021.minhajornada.ui.DatabaseFake
 import kotlinx.coroutines.tasks.await
 
-class ChallengesRepositoryImpl(
-    private val reminderRepository: ReminderRepository,
-) : ChallengeRepository {
+class ChallengesRepositoryImpl() : ChallengeRepository {
     val userChallengesCollection by lazy { FireStoreHelper.userChallengesCollection }
     override suspend fun getChallenges(): List<ChallengeDTO> {
         val challenges = userChallengesCollection
@@ -41,7 +39,10 @@ class ChallengesRepositoryImpl(
     }
 
     override suspend fun deleteChallenge(challengeId: String) {
-        TODO("Not yet implemented")
+        userChallengesCollection
+            .document(challengeId)
+            .delete()
+            .await()
     }
 
     override suspend fun completeChallenge(
