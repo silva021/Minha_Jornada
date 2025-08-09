@@ -11,6 +11,8 @@ import com.silva021.minhajornada.data.repository.CommunitiesRepository
 import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
 import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
+import com.silva021.minhajornada.data.repository.PublicChallengeRepository
+import com.silva021.minhajornada.data.repository.PublicChallengeRepositoryImpl
 import com.silva021.minhajornada.data.repository.ReminderRepository
 import com.silva021.minhajornada.data.repository.ReminderRepositoryImpl
 import com.silva021.minhajornada.domain.usecases.CompleteChallengeUseCase
@@ -133,5 +135,5 @@ val repositoryModule = module {
     single<CommunitiesRepository> { CommunitiesRepositoryImpl(get()) }
     single<CheckInRepository> { CheckInRepositoryImpl() }
     single<ReminderRepository> { ReminderRepositoryImpl() }
-
+    single<PublicChallengeRepository> { PublicChallengeRepositoryImpl() }
 }
