@@ -185,16 +185,16 @@ fun UpdateChallengeProgressContent(
 
             Spacer(Modifier.height(16.dp))
 
-            SecondButton(
-                text = "Concluir desafio",
-                onClick = {
-                    onCompleteChallenge.invoke(challenge.id)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            Spacer(Modifier.height(16.dp))
+//            SecondButton(
+//                text = "Concluir desafio",
+//                onClick = {
+//                    onCompleteChallenge.invoke(challenge.id)
+//                },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//            )
+//
+//            Spacer(Modifier.height(16.dp))
         }
     }
 }
