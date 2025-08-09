@@ -263,14 +263,16 @@ object DatabaseFake {
             startDate = Timestamp.now(),
             checkins = listOf(
                 CheckIn(
+                    id = "checkin1",
                     day = 1,
-                    date = "2025-07-10",
+                    date = Timestamp.now(),
                     note = "Corri 3 km no parque hoje cedo. Ritmo bom, mas ainda estou voltando ao hábito.",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin2",
                     day = 2,
-                    date = "2025-07-11",
+                    date = Timestamp.now(),
                     note = "Mais 3 km hoje, mas senti um pouco de dor na perna. Vou alongar melhor amanhã.",
                     status = CheckInStatus.SUCCESS
                 )
@@ -287,44 +289,51 @@ object DatabaseFake {
             startDate = Timestamp.now(),
             checkins = listOf(
                 CheckIn(
+                    id = "checkin3",
                     day = 1,
-                    date = "2023-06-20",
+                    date = Timestamp.now(),
                     note = "Comecei bem, bebi os 8 copos. Usei um app pra lembrar.",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin4",
                     day = 2,
-                    date = "2023-06-21",
+                    date = Timestamp.now(),
                     note = "Esqueci de manhã, mas recuperei à tarde. Completei!",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin5",
                     day = 3,
-                    date = "2023-06-22",
+                    date = Timestamp.now(),
                     note = "Já estou com mais sede natural, o corpo tá pedindo água.",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin6",
                     day = 4,
-                    date = "2023-06-23",
+                    date = Timestamp.now(),
                     note = "Fácil hoje. Levei uma garrafa de 2L comigo.",
                     status = CheckInStatus.FAILURE
                 ),
                 CheckIn(
+                    id = "checkin7",
                     day = 5,
-                    date = "2023-06-24",
+                    date = Timestamp.now(),
                     note = "Tá virando rotina. Só preciso lembrar antes de dormir.",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin8",
                     day = 6,
-                    date = "2023-06-25",
+                    date = Timestamp.now(),
                     note = "Quase esqueci no meio do dia, mas deu tempo. Água salva!",
                     status = CheckInStatus.SUCCESS
                 ),
                 CheckIn(
+                    id = "checkin9",
                     day = 7,
-                    date = "2023-06-26",
+                    date = Timestamp.now(),
                     note = "Último dia! Me sinto mais leve e com menos dor de cabeça.",
                     status = CheckInStatus.SUCCESS
                 )
