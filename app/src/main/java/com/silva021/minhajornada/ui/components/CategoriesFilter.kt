@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.ui.components
 
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -20,15 +21,17 @@ import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 @Composable
 fun CategoriesFilter(
     modifier: Modifier = Modifier,
+    showAllCategory: Boolean = true,
     selectedCategory: CategoryType,
-    onCategorySelected: (CategoryType) -> Unit
+    onCategorySelected: (CategoryType) -> Unit,
 ) {
-    Row(
-        modifier = modifier
-            .horizontalScroll(rememberScrollState())
-
-    ) {
-        CategoryType.entries.forEach { category ->
+    Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+        val categories = CategoryType.entries.toMutableList().also {
+            it.removeIf {
+                it == CategoryType.ALL && !showAllCategory
+            }
+        }
+        categories.forEach { category ->
             FilterChip(
                 selected = category == selectedCategory,
                 onClick = { onCategorySelected(category) },
@@ -48,8 +51,17 @@ fun CategoriesFilter(
 @Composable
 @Preview(showBackground = true)
 fun CategoriesFilterPreview() {
-    CategoriesFilter(
-        selectedCategory = CategoryType.EDUCATION,
-        onCategorySelected = {}
-    )
+    Column {
+
+        CategoriesFilter(
+            selectedCategory = CategoryType.EDUCATION,
+            onCategorySelected = {}
+        )
+
+        CategoriesFilter(
+            selectedCategory = CategoryType.EDUCATION,
+            onCategorySelected = {},
+            showAllCategory = false
+        )
+    }
 }

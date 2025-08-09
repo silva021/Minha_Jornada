@@ -36,21 +36,16 @@ import com.silva021.minhajornada.domain.model.DurationType
 import com.silva021.minhajornada.domain.model.Reminder
 import com.silva021.minhajornada.domain.model.ReminderFrequency
 import com.silva021.minhajornada.domain.model.Weekday
-import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.components.CategoriesFilter
 import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.DurationFilter
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
-import com.silva021.minhajornada.ui.profilesDTO
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
-import okhttp3.internal.http.toHttpDateString
-import java.util.Date
 import java.util.UUID
-import kotlin.random.Random
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,12 +136,13 @@ fun CreateChallengeContent(
             )
 
             CategoriesFilter(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                selectedCategory = selectedCategory
-            ) {
-                selectedCategory = it
-            }
+                modifier = Modifier.fillMaxWidth(),
+                selectedCategory = selectedCategory,
+                showAllCategory = false,
+                onCategorySelected = {
+                    selectedCategory = it
+                }
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
