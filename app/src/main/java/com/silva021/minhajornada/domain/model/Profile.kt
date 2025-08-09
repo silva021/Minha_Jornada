@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.domain.model
 
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.data.dto.ProfileDTO
 
 data class Profile(
@@ -8,7 +9,7 @@ data class Profile(
     val email: String,
     val username: String,
     val profilePictureUrl: String,
-    val createdAt: String,
+    val createdAt: Timestamp,
 )
 
 fun ProfileDTO.toDomain(): Profile {
