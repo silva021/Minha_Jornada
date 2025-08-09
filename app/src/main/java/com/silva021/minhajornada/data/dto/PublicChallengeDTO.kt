@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.data.dto
 
+import com.google.firebase.Timestamp
 import java.util.UUID
 
 data class PublicChallengeDTO(
@@ -12,6 +13,7 @@ data class PublicChallengeDTO(
     val participantsCount: Int = 0,
     val category: String = "",
     val duration: String ="",
+    val createdAt: Timestamp,
     val rules: List<String> = emptyList(),
     val benefits: List<String> = emptyList(),
     val trending: Boolean = false

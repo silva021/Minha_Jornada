@@ -39,7 +39,8 @@ object DatabaseFake {
                 "Maior consciência das coisas positivas",
                 "Redução do estresse e ansiedade",
                 "Melhora na qualidade do sono",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             title = "Aprenda uma Nova Habilidade",
@@ -61,7 +62,8 @@ object DatabaseFake {
                 "Aumento da confiança pessoal",
                 "Desenvolvimento de disciplina",
                 "Estímulo à neuroplasticidade cerebral",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             title = "Detox Digital",
@@ -83,7 +85,8 @@ object DatabaseFake {
                 "Redução da ansiedade digital",
                 "Mais tempo para atividades presenciais",
                 "Aumento da produtividade",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             title = "Alimentação Saudável",
@@ -105,7 +108,8 @@ object DatabaseFake {
                 "Melhora na digestão",
                 "Pele mais saudável",
                 "Controle do peso corporal",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBu1VDWNzIZGgVSP-NqdjIkQCX3gyvA-ICH9Xp7YsF8u-XWG9MWtfCjU6ddPsJzEv2iszLp_iJmVpl7vAginGvWGHfY13oYYIWn_YtzpL6QBTiaoYIwYGY12OSNSF9gokih6r0K21NviLwHaQ6kcyCzY1hiHYoUx4tSYUP3snqUpZBBsGr2WTjybGloX2axlldG70gR9Rv0iCp_ckD4GEMFaDN-2ycR29c5vOVHLIhO8-ysA3yENqGG_xjIFRUFm8SZL8Rny-AOnz0",
@@ -128,7 +132,8 @@ object DatabaseFake {
                 "Aumento da disposição",
                 "Perda de peso inicial",
                 "Estabelecimento de rotina saudável",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDC1CK0fJJekJFIALgZN8l9nrRFGObdyllNq8lf6DxJZ8IUsb5qYwMzKWtGtN-nXBCqfdu17MHgeoPkKp5xDDpbXjwvfCrF3ZMz_rRdJwFs9TM3rN6uZEK6KhM1tmwEurY1MDeTe6BI1Jr3DpOlyYbCjLOjYG-gJmCqMF4PV-sBfIfIGIjhjDjdWnUEMGZC8KbUyko8bUnt65-EGafdK6qHIQQDjN5_kmznxLSEaxS4EkFAEUU4ehsgB6-vQT2Jl6Zk8Er3SKk78eY",
@@ -151,7 +156,8 @@ object DatabaseFake {
                 "Maior foco e concentração",
                 "Melhor regulação emocional",
                 "Aumento da autoconsciência",
-            )
+            ),
+            createdAt = Timestamp.now()
         ),
         PublicChallengeDTO(
             imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuCp9degKs731yeuU7AIizup4AYO7fTtAJgiurX93Bs7bqS7Ie6UiiWBJOAKjVVJlodlQpebQRBJNn-Ylw3kgkv0YTtfVj6pZDS3LHNUM0ULict7jPVScCfHJNBwvaG3B7BY1uvshkpTfR6Zilae5gA_3ExIubr00mpj9_4gnikSTwuYpmRrcdd62Zp9ryukD34PjY_j2E7z5mAlmDjfwfYyjv9N4Kwko6rwLLSFwWcoNVlbOx-3oH0veR6XgOkvN3XdG6yjZEvCFSI",
@@ -174,7 +180,8 @@ object DatabaseFake {
                 "Melhor gestão do tempo",
                 "Redução da procrastinação",
                 "Maior senso de realização",
-            )
+            ),
+            createdAt = Timestamp.now()
         )
     )
 

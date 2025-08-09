@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.domain.model
 
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 
 data class PublicChallenge(
@@ -10,8 +11,9 @@ data class PublicChallenge(
     val description: String,
     val creatorName: String,
     val participantsCount: Int,
-    val category: CategoryType,
-    val duration: DurationType,
+    val categoryType: CategoryType,
+    val durationType: DurationType,
+    val createdAt: Timestamp,
     val isTrending: Boolean = false,
     val rules: List<String> = emptyList(),
     val benefits: List<String> = emptyList()
@@ -26,8 +28,9 @@ fun PublicChallengeDTO.toDomain(): PublicChallenge {
         description = description,
         creatorName = creatorName,
         participantsCount = participantsCount,
-        category = CategoryType.valueOf(category),
-        duration = DurationType.valueOf(duration),
+        categoryType = CategoryType.valueOf(category),
+        durationType = DurationType.valueOf(duration),
+        createdAt = createdAt,
         isTrending = trending,
         rules = rules,
         benefits = benefits
