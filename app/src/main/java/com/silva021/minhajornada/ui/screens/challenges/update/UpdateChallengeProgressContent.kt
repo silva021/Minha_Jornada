@@ -22,9 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Timestamp
 import com.silva021.minhajornada.domain.extension.currentChallengeDay
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.ChallengeResult
+import com.silva021.minhajornada.domain.model.CheckIn
 import com.silva021.minhajornada.domain.model.CheckInStatus
 import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.CustomTextField
@@ -36,17 +38,23 @@ import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.accentColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateChallengeProgressContent(
     challenge: Challenge,
-    onCompletedDay: (ChallengeResult) -> Unit,
+    currentCheckIn: CheckIn? = null,
+    onCompletedDay: (CheckIn) -> Unit,
     onCompleteChallenge: (ChallengeResult) -> Unit,
     onBackPressed: () -> Unit,
 ) {
-    val observationText = remember { mutableStateOf("") }
-    var statusSelected by remember { mutableStateOf(CheckInStatus.SUCCESS) }
+    val observationText = remember { mutableStateOf(currentCheckIn?.note ?: "") }
+    var statusSelected by remember {
+        mutableStateOf(
+            currentCheckIn?.status ?: CheckInStatus.SUCCESS
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -156,12 +164,23 @@ fun UpdateChallengeProgressContent(
             Spacer(modifier = Modifier.weight(1f))
 
             PrimaryButton(
-                text = "Concluir o dia",
+                text = if (currentCheckIn == null) "Concluir o dia" else "Atualizar progresso",
                 onClick = {
-                    onCompletedDay.invoke(ChallengeResult.SUCCESS)
+                    onCompletedDay.invoke(
+                        currentCheckIn?.copy(
+                            status = statusSelected,
+                            note = observationText.value
+                        ) ?: CheckIn(
+                            id = UUID.randomUUID().toString(),
+                            day = challenge.currentChallengeDay(),
+                            status = statusSelected,
+                            note = observationText.value,
+                            date = Timestamp.now()
+                        )
+                    )
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = observationText.value.isNotBlank()
             )
 
             Spacer(Modifier.height(16.dp))

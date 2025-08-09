@@ -15,7 +15,6 @@ import org.koin.androidx.compose.koinViewModel
 fun UpdateChallengeProgressScreen(
     viewModel: UpdateChallengeProgressViewModel = koinViewModel(),
     challengeId: String,
-    onCompletedDay: (ChallengeResult) -> Unit,
     onCompleteChallenge: (ChallengeResult) -> Unit,
     onBackPressed: () -> Unit,
 ) {
@@ -43,8 +42,14 @@ fun UpdateChallengeProgressScreen(
 
         is UpdateChallengeProgressUiState.Idle -> {
             UpdateChallengeProgressContent(
-                state.challenge,
-                onCompletedDay = onCompletedDay,
+                challenge = state.challenge,
+                currentCheckIn = state.currentCheckIn,
+                onCompletedDay = {
+                    viewModel.updateProgress(
+                        state.challenge,
+                        it
+                    )
+                },
                 onCompleteChallenge = onCompleteChallenge,
                 onBackPressed = onBackPressed,
             )

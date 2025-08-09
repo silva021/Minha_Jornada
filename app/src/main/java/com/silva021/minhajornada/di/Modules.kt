@@ -5,6 +5,8 @@ import com.silva021.minhajornada.data.api.CommunitiesApi
 import com.silva021.minhajornada.data.api.ProfileApi
 import com.silva021.minhajornada.data.repository.ChallengeRepository
 import com.silva021.minhajornada.data.repository.ChallengesRepositoryImpl
+import com.silva021.minhajornada.data.repository.CheckInRepository
+import com.silva021.minhajornada.data.repository.CheckInRepositoryImpl
 import com.silva021.minhajornada.data.repository.CommunitiesRepository
 import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
@@ -12,6 +14,7 @@ import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
 import com.silva021.minhajornada.data.repository.ReminderRepository
 import com.silva021.minhajornada.data.repository.ReminderRepositoryImpl
 import com.silva021.minhajornada.domain.usecases.CreateChallengeUseCase
+import com.silva021.minhajornada.domain.usecases.CreateCheckInUseCase
 import com.silva021.minhajornada.domain.usecases.CreateProfileUseCase
 import com.silva021.minhajornada.domain.usecases.CreateReminderUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
@@ -64,7 +67,7 @@ val viewModelModule = module {
     viewModel { CreateChallengeViewModel(get()) }
     viewModel { ActiveChallengesViewModel(get()) }
     viewModel { ChallengeSummaryViewModel(get()) }
-    viewModel { UpdateChallengeProgressViewModel(get()) }
+    viewModel { UpdateChallengeProgressViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { LoginViewModel(get()) }
 }
@@ -82,6 +85,7 @@ val usecasesModule = module {
 
     factory { GetMyProfileUseCase(get()) }
     factory { CreateProfileUseCase(get()) }
+    factory { CreateCheckInUseCase(get()) }
 
     factory { GetCommunitiesUseCase(get()) }
     factory { GetCommunitiesByCategoryUseCase(get()) }
@@ -119,6 +123,7 @@ val repositoryModule = module {
     single<ChallengeRepository> { ChallengesRepositoryImpl(get()) }
     single<ProfileRepository> { ProfileRepositoryImpl(get()) }
     single<CommunitiesRepository> { CommunitiesRepositoryImpl(get()) }
+    single<CheckInRepository> { CheckInRepositoryImpl() }
     single<ReminderRepository> { ReminderRepositoryImpl() }
 
 }
