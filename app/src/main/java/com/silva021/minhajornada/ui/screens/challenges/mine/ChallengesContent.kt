@@ -41,6 +41,7 @@ import com.silva021.minhajornada.domain.extension.calculateChallengeEndDate
 import com.silva021.minhajornada.domain.extension.calculateChallengeProgress
 import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.ui.DatabaseFake.challenges
+import com.silva021.minhajornada.ui.components.SwipeableItem
 import com.silva021.minhajornada.ui.theme.Palette
 
 @Composable
@@ -86,13 +87,18 @@ fun ChallengesContent(
 
         if (challenges.actives.isNotEmpty()) {
             items(challenges.actives) {
-                ChallengeItem(
-                    icon = Icons.Default.LocalFireDepartment,
-                    title = it.title,
-                    progress = it.calculateChallengeProgress(),
-                    daysLeft = it.calculateChallengeDaysLeft(),
-                    onClick = {
-                        onUpdateChallengeProgress(it.id)
+                SwipeableItem(
+                    onDeleteClick = {},
+                    content = {
+                        ChallengeItem(
+                            icon = Icons.Default.LocalFireDepartment,
+                            title = it.title,
+                            progress = it.calculateChallengeProgress(),
+                            daysLeft = it.calculateChallengeDaysLeft(),
+                            onClick = {
+                                onUpdateChallengeProgress(it.id)
+                            }
+                        )
                     }
                 )
             }
@@ -173,7 +179,7 @@ fun ChallengeItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+//            .clip(RoundedCornerShape(8.dp))
             .background(Palette.cardBackground)
             .padding(16.dp)
             .clickable {
