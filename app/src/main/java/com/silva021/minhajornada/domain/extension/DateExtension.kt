@@ -1,5 +1,6 @@
 package com.silva021.minhajornada.domain.extension
 
+import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -30,9 +31,8 @@ fun String.formatRelativeDate(): String {
     }
 }
 
-fun String.getYears(): String {
-    val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(this)
-    val calendarInstance = Calendar.getInstance().apply { time = date }
+fun Timestamp.getYears(): String {
+    val calendarInstance = Calendar.getInstance().apply { time = this@getYears.toDate() }
     return calendarInstance.get(Calendar.YEAR).toString()
 }
 

@@ -1,19 +1,17 @@
 package com.silva021.minhajornada.data.repository
 
-import com.silva021.minhajornada.data.api.ProfileApi
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.silva021.minhajornada.data.datastore.FireStoreHelper
 import com.silva021.minhajornada.data.dto.ProfileDTO
-import com.silva021.minhajornada.ui.profilesDTO
 import kotlinx.coroutines.tasks.await
-import kotlin.text.set
 
-class ProfileRepositoryImpl(
-    private val profileApi: ProfileApi
-) : ProfileRepository {
+class ProfileRepositoryImpl() : ProfileRepository {
     val usersCollection = FireStoreHelper.usersCollection
 
     override suspend fun getProfile(): ProfileDTO {
-        return profilesDTO.first()
+        return usersCollection.document(Firebase.auth.uid.orEmpty()).get().await()
+            .toObject(ProfileDTO::class.java) ?: throw Exception("Profile not found")
     }
 
     override suspend fun createProfile(profile: ProfileDTO) {

@@ -123,7 +123,6 @@ val repositoryModule = module {
 
     single {
         Retrofit.Builder()
-//            .baseUrl(BuildConfig.JSON_SERVER_URL)
             .baseUrl("https://minha-jornada-debug-api.vercel.app/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
@@ -131,11 +130,10 @@ val repositoryModule = module {
     }
 
     single<ChallengesApi> { get<Retrofit>().create(ChallengesApi::class.java) }
-    single<ProfileApi> { get<Retrofit>().create(ProfileApi::class.java) }
     single<CommunitiesApi> { get<Retrofit>().create(CommunitiesApi::class.java) }
 
     single<ChallengeRepository> { ChallengesRepositoryImpl() }
-    single<ProfileRepository> { ProfileRepositoryImpl(get()) }
+    single<ProfileRepository> { ProfileRepositoryImpl() }
     single<CommunitiesRepository> { CommunitiesRepositoryImpl(get()) }
     single<CheckInRepository> { CheckInRepositoryImpl() }
     single<ReminderRepository> { ReminderRepositoryImpl() }

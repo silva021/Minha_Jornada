@@ -13,19 +13,13 @@ object FireStoreHelper {
         return db.collection(collectionName)
     }
 
-    val usersCollection: CollectionReference
-        get() = getCollection("users")
+    val usersCollection = getCollection("users")
 
-    val userChallengesCollection: CollectionReference
-        get() = getCollection("challenges")
-            .document(Firebase.auth.currentUser?.uid.orEmpty())
-            .collection("userChallenges")
+    val userChallengesCollection = getCollection("challenges")
+        .document(Firebase.auth.currentUser?.uid.orEmpty())
+        .collection("userChallenges")
 
-    val publicChallengesCollection: CollectionReference
-        get() = getCollection("publicChallenges")
+    val publicChallengesCollection = getCollection("publicChallenges")
 
-    fun reminderCollection(
-        challengeId: String
-    ) = getCollection("reminder")
-
+    val communities = getCollection("communities")
 }
