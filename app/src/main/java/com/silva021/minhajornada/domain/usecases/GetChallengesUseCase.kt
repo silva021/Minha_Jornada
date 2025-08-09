@@ -1,7 +1,7 @@
 package com.silva021.minhajornada.domain.usecases
 
 import com.silva021.minhajornada.data.repository.ChallengeRepository
-import com.silva021.minhajornada.domain.extension.isCompleted
+import com.silva021.minhajornada.domain.extension.isExpired
 import com.silva021.minhajornada.domain.model.Challenges
 import com.silva021.minhajornada.domain.model.toDomain
 
@@ -11,8 +11,8 @@ class GetChallengesUseCase(
     suspend operator fun invoke(): Result<Challenges> = runCatching {
         val challenges = repository.getChallenges().map { it.toDomain() }
         Challenges(
-            actives = challenges.filter { !it.isCompleted() },
-            completed = challenges.filter { it.isCompleted() }
+            actives = challenges.filter { it.isExpired().not() && it.isCompleted.not()},
+            completed = challenges.filter { it.isExpired() || it.isCompleted }
         )
     }
 }
