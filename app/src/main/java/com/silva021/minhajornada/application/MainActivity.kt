@@ -262,9 +262,10 @@ class MainActivity : ComponentActivity() {
                             backStackEntry.arguments?.getString(CHALLENGE_ID).orEmpty()
 
                         ExplorerChallengeDetailsScreen(
-//                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!,
-                            challenge = DatabaseFake.publicChallenges.find { it.id == challengeId }!!
-                                .toDomain(),
+                            challengeId = challengeId,
+                            navigateToChallengeScreen = {
+                                Routes.ChallengesScreen.navigateToChallengesScreen(navController)
+                            },
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ExplorerScreen.route,

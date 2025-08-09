@@ -32,6 +32,7 @@ import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
+import com.silva021.minhajornada.domain.usecases.GetPublicChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetReminderByIdUseCase
@@ -49,6 +50,7 @@ import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetails
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
 import com.silva021.minhajornada.ui.screens.communities.post.CommunityPostViewModel
+import com.silva021.minhajornada.ui.screens.explorer.challengedetails.ExplorerChallengeDetailsViewModel
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.login.LoginViewModel
 import com.silva021.minhajornada.ui.screens.login.signup.SignUpViewModel
@@ -75,6 +77,7 @@ val viewModelModule = module {
     viewModel { ChallengeSummaryViewModel(get()) }
     viewModel { UpdateChallengeProgressViewModel(get(), get()) }
     viewModel { ChallengeCompletedViewModel(get()) }
+    viewModel { ExplorerChallengeDetailsViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { LoginViewModel(get()) }
 }
@@ -84,6 +87,7 @@ val usecasesModule = module {
 
     factory { GetChallengesUseCase(get()) }
     factory { GetChallengeByIdUseCase(get()) }
+    factory { GetPublicChallengeByIdUseCase(get()) }
     factory { CreateChallengeUseCase(get()) }
     factory { CreateReminderUseCase(get()) }
     factory { DeleteReminderUseCase(get()) }
