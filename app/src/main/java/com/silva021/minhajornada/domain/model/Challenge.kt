@@ -12,6 +12,7 @@ data class Challenge(
     val categoryType: CategoryType,
     val ownerName: String,
     val isCompleted: Boolean,
+    val isPublic: Boolean,
     val checkins: List<CheckIn>,
     val reminders: List<Reminder>,
     val startDate: Timestamp
@@ -26,6 +27,7 @@ fun ChallengeDTO.toDomain(): Challenge {
         startDate = this.startDate,
         ownerName = this.ownerName,
         isCompleted = this.completed,
+        isPublic = this.public,
         checkins = this.checkins.map { it.toDomain() },
         categoryType = CategoryType.valueOf(this.categoryType.uppercase()),
         durationType = DurationType.valueOf(this.durationType.uppercase()),

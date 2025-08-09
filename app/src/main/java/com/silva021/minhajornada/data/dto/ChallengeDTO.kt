@@ -11,6 +11,7 @@ data class ChallengeDTO(
     val durationType: String = "",
     val ownerName: String = "",
     val completed: Boolean = false,
+    val public: Boolean = false,
     val checkins: List<CheckInDTO> = emptyList(),
     val reminders: List<ReminderDTO> = emptyList(),
     val startDate: Timestamp = Timestamp.now(),

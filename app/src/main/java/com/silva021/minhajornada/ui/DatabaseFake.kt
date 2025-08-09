@@ -277,6 +277,7 @@ object DatabaseFake {
             ),
             ownerName = "Lucas Silva",
             isCompleted = true,
+            isPublic = true,
             reminders = mockReminders
         ),
         Challenge(
@@ -339,6 +340,7 @@ object DatabaseFake {
             ),
             reminders = mockReminders,
             isCompleted = true,
+            isPublic = false,
             ownerName = "Lucas Silva",
         )
     )
