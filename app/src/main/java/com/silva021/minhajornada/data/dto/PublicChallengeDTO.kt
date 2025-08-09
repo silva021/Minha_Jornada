@@ -13,7 +13,7 @@ data class PublicChallengeDTO(
     val participantsCount: Int = 0,
     val category: String = "",
     val duration: String ="",
-    val createdAt: Timestamp,
+    val createdAt: Timestamp = Timestamp.now(),
     val rules: List<String> = emptyList(),
     val benefits: List<String> = emptyList(),
     val trending: Boolean = false
