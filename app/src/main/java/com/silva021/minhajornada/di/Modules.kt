@@ -17,6 +17,7 @@ import com.silva021.minhajornada.domain.usecases.CompleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateCheckInUseCase
 import com.silva021.minhajornada.domain.usecases.CreateProfileUseCase
+import com.silva021.minhajornada.domain.usecases.CreatePublicChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateReminderUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
@@ -92,6 +93,7 @@ val usecasesModule = module {
     factory { GetMyProfileUseCase(get()) }
     factory { CreateProfileUseCase(get()) }
     factory { CreateCheckInUseCase(get()) }
+    factory { CreatePublicChallengeUseCase(get()) }
 
     factory { GetCommunitiesUseCase(get()) }
     factory { GetCommunitiesByCategoryUseCase(get()) }
