@@ -48,8 +48,8 @@ import com.silva021.minhajornada.ui.theme.Palette
 fun ChallengesContent(
     challenges: Challenges,
     onCreateChallenge: () -> Unit,
-    onUpdateChallengeProgress: () -> Unit,
-    onSummaryChallengeClick: () -> Unit,
+    onUpdateChallengeProgress: (String) -> Unit,
+    onSummaryChallengeClick: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -93,7 +93,7 @@ fun ChallengesContent(
                     progress = it.calculateChallengeProgress(),
                     daysLeft = it.calculateChallengeDaysLeft(),
                     onClick = {
-                        onUpdateChallengeProgress()
+                        onUpdateChallengeProgress(it.id)
                     }
                 )
             }
@@ -141,7 +141,7 @@ fun ChallengesContent(
                     title = it.title,
                     completionDate = "Concluído em ${it.calculateChallengeEndDate()}",
                     onClick = {
-                        onSummaryChallengeClick()
+                        onSummaryChallengeClick(it.id)
                     }
                 )
             }

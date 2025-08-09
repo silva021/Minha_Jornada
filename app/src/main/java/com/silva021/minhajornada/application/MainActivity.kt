@@ -176,11 +176,12 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             onUpdateChallengeProgress = {
-                                navigateToUpdateChallengeProgressScreen(navController)
+                                navigateToUpdateChallengeProgressScreen(navController, it)
                             },
                             onSummaryChallengeClick = {
                                 Routes.ChallengeSummaryScreen.navigateToChallengeSummaryScreen(
-                                    navController
+                                    navController,
+                                    it
                                 )
                             }
                         )
@@ -195,9 +196,16 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
-                    composable(Routes.UpdateChallengeProgressScreen.route) {
+                    composable(
+                        route = Routes.UpdateChallengeProgressScreen.route,
+                        arguments = listOf(
+                            navArgument(Routes.UpdateChallengeProgressScreen.CHALLENGE_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) {
                         UpdateChallengeProgressScreen(
-                            challenge = DatabaseFake.challenges.first(),
+                            challengeId = it.arguments?.getString(Routes.UpdateChallengeProgressScreen.CHALLENGE_ID) ?: "",
                             onCompleteChallenge = {
                                 Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
                                     navController,
@@ -352,9 +360,19 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    composable(Routes.ChallengeSummaryScreen.route) {
+                    composable(
+                        route = Routes.ChallengeSummaryScreen.route,
+                        arguments = listOf(
+                            navArgument(Routes.ChallengeSummaryScreen.CHALLENGE_ID) {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val challengeId =
+                            backStackEntry.arguments?.getString(Routes.ChallengeSummaryScreen.CHALLENGE_ID)
+                                .orEmpty()
                         ChallengeSummaryScreen(
-                            challenge = DatabaseFake.challenges.last(),
+                            challengeId = challengeId,
                             onBackPressed = {
                                 navController.popBackStack(
                                     Routes.ChallengesScreen.route,

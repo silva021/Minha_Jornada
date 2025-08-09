@@ -34,6 +34,8 @@ import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengeVie
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesViewModel
 import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewModel
 import com.silva021.minhajornada.ui.screens.challenges.reminders.create.CreateReminderViewModel
+import com.silva021.minhajornada.ui.screens.challenges.summary.ChallengeSummaryViewModel
+import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressViewModel
 import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetailsViewModel
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
@@ -61,7 +63,8 @@ val viewModelModule = module {
     viewModel { CreateReminderViewModel(get(), get(), get()) }
     viewModel { CreateChallengeViewModel(get()) }
     viewModel { ActiveChallengesViewModel(get()) }
-
+    viewModel { ChallengeSummaryViewModel(get()) }
+    viewModel { UpdateChallengeProgressViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { LoginViewModel(get()) }
 }

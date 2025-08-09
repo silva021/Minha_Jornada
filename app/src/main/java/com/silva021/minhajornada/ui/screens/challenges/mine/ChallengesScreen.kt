@@ -15,8 +15,8 @@ import org.koin.androidx.compose.koinViewModel
 fun ChallengesScreen(
     viewModel: ChallengesViewModel = koinViewModel(),
     onCreateChallenge: () -> Unit,
-    onUpdateChallengeProgress: () -> Unit,
-    onSummaryChallengeClick: () -> Unit,
+    onUpdateChallengeProgress: (String) -> Unit,
+    onSummaryChallengeClick: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

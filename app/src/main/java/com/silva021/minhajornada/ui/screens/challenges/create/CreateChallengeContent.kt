@@ -27,7 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.auth
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.DurationType
@@ -207,6 +209,7 @@ fun CreateChallengeContent(
                             categoryType = selectedCategory,
                             checkins = listOf(),
                             startDate = Timestamp.now(),
+                            ownerName = Firebase.auth.currentUser?.displayName.orEmpty(),
                             reminders = if (notificationsEnabled)
                                 listOf(
                                     Reminder(

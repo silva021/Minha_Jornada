@@ -47,9 +47,16 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object UpdateChallengeProgressScreen : Routes("update_challenge_progress_screen") {
-        fun navigateToUpdateChallengeProgressScreen(navController: NavController) {
-            navController.navigate(UpdateChallengeProgressScreen.route)
+    object UpdateChallengeProgressScreen : Routes("update_challenge_progress_screen/{challengeId}") {
+        const val CHALLENGE_ID = "challengeId"
+        fun navigateToUpdateChallengeProgressScreen(navController: NavController, challengeId: String) {
+            navController.navigate(UpdateChallengeProgressScreen.route.replace("{$CHALLENGE_ID}", challengeId)) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         }
     }
 
@@ -126,9 +133,10 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object ChallengeSummaryScreen : Routes("challenge_summary_screen") {
-        fun navigateToChallengeSummaryScreen(navController: NavController) {
-            navController.navigate(ChallengeSummaryScreen.route)
+    object ChallengeSummaryScreen : Routes("challenge_summary_screen/{challengeId}") {
+        const val CHALLENGE_ID = "challengeId"
+        fun navigateToChallengeSummaryScreen(navController: NavController, challengeId: String) {
+            navController.navigate(ChallengeSummaryScreen.route.replace("{$CHALLENGE_ID}", challengeId))
         }
     }
 

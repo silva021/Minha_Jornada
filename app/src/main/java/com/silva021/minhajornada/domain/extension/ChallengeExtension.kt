@@ -49,3 +49,27 @@ fun Challenge.calculateChallengeEndDate(): String {
 
     return dateFormat.format(calendar.time)
 }
+
+fun Challenge.currentChallengeDay(): Int {
+    val start = Calendar.getInstance().apply {
+        time = this@currentChallengeDay.startDate.toDate()
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+
+    val today = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+
+    if (today.before(start)) return 0
+
+    val diffDays = ((today.timeInMillis - start.timeInMillis) / (24L * 60 * 60 * 1000)).toInt()
+    val dayNumber = diffDays + 1
+
+    return dayNumber.coerceIn(1, durationType.days)
+}
