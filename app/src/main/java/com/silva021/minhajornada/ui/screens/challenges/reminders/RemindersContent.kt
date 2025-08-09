@@ -48,6 +48,7 @@ import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.components.SecondButton
+import com.silva021.minhajornada.ui.components.SwipeableItem
 import com.silva021.minhajornada.ui.mockReminders
 import com.silva021.minhajornada.ui.theme.Palette
 import java.util.Locale
@@ -103,7 +104,6 @@ fun RemindersContent(
 
                 LazyColumn(
                     modifier = Modifier
-//                        .weight(1f)
                         .background(Palette.cardBackground, RoundedCornerShape(16.dp))
                         .clip(RoundedCornerShape(16.dp))
                 ) {
@@ -111,14 +111,19 @@ fun RemindersContent(
                         items = challenge.reminders,
                         key = { reminder -> reminder.id }
                     ) { reminder ->
-                        Log.d("lucas-debug", "Rendering reminder: ${reminder}")
-                        SwipeableReminderItem(
-                            reminder = reminder,
-                            onCardClick = { reminder -> onEditReminder(reminder) },
-                            onCheckedChange = { isChecked -> onUpdateReminder(reminder.copy(active = isChecked)) },
-                            onDeleteClick = {
-                                onDeleteReminder.invoke(it)
+                        SwipeableItem(
+                            content = {
+                                ReminderItem(
+                                    reminder = reminder,
+                                    onCardClick = { onEditReminder(reminder) },
+                                    onCheckedChange = { isChecked ->
+                                        onUpdateReminder(reminder.copy(active = isChecked))
+                                    }
+                                )
                             },
+                            onDeleteClick = {
+                                onDeleteReminder.invoke(reminder.id)
+                            }
                         )
                     }
                 }
@@ -174,56 +179,6 @@ private fun ChallengeHeader(challenge: Challenge) {
             )
         }
     }
-}
-
-@Composable
-fun SwipeableReminderItem(
-    reminder: Reminder,
-    onCardClick: (Reminder) -> Unit,
-    onCheckedChange: (Boolean) -> Unit,
-    onDeleteClick: (String) -> Unit,
-) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        positionalThreshold = { totalWidth -> totalWidth * 0.5f },
-        confirmValueChange = { dismissValue ->
-            when (dismissValue) {
-                SwipeToDismissBoxValue.EndToStart -> {
-                    onDeleteClick(reminder.id)
-                    false
-                }
-
-                else -> false
-            }
-        }
-    )
-
-    SwipeToDismissBox(
-        state = dismissState,
-        enableDismissFromStartToEnd = false,
-        backgroundContent = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0xFFF44336))
-                    .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-        },
-        content = {
-            ReminderItem(
-                reminder = reminder,
-                onCheckedChange = onCheckedChange,
-                onCardClick = onCardClick
-            )
-        }
-    )
 }
 
 @Composable
