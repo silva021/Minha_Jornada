@@ -8,11 +8,13 @@ class GetPublicChallengesUseCase(
     val repository: ChallengeRepository,
 ) {
     suspend operator fun invoke(): Result<PublicChallenges> = runCatching {
-        val publicChallenges = repository.getPublicChallenges()
+        val challenges = repository.getPublicChallenges().map { it.toDomain() }
+
+        val (trending, popular) = challenges.partition { it.isTrending }
 
         PublicChallenges(
-            popularChallenges = publicChallenges.filter { it.isTrending.not() }.map { it.toDomain() },
-            trendingChallenges = publicChallenges.filter { it.isTrending }.map { it.toDomain() }
+            popularChallenges = popular,
+            trendingChallenges = trending
         )
     }
 }

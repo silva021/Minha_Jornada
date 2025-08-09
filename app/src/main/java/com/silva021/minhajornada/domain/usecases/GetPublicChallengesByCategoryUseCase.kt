@@ -9,13 +9,15 @@ class GetPublicChallengesByCategoryUseCase(
     val repository: ChallengeRepository,
 ) {
     suspend operator fun invoke(categoryType: CategoryType): Result<PublicChallenges> = runCatching {
-        val filteredChallenges = repository
+        val challenges = repository
             .getPublicChallengeByCategory(categoryType.name)
             .map { it.toDomain() }
 
+        val (trending, popular) = challenges.partition { it.isTrending }
+
         PublicChallenges(
-            popularChallenges = filteredChallenges.filter { it.isTrending.not() },
-            trendingChallenges = filteredChallenges.filter { it.isTrending }
+            popularChallenges = popular,
+            trendingChallenges = trending
         )
     }
 }

@@ -10,9 +10,12 @@ class GetChallengesUseCase(
 ) {
     suspend operator fun invoke(): Result<Challenges> = runCatching {
         val challenges = repository.getChallenges().map { it.toDomain() }
+
+        val (actives, completed) = challenges.partition { it.isExpired().not() && it.isCompleted.not() }
+
         Challenges(
-            actives = challenges.filter { it.isExpired().not() && it.isCompleted.not()},
-            completed = challenges.filter { it.isExpired() || it.isCompleted }
+            actives = actives,
+            completed = completed
         )
     }
 }
