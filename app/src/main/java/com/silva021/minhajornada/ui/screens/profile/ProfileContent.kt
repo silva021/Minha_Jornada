@@ -68,15 +68,15 @@ fun ProfileContent(
             )
         }
 
-        item {
-            SectionCard(
-                title = "Preferências",
-                items = listOf(
-                    SettingsItem("Idioma", value = "Português"),
-                    SettingsItem("Tema", value = "Sistema")
-                )
-            )
-        }
+//        item {
+//            SectionCard(
+//                title = "Preferências",
+//                items = listOf(
+//                    SettingsItem("Idioma", value = "Português"),
+//                    SettingsItem("Tema", value = "Sistema")
+//                )
+//            )
+//        }
 
         item {
             SectionCard(
