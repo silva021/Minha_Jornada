@@ -140,17 +140,17 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object ChallengeCompletedScreen : Routes("challenge_completed_screen/{status}") {
-        const val STATUS_ID = "status"
+    object ChallengeCompletedScreen : Routes("challenge_completed_screen/{challengeId}") {
+        const val CHALLENGE_ID = "challengeId"
 
         fun navigateToChallengeCompletedScreen(
             navController: NavController,
-            challengeResult: ChallengeResult,
+            challengeId: String,
         ) {
             navController.navigate(
                 ChallengeCompletedScreen.route.replace(
-                    "{$STATUS_ID}",
-                    challengeResult.name
+                    "{$CHALLENGE_ID}",
+                    challengeId
                 )
             )
         }

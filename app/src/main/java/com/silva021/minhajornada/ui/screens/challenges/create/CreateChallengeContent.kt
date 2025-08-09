@@ -209,6 +209,7 @@ fun CreateChallengeContent(
                             categoryType = selectedCategory,
                             checkins = listOf(),
                             startDate = Timestamp.now(),
+                            isCompleted = false,
                             ownerName = Firebase.auth.currentUser?.displayName.orEmpty(),
                             reminders = if (notificationsEnabled)
                                 listOf(

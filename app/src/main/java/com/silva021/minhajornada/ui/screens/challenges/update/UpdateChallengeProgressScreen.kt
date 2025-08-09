@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import org.koin.androidx.compose.koinViewModel
@@ -15,23 +14,28 @@ import org.koin.androidx.compose.koinViewModel
 fun UpdateChallengeProgressScreen(
     viewModel: UpdateChallengeProgressViewModel = koinViewModel(),
     challengeId: String,
-    onCompleteChallenge: (ChallengeResult) -> Unit,
+    onCompleteChallenge: (String) -> Unit,
     onBackPressed: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
+
         viewModel.loadChallengeById(challengeId)
+
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is NavigationEvent.NavigateToCompleteChallenge -> {
+                    onCompleteChallenge.invoke(event.challengeId)
+                }
+            }
+        }
     }
 
     when (val state = uiState) {
         is UpdateChallengeProgressUiState.Loading -> {
             LoadingScreen()
         }
-
-        is UpdateChallengeProgressUiState.Success -> {
-        }
-
         is UpdateChallengeProgressUiState.Error -> {
             ErrorScreen(
                 onRetry = {

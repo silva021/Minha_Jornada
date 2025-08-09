@@ -34,22 +34,18 @@ import androidx.navigation.navigation
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.silva021.minhajornada.domain.model.ChallengeResult
 import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake
 import com.silva021.minhajornada.ui.routes.Routes
-import com.silva021.minhajornada.ui.routes.Routes.ChallengeCompletedScreen.STATUS_ID
 import com.silva021.minhajornada.ui.routes.Routes.CommunityDetailsScreen
 import com.silva021.minhajornada.ui.routes.Routes.CommunityFeedScreen.COMMUNITY_ID
 import com.silva021.minhajornada.ui.routes.Routes.ExplorerChallengeDetailsScreen.CHALLENGE_ID
 import com.silva021.minhajornada.ui.routes.Routes.UpdateChallengeProgressScreen.navigateToUpdateChallengeProgressScreen
-import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesContent
 import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedScreen
 import com.silva021.minhajornada.ui.screens.challenges.create.CreateChallengeScreen
 import com.silva021.minhajornada.ui.screens.challenges.mine.ChallengesScreen
 import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersScreen
-import com.silva021.minhajornada.ui.screens.challenges.reminders.RemindersViewModel
 import com.silva021.minhajornada.ui.screens.challenges.reminders.create.CreateReminderScreen
 import com.silva021.minhajornada.ui.screens.challenges.summary.ChallengeSummaryScreen
 import com.silva021.minhajornada.ui.screens.challenges.update.UpdateChallengeProgressScreen
@@ -206,10 +202,10 @@ class MainActivity : ComponentActivity() {
                     ) {
                         UpdateChallengeProgressScreen(
                             challengeId = it.arguments?.getString(Routes.UpdateChallengeProgressScreen.CHALLENGE_ID) ?: "",
-                            onCompleteChallenge = {
+                            onCompleteChallenge = { challengeId ->
                                 Routes.ChallengeCompletedScreen.navigateToChallengeCompletedScreen(
                                     navController,
-                                    it
+                                    challengeId
                                 )
                             },
                             onBackPressed = {
@@ -379,18 +375,16 @@ class MainActivity : ComponentActivity() {
                     composable(
                         Routes.ChallengeCompletedScreen.route,
                         arguments = listOf(
-                            navArgument(STATUS_ID) { type = NavType.StringType }
+                            navArgument(CHALLENGE_ID) { type = NavType.StringType }
                         )
                     ) { backStackEntry ->
-                        val status = ChallengeResult.valueOf(
-                            backStackEntry.arguments?.getString(STATUS_ID).orEmpty()
-                        )
+                        val challengeId = backStackEntry.arguments?.getString(CHALLENGE_ID).orEmpty()
+
                         ChallengeCompletedScreen(
-                            challengeResult = status,
+                            challengeId = challengeId,
                             onBackPressed = {
-                                navController.popBackStack(
-                                    Routes.ChallengesScreen.route,
-                                    inclusive = false
+                                Routes.ChallengesScreen.navigateToChallengesScreen(
+                                    navController
                                 )
                             }
                         )

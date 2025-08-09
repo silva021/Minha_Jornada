@@ -46,7 +46,7 @@ fun UpdateChallengeProgressContent(
     challenge: Challenge,
     currentCheckIn: CheckIn? = null,
     onCompletedDay: (CheckIn) -> Unit,
-    onCompleteChallenge: (ChallengeResult) -> Unit,
+    onCompleteChallenge: (String) -> Unit,
     onBackPressed: () -> Unit,
 ) {
     val observationText = remember { mutableStateOf(currentCheckIn?.note ?: "") }
@@ -188,7 +188,7 @@ fun UpdateChallengeProgressContent(
             SecondButton(
                 text = "Concluir desafio",
                 onClick = {
-                    onCompleteChallenge.invoke(ChallengeResult.FAILED)
+                    onCompleteChallenge.invoke(challenge.id)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
