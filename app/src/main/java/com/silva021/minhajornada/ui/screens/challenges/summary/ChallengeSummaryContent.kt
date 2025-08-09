@@ -36,6 +36,8 @@ import com.silva021.minhajornada.ui.theme.Palette.errorColor
 import com.silva021.minhajornada.ui.theme.Palette.successColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun ChallengeSummaryContent(
@@ -150,8 +152,12 @@ private fun ReportItem(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
+
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
             Text(
-                text = checkIn.date,
+                text = dateFormat.format(checkIn.date.toDate()),
                 color = textSecondary,
                 fontSize = 14.sp
             )
