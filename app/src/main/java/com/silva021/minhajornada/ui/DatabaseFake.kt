@@ -115,7 +115,7 @@ object DatabaseFake {
             participantsCount = 0,
             category = CategoryType.FITNESS.name,
             duration = DurationType.SEVEN_DAYS.name,
-            isTrending = true,
+            trending = true,
             description = "Em apenas uma semana, você vai dar o primeiro passo para uma rotina mais ativa e saudável...",
             rules = listOf(
                 "30 minutos de exercícios diários",
@@ -138,7 +138,7 @@ object DatabaseFake {
             participantsCount = 0,
             duration = DurationType.THIRTY_DAYS.name,
             category = CategoryType.MINDSET.name,
-            isTrending = true,
+            trending = true,
             description = "Acalme a mente e aprofunde sua conexão com o presente...",
             rules = listOf(
                 "Meditação de 10 minutos diários",
@@ -161,7 +161,7 @@ object DatabaseFake {
             participantsCount = 0,
             duration = DurationType.THIRTY_DAYS.name,
             category = CategoryType.EDUCATION.name,
-            isTrending = true,
+            trending = true,
             description = "Organize sua rotina, elimine distrações e aumente sua eficiência...",
             rules = listOf(
                 "Defina 3 prioridades diárias",

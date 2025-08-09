@@ -14,5 +14,5 @@ data class PublicChallengeDTO(
     val duration: String ="",
     val rules: List<String> = emptyList(),
     val benefits: List<String> = emptyList(),
-    val isTrending: Boolean = false
+    val trending: Boolean = false
 )

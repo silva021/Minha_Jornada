@@ -28,7 +28,7 @@ fun PublicChallengeDTO.toDomain(): PublicChallenge {
         participantsCount = participantsCount,
         category = CategoryType.valueOf(category),
         duration = DurationType.valueOf(duration),
-        isTrending = isTrending,
+        isTrending = trending,
         rules = rules,
         benefits = benefits
     )
