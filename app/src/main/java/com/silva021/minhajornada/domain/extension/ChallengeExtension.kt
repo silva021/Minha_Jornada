@@ -6,7 +6,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-fun Challenge.isCompleted(): Boolean {
+fun Challenge.isExpired(): Boolean {
     val end = this.calculateChallengeEndDate()
     val today = Calendar.getInstance()
 
@@ -15,6 +15,8 @@ fun Challenge.isCompleted(): Boolean {
 
     return today.time.after(endDate)
 }
+
+fun Challenge.allCheckInDone() = this.checkins.size == this.durationType.days
 
 fun Challenge.calculateChallengeProgress(): Int {
     val completedDays = this.checkins.distinctBy { it.day }.size

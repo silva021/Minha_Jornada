@@ -16,7 +16,8 @@ class ChallengesRepositoryImpl(
         val challenges = userChallengesCollection
             .get()
             .await()
-            .documents.mapNotNull { document ->
+            .documents
+            .mapNotNull { document ->
                 document.toObject(ChallengeDTO::class.java)
             }
 
@@ -43,6 +44,18 @@ class ChallengesRepositoryImpl(
         TODO("Not yet implemented")
     }
 
+    override suspend fun completeChallenge(
+        challengeId: String
+    ) {
+        userChallengesCollection
+            .document(challengeId)
+            .update(
+                mapOf(
+                    "completed" to true,
+                )
+            )
+    }
+
 }
 
 interface ChallengeRepository {
@@ -51,5 +64,5 @@ interface ChallengeRepository {
     suspend fun createChallenge(challenge: ChallengeDTO)
     suspend fun updateChallengeProgress(challengeId: String, progress: Int): ChallengeDTO
     suspend fun deleteChallenge(challengeId: String)
-
+    suspend fun completeChallenge(challengeId: String)
 }
