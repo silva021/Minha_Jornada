@@ -209,9 +209,8 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             onBackPressed = {
-                                navController.popBackStack(
-                                    Routes.ChallengesScreen.route,
-                                    inclusive = false
+                                Routes.ChallengesScreen.navigateToChallengesScreen(
+                                    navController
                                 )
                             }
                         )
