@@ -21,6 +21,9 @@ object FireStoreHelper {
             .document(Firebase.auth.currentUser?.uid.orEmpty())
             .collection("userChallenges")
 
+    val publicChallengesCollection: CollectionReference
+        get() = getCollection("publicChallenges")
+
     fun reminderCollection(
         challengeId: String
     ) = getCollection("reminder")
