@@ -275,6 +275,7 @@ object DatabaseFake {
                     status = CheckInStatus.SUCCESS
                 )
             ),
+            ownerName = "Lucas Silva",
             reminders = mockReminders
         ),
         Challenge(
@@ -328,7 +329,8 @@ object DatabaseFake {
                     status = CheckInStatus.SUCCESS
                 )
             ),
-            reminders = mockReminders
+            reminders = mockReminders,
+            ownerName = "Lucas Silva",
         )
     )
 
