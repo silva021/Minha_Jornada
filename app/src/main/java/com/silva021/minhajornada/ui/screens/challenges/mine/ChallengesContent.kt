@@ -40,7 +40,6 @@ import com.silva021.minhajornada.domain.extension.calculateChallengeDaysLeft
 import com.silva021.minhajornada.domain.extension.calculateChallengeEndDate
 import com.silva021.minhajornada.domain.extension.calculateChallengeProgress
 import com.silva021.minhajornada.domain.model.Challenges
-import com.silva021.minhajornada.domain.model.toDomain
 import com.silva021.minhajornada.ui.DatabaseFake.challenges
 import com.silva021.minhajornada.ui.theme.Palette
 
@@ -210,7 +209,10 @@ fun ChallengeItem(
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "$daysLeft dias restantes",
+                    text = if (daysLeft <= 0)
+                        "Último dia!"
+                    else
+                        "$daysLeft dias restantes",
                     color = Palette.textSecondary,
                     fontSize = 14.sp
                 )
