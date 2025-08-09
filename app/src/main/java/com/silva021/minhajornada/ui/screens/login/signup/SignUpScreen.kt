@@ -54,16 +54,21 @@ fun SignUpScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is NavigationEvent.NavigateToChallengeScreen -> {
+                    onNavigateChallenge.invoke()
+                }
+            }
+        }
+    }
+
+
     when (val state = uiState) {
         is RegisterScreenState.Loading -> {
             LoadingScreen()
         }
-        is RegisterScreenState.Success -> {
-            LaunchedEffect(Unit) {
-                onNavigateChallenge.invoke()
-            }
-        }
-
         is RegisterScreenState.Idle, is RegisterScreenState.Error -> {
             val errorMessage = if (state is RegisterScreenState.Error) state.message else null
             SignUpContent(
