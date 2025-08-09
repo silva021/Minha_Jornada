@@ -3,7 +3,7 @@ package com.silva021.minhajornada.data.repository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.silva021.minhajornada.data.datastore.FireStoreHelper
-import com.silva021.minhajornada.data.dto.ChallengeDTO
+import com.google.firebase.firestore.FieldValue
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 import kotlinx.coroutines.tasks.await
 
@@ -46,6 +46,13 @@ class PublicChallengeRepositoryImpl() : PublicChallengeRepository {
     override suspend fun acceptPublicChallenge(id: String) {
 
     }
+
+    override suspend fun incrementParticipantsCount(id: String) {
+        publicChallengesCollection
+            .document(id)
+            .update("participantsCount", FieldValue.increment(1))
+            .await()
+    }
 }
 
 interface PublicChallengeRepository {
@@ -54,4 +61,5 @@ interface PublicChallengeRepository {
     suspend fun getPublicChallengeById(id: String): PublicChallengeDTO
     suspend fun createPublicChallenge(challenge: PublicChallengeDTO)
     suspend fun acceptPublicChallenge(id: String)
+    suspend fun incrementParticipantsCount(id: String)
 }
