@@ -1,8 +1,5 @@
 package com.silva021.minhajornada.di
 
-import com.silva021.minhajornada.data.api.ChallengesApi
-import com.silva021.minhajornada.data.api.CommunitiesApi
-import com.silva021.minhajornada.data.api.ProfileApi
 import com.silva021.minhajornada.data.repository.ChallengeRepository
 import com.silva021.minhajornada.data.repository.ChallengesRepositoryImpl
 import com.silva021.minhajornada.data.repository.CheckInRepository
@@ -27,7 +24,6 @@ import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommentsByPostIdUseCase
-import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostByIdUseCase
@@ -38,6 +34,7 @@ import com.silva021.minhajornada.domain.usecases.GetPublicChallengesByCategoryUs
 import com.silva021.minhajornada.domain.usecases.GetPublicChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetReminderByIdUseCase
 import com.silva021.minhajornada.domain.usecases.JoinCommunityUseCase
+import com.silva021.minhajornada.domain.usecases.LeaveCommunityUseCase
 import com.silva021.minhajornada.domain.usecases.LoginUseCase
 import com.silva021.minhajornada.domain.usecases.UpdateReminderUseCase
 import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesViewModel
@@ -57,20 +54,16 @@ import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.login.LoginViewModel
 import com.silva021.minhajornada.ui.screens.login.signup.SignUpViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
     viewModel { ChallengesViewModel(get(), get()) }
-    viewModel { CommunitiesViewModel(get(), get()) }
+    viewModel { CommunitiesViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get()) }
     viewModel { CommunityDetailsViewModel(get(), get()) }
-    viewModel { CommunityFeedViewModel(get(), get(), get()) }
+    viewModel { CommunityFeedViewModel(get(), get(), get(), get()) }
     viewModel { CommunityPostViewModel(get(), get(), get()) }
     viewModel { RemindersViewModel(get(), get()) }
     viewModel { CreateReminderViewModel(get(), get(), get()) }
@@ -104,12 +97,11 @@ val usecasesModule = module {
     factory { AcceptPublicChallengeUseCase(get(), get()) }
     factory { GetCommunitiesUseCase(get()) }
     factory { JoinCommunityUseCase(get()) }
-    factory { GetCommunitiesByCategoryUseCase(get()) }
     factory { GetCommunityByIdUseCase(get()) }
     factory { GetCommunityPostsUseCase(get()) }
     factory { GetCommunityPostByIdUseCase(get()) }
     factory { GetCommentsByPostIdUseCase(get()) }
-
+    factory { LeaveCommunityUseCase(get()) }
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }
 }

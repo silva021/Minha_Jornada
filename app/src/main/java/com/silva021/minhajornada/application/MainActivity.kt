@@ -315,6 +315,7 @@ class MainActivity : ComponentActivity() {
                         val communityId =
                             backStackEntry.arguments?.getString(CommunityDetailsScreen.COMMUNITY_ID)
                                 .orEmpty()
+
                         CommunityFeedScreen(
                             communityId = communityId,
                             onBackPressed = {
@@ -333,6 +334,12 @@ class MainActivity : ComponentActivity() {
                                 Routes.EditPostScreen.navigateToEditPostScreen(
                                     navController,
                                     it.id
+                                )
+                            },
+                            onNavigateCommunities = {
+                                navController.popBackStack(
+                                    Routes.CommunitiesScreen.route,
+                                    inclusive = false
                                 )
                             }
                         )
