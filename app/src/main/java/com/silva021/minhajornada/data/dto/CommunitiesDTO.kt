@@ -1,7 +1,7 @@
 package com.silva021.minhajornada.data.dto
 
 data class CommunitiesDTO(
-    val featured: List<CommunityDTO>,
+    val discover: List<CommunityDTO>,
     val my: List<CommunityDTO>,
 )
 
@@ -12,5 +12,5 @@ data class CommunityDTO(
     val imageUrl: String = "",
     val category: String = "",
     val about: String = "",
-    val members: Int = 0,
+    val membersCount: Int = 0,
 )

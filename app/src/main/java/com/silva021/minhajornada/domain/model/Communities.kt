@@ -4,7 +4,7 @@ import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
 
 data class Communities(
-    val featured: List<Community>,
+    val discover: List<Community>,
     val my: List<Community>,
 )
 
@@ -15,13 +15,13 @@ data class Community(
     val imageUrl: String,
     val category: CategoryType,
     val about: String,
-    val members: Int,
+    val membersCount: Int,
 )
 
 fun CommunitiesDTO.toDomain(): Communities {
     return Communities(
         my = my.map { it.toDomain() },
-        featured = featured.map { it.toDomain() }
+        discover = discover.map { it.toDomain() }
     )
 }
 
@@ -32,5 +32,5 @@ fun CommunityDTO.toDomain() = Community(
     imageUrl = imageUrl,
     category = CategoryType.valueOf(category),
     about = about,
-    members = members
+    membersCount = membersCount,
 )
