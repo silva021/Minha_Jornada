@@ -115,25 +115,6 @@ val usecasesModule = module {
 }
 
 val repositoryModule = module {
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-    }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl("https://minha-jornada-debug-api.vercel.app/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(get())
-            .build()
-    }
-
-    single<ChallengesApi> { get<Retrofit>().create(ChallengesApi::class.java) }
-    single<CommunitiesApi> { get<Retrofit>().create(CommunitiesApi::class.java) }
-
     single<ChallengeRepository> { ChallengesRepositoryImpl() }
     single<ProfileRepository> { ProfileRepositoryImpl() }
     single<CommunitiesRepository> { CommunitiesRepositoryImpl() }
