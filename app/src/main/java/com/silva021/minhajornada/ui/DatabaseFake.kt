@@ -354,10 +354,10 @@ object DatabaseFake {
                 description = "Uma comunidade para todos que amam fitness, saúde e bem-estar.",
                 category = CategoryType.FITNESS.name,
                 about = "Esta comunidade é para pessoas que amam fitness, saúde e bem-estar. Compartilhe dicas, treinos, receitas saudáveis e muito mais.",
-                members = 1200
+                membersCount = 1200
             )
         ),
-        featured = listOf(
+        discover = listOf(
             CommunityDTO(
                 id = "2",
                 imageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDA4p3n7YAU0tuTTdUX1LXvST81S587HIZyGmvHVPennNBDBO44rX3GtNANF2o61oLDAyXlHfi6JeyLmtbEIvWxXS6CtSaEZtwXSnhdXgcwAsOnV6YjnW4u233WljWwK9R0nEhMKHv_bUknrvg-P8_jGN_uuStHzRRCKGQWvRZjiPew6af3P2SDzvcxQ2D80WZ1es7HpJZo-0dlAEI0uvSH0HiAEtEo7tkGl3rBhrOP1VjT9XpWAYRWl0Qp48KpncrzMxSShunC0iw",
@@ -365,7 +365,7 @@ object DatabaseFake {
                 about = "Para os amantes de livros e leitura. Compartilhe resenhas, dicas de leitura e participe de discussões literárias.",
                 description = "Uma comunidade para os amantes de livros e leitura. Compartilhe resenhas, dicas de leitura e participe de discussões literárias.",
                 category = CategoryType.EDUCATION.name,
-                members = 876
+                membersCount = 876
             )
         )
     )
