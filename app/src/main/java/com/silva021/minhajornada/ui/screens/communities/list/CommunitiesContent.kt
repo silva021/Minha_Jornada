@@ -56,8 +56,8 @@ fun CommunitiesContent(
     onCommunityClick: (Community) -> Unit,
 ) {
     var searchText by remember { mutableStateOf("") }
-    val communitiesFeatured = communities.featured.take(3)
-    val communitiesPopular = communities.featured.drop(3)
+    val communitiesFeatured = communities.discover.take(3)
+    val communitiesPopular = communities.discover.drop(3)
 
     Column(
         modifier = Modifier
@@ -80,7 +80,7 @@ fun CommunitiesContent(
             onCategoryClick(it)
         }
 
-        if (communities.my.isEmpty() && communities.featured.isEmpty()) {
+        if (communities.my.isEmpty() && communities.discover.isEmpty()) {
             Column(
                 Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -218,7 +218,7 @@ fun FeaturedCommunityCard(
             fontWeight = FontWeight.Medium
         )
         Text(
-            text = "${community.members} membros",
+            text = "${community.membersCount} membros",
             color = textSecondary,
             fontSize = 14.sp
         )
@@ -245,7 +245,7 @@ fun CommunitiesEmptyContentPreview() {
     MaterialTheme {
         CommunitiesContent(
             communities = Communities(
-                featured = emptyList(),
+                discover = emptyList(),
                 my = emptyList()
             ),
             selectedCategory = CategoryType.FITNESS,

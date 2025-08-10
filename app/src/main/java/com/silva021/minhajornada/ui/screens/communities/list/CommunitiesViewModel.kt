@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Communities
-import com.silva021.minhajornada.domain.usecases.GetCommunitiesByCategoryUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunitiesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class CommunitiesViewModel(
     private val getCommunities: GetCommunitiesUseCase,
-    private val getCommunitiesByCategory: GetCommunitiesByCategoryUseCase
 ) : ViewModel() {
 
     private val _selectedCategory = MutableStateFlow(CategoryType.ALL)
@@ -23,17 +21,16 @@ class CommunitiesViewModel(
     val uiState: StateFlow<CommunitiesUiState> = _uiState.asStateFlow()
 
     fun fetchCommunities() {
-        if (_uiState.value.isSuccess().not())
-            viewModelScope.launch {
-                _uiState.value = CommunitiesUiState.Loading
-                getCommunities().onSuccess {
-                    _uiState.value = CommunitiesUiState.Success(Communities( featured = it, listOf()))
-                }.onFailure {
-                    _uiState.value = CommunitiesUiState.Error(
-                        it.message ?: "Erro ao carregar comunidades"
-                    )
-                }
+        viewModelScope.launch {
+            _uiState.value = CommunitiesUiState.Loading
+            getCommunities().onSuccess {
+                _uiState.value = CommunitiesUiState.Success(it)
+            }.onFailure {
+                _uiState.value = CommunitiesUiState.Error(
+                    it.message ?: "Erro ao carregar comunidades"
+                )
             }
+        }
     }
 
     fun fetchCommunitiesByCategory(
@@ -41,7 +38,7 @@ class CommunitiesViewModel(
     ) {
         viewModelScope.launch {
             _uiState.value = CommunitiesUiState.Loading
-            getCommunitiesByCategory(categoryType).onSuccess {
+            getCommunities(categoryType).onSuccess {
                 _uiState.value = CommunitiesUiState.Success(it)
             }.onFailure {
                 _uiState.value = CommunitiesUiState.Error(
@@ -66,6 +63,4 @@ sealed class CommunitiesUiState {
     data class Success(val communities: Communities) : CommunitiesUiState()
     object Loading : CommunitiesUiState()
     data class Error(val message: String) : CommunitiesUiState()
-
-    fun isSuccess() = this is Success
 }
