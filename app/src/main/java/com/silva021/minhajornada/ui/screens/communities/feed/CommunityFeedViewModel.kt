@@ -8,7 +8,12 @@ import com.silva021.minhajornada.domain.model.Profile
 import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
+import com.silva021.minhajornada.domain.usecases.LeaveCommunityUseCase
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -16,6 +21,7 @@ class CommunityFeedViewModel(
     private val getCommunityById: GetCommunityByIdUseCase,
     private val getProfile: GetMyProfileUseCase,
     private val getPosts: GetCommunityPostsUseCase,
+    private val leaveCommunityUseCase: LeaveCommunityUseCase
 ) : ViewModel() {
     private val _communityState =
         MutableStateFlow<CommunityHeaderUiState>(CommunityHeaderUiState.Loading)
@@ -26,6 +32,11 @@ class CommunityFeedViewModel(
 
     private val _userState = MutableStateFlow<UserInfoUiState>(UserInfoUiState.Loading)
     val userState = _userState.asStateFlow()
+
+    private val _eventFlow = MutableSharedFlow<NavigationEvent>(
+        extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val eventFlow: Flow<NavigationEvent> = _eventFlow.asSharedFlow()
 
     fun loadCommunityScreen(communityId: String) {
         loadCommunityHeader(communityId)
@@ -68,6 +79,22 @@ class CommunityFeedViewModel(
             }
         }
     }
+
+    fun leaveCommunity(communityId: String) {
+        viewModelScope.launch {
+            _communityState.value = CommunityHeaderUiState.Loading
+            _feedState.value = CommunityFeedUiState.Loading
+            _userState.value = UserInfoUiState.Loading
+
+            leaveCommunityUseCase(communityId).onSuccess {
+                _eventFlow.emit(NavigationEvent.NavigateToCommunities)
+            }.onFailure { error ->
+                _communityState.value = CommunityHeaderUiState.Error(
+                    error.message ?: "Erro ao sair da comunidade"
+                )
+            }
+        }
+    }
 }
 
 sealed class UserInfoUiState {
@@ -86,4 +113,8 @@ sealed class CommunityHeaderUiState {
     object Loading : CommunityHeaderUiState()
     data class Success(val community: Community) : CommunityHeaderUiState()
     data class Error(val message: String) : CommunityHeaderUiState()
+}
+
+sealed class NavigationEvent {
+    data object NavigateToCommunities : NavigationEvent()
 }

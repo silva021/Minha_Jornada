@@ -29,6 +29,7 @@ fun CommunityFeedScreen(
     onBackPressed: () -> Unit,
     onClickPost: (Post) -> Unit,
     onEditPost: (Post) -> Unit,
+    onNavigateCommunities: () -> Unit
 ) {
     val communityState by viewModel.communityState.collectAsState()
     val feedState by viewModel.feedState.collectAsState()
@@ -37,6 +38,14 @@ fun CommunityFeedScreen(
 
     LaunchedEffect(Unit) {
         viewModel.loadCommunityScreen(communityId)
+
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                NavigationEvent.NavigateToCommunities -> {
+                    onNavigateCommunities.invoke()
+                }
+            }
+        }
     }
 
     Column(
@@ -51,7 +60,12 @@ fun CommunityFeedScreen(
         when (val state = communityState) {
             is CommunityHeaderUiState.Loading -> CommunityHeaderSkeleton()
             is CommunityHeaderUiState.Error -> CommunityHeaderSkeleton()
-            is CommunityHeaderUiState.Success -> CommunityHeader(state.community)
+            is CommunityHeaderUiState.Success -> CommunityHeader(
+                state.community,
+                onLeaveCommunity = {
+                    viewModel.leaveCommunity(state.community.id)
+                }
+            )
         }
 
         when (val state = feedState) {

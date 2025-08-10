@@ -27,7 +27,8 @@ import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
 @Composable
 fun CommunityHeader(
-    community: Community
+    community: Community,
+    onLeaveCommunity: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -40,7 +41,6 @@ fun CommunityHeader(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-//                model = "https://lh3.googleusercontent.com/aida-public/AB6AXuD9-tV5n5JOQL4OJtNs4OgJv08Y4JvKstcFqQimD4MZw7Uk4-XFDOk93zlmDd8sVHSYtAAsXlPw-kj_N9oJFIzr6cmoGRUQ63pPPaEINbTUxf_MxHDb-kRyj4uRRr-j_0_CfRQCyvJMdzdk9pye5XoJisAAku8DLhn-2jpgXnis8U1tZcjYIISzJAF1VIk5U2nuC193dgim_JWGWhKVnA_Pb--Uf1zrEYn8ZH6FJO2aJeQ5NlGd1qJt7lmocn79iwsVdcdTyetMDI8",
                 model = community.imageUrl,
                 contentDescription = "Foto da comunidade",
                 modifier = Modifier
@@ -53,14 +53,13 @@ fun CommunityHeader(
 
             Column {
                 Text(
-//                    text = "Viciados em Fitness",
                     text = community.name,
                     color = textPrimary,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "${community.members} membros", color = textSecondary, fontSize = 14.sp
+                    text = "${community.membersCount} membros", color = textSecondary, fontSize = 14.sp
                 )
             }
         }
@@ -68,7 +67,7 @@ fun CommunityHeader(
         PrimaryButton(
             text = "Sair",
             shape = RoundedCornerShape(8.dp),
-            onClick = { /* Sair da comunidade */ },
+            onClick = onLeaveCommunity,
         )
     }
 }
