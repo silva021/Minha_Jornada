@@ -41,7 +41,6 @@ import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 import com.silva021.minhajornada.ui.utils.fromHtml
 import com.silva021.minhajornada.ui.utils.isValidEmail
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +81,7 @@ fun SignUpContent(
                     modifier = Modifier.fillMaxWidth(),
                     value = fullName,
                     onValueChange = { fullName = it },
-                    placeholder = "Lucas Silva",
+                    placeholder = "Ex: Lucas Silva",
                 )
 
                 Text(
@@ -95,7 +94,7 @@ fun SignUpContent(
                     modifier = Modifier.fillMaxWidth(),
                     value = userName,
                     onValueChange = { userName = it },
-                    placeholder = "lucas_silva",
+                    placeholder = "Ex: lucas_silva",
                 )
 
                 Text(
@@ -166,7 +165,7 @@ fun SignUpContent(
                                 id = "",
                                 name = fullName,
                                 email = email,
-                                username = userName,
+                                userName = userName,
                                 profilePictureUrl = "",
                                 createdAt = Timestamp.now()
                             ),
