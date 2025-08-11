@@ -15,8 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -94,22 +91,6 @@ fun PostItem(
         ) {
             Row {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(end = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = "Curtir",
-                        tint = textSecondary,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = post.likes.toString(), color = textSecondary, fontSize = 14.sp
-                    )
-                }
-
-                Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -120,21 +101,21 @@ fun PostItem(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = post.comments.toString(), color = textSecondary, fontSize = 14.sp
-                    )
+                        text = post.comments.toString(), color = textSecondary, fontSize = 14.sp                    )
                 }
             }
 
-            IconButton(
-                onClick = onEditPost,
-                modifier = Modifier.size(18.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Mais opções",
-                    tint = textSecondary
-                )
-            }
+            if (post.isMine)
+                IconButton(
+                    onClick = onEditPost,
+                    modifier = Modifier.size(18.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Mais opções",
+                        tint = textSecondary
+                    )
+                }
         }
     }
 }
