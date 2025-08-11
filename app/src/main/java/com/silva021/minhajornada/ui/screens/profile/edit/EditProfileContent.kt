@@ -53,7 +53,7 @@ fun EditProfileContent(
     onBackPressed: () -> Unit,
 ) {
     var fullName by remember { mutableStateOf(profile.name) }
-    var username by remember { mutableStateOf(profile.username) }
+    var username by remember { mutableStateOf(profile.userName) }
 
     Column(
         modifier = Modifier

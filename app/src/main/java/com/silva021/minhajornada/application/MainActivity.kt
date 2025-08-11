@@ -327,13 +327,15 @@ class MainActivity : ComponentActivity() {
                             onClickPost = {
                                 Routes.CommunityPostScreen.navigateToCommunityPostScreen(
                                     navController,
-                                    it.id
+                                    postId = it.id,
+                                    communityId = communityId
                                 )
                             },
                             onEditPost = {
                                 Routes.EditPostScreen.navigateToEditPostScreen(
                                     navController,
-                                    it.id
+                                    postId = it.id,
+                                    communityId = communityId
                                 )
                             },
                             onNavigateCommunities = {
@@ -353,11 +355,19 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) { backStackEntry ->
-                        val postId =
-                            backStackEntry.arguments?.getString(Routes.CommunityPostScreen.POST_ID)
-                                .orEmpty()
+                        val postId = backStackEntry
+                            .arguments
+                            ?.getString(Routes.CommunityPostScreen.POST_ID)
+                            .orEmpty()
+
+                        val communityId = backStackEntry
+                            .arguments
+                            ?.getString(Routes.CommunityPostScreen.COMMUNITY_ID)
+                            .orEmpty()
+
                         CommunityPostScreen(
                             postId = postId,
+                            communityId = communityId,
                             onBackPressed = {
                                 navController.popBackStack()
                             }
@@ -441,8 +451,12 @@ class MainActivity : ComponentActivity() {
                         val postId =
                             backStackEntry.arguments?.getString(Routes.EditPostScreen.POST_ID)
                                 .orEmpty()
+                        val communityId =
+                            backStackEntry.arguments?.getString(Routes.EditPostScreen.COMMUNITY_ID)
+                                .orEmpty()
                         EditPostScreen(
                             postId = postId,
+                            communityId = communityId,
                             onBackPressed = {
                                 navController.popBackStack()
                             }

@@ -1,19 +1,17 @@
 package com.silva021.minhajornada.domain.usecases
 
 import com.silva021.minhajornada.data.repository.FeedRepository
-import com.silva021.minhajornada.domain.model.Post
-import com.silva021.minhajornada.domain.model.toDomain
 
-class GetCommunityPostByIdUseCase(
-    val repository: FeedRepository,
+class DeletePostUseCase(
+    private val repository: FeedRepository,
 ) {
     suspend operator fun invoke(
         communityId: String,
         postId: String
-    ): Result<Post> = runCatching {
-        repository.getPostById(
+    ) = runCatching {
+        repository.deletePost(
             communityId = communityId,
             postId = postId
-        ).toDomain()
+        )
     }
 }

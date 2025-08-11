@@ -69,7 +69,7 @@ fun CommentItem(
                     )
 
                     Text(
-                        text = " (@${comment.profile.username})",
+                        text = " (@${comment.profile.userName})",
                         color = textSecondary,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold

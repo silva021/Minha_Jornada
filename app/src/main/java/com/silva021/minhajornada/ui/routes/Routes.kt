@@ -126,10 +126,19 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object CommunityPostScreen : Routes("community_post_screen/{postId}") {
+    object CommunityPostScreen : Routes("community_post_screen/{communityId}/{postId}") {
         const val POST_ID = "postId"
-        fun navigateToCommunityPostScreen(navController: NavController, postId: String) {
-            navController.navigate(CommunityPostScreen.route.replace("{$POST_ID}", postId))
+        const val COMMUNITY_ID = "communityId"
+        fun navigateToCommunityPostScreen(
+            navController: NavController,
+            postId: String,
+            communityId: String
+        ) {
+            navController.navigate(
+                CommunityPostScreen.route
+                    .replace("{$COMMUNITY_ID}", communityId)
+                    .replace("{$POST_ID}", postId)
+            )
         }
     }
 
@@ -162,11 +171,16 @@ sealed class Routes(val route: String) {
         }
     }
 
-    object EditPostScreen : Routes("edit_post_screen/{postId}") {
+    object EditPostScreen : Routes("edit_post_screen/{postId}/{communityId}") {
         const val POST_ID = "postId"
+        const val COMMUNITY_ID = "communityId"
 
-        fun navigateToEditPostScreen(navController: NavController, postId: String) {
-            navController.navigate(EditPostScreen.route.replace("{$POST_ID}", postId))
+        fun navigateToEditPostScreen(navController: NavController, postId: String, communityId: String) {
+            navController.navigate(
+                EditPostScreen.route
+                    .replace("{$POST_ID}", postId)
+                    .replace("{$COMMUNITY_ID}", communityId)
+            )
         }
     }
 

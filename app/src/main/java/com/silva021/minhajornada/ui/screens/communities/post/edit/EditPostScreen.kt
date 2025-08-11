@@ -17,6 +17,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,102 +33,49 @@ import com.silva021.minhajornada.ui.components.CustomTextField
 import com.silva021.minhajornada.ui.components.Header
 import com.silva021.minhajornada.ui.components.PrimaryButton
 import com.silva021.minhajornada.ui.components.SecondButton
+import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
+import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditPostScreen(
+    viewModel: EditPostViewModel = koinViewModel(),
     postId: String,
+    communityId: String,
     onBackPressed: () -> Unit,
 ) {
-    val originalPostText = "Estou animado para começar meu novo desafio! #NovosComeços #JornadaFitness"
-    var postText by remember {
-        mutableStateOf("Estou animado para começar meu novo desafio! #NovosComeços #JornadaFitness")
-    }
+    val uiState by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Palette.backgroundColor)
-    ) {
-        Header(
-            "Editar Post",
-            onBackPressed = onBackPressed
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Publicação",
-                color = textSecondary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+    LaunchedEffect(Unit) {
+        viewModel.loadPost(communityId = communityId, postId = postId)
 
-            CustomTextField(
-                value = postText,
-                onValueChange = { postText = it },
-                placeholder = "No que você está pensando?",
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (postText != originalPostText) {
-                    SecondButton(
-                        onClick = {
-                            postText = originalPostText
-                        },
-                        text = "Cancelar",
-                    )
-                } else {
-                    Button(
-                        onClick = {  },
-                        modifier = Modifier
-                            .height(48.dp),
-                        shape = RoundedCornerShape(50),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Palette.errorColor,
-                            contentColor = textPrimary
-                        )
-                    ) {
-                        Text(
-                            text = "Excluir",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                PrimaryButton(
-                    onClick = { /* Salvar */ },
-                    text = "Atualizar",
-                )
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is NavigationEvent.GoBack -> onBackPressed()
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun EditPostScreenPreview() {
-    MaterialTheme {
-        EditPostScreen(
-            postId = "12345",
-            onBackPressed = { /* No action */ }
-        )
+    when (val state = uiState) {
+        is EditPostUiState.Loading -> {
+            LoadingScreen()
+        }
+        is EditPostUiState.Success -> {
+            EditPostContent(
+                post = state.post,
+                onUpdatePost = { viewModel.editPost(it) },
+                onDeletePost = { viewModel.deletePost() },
+                onBackPressed = onBackPressed
+            )
+        }
+        is EditPostUiState.Error -> {
+            ErrorScreen(
+                onRetry = { viewModel.loadPost(communityId, postId) }
+            )
+        }
     }
 }

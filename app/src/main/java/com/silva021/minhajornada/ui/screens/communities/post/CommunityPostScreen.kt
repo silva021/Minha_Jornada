@@ -1,6 +1,7 @@
 package com.silva021.minhajornada.ui.screens.communities.post
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.silva021.minhajornada.ui.components.Header
@@ -29,12 +34,14 @@ import com.silva021.minhajornada.ui.screens.defaults.error.ErrorScreen
 import com.silva021.minhajornada.ui.screens.defaults.loading.LoadingScreen
 import com.silva021.minhajornada.ui.theme.Palette.backgroundColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
+import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CommunityPostScreen(
     viewModel: CommunityPostViewModel = koinViewModel(),
     postId: String,
+    communityId: String,
     onBackPressed: () -> Unit,
 ) {
     val postState by viewModel.postState.collectAsState()
@@ -43,7 +50,7 @@ fun CommunityPostScreen(
     var inputText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.loadPostInfo(postId)
+        viewModel.loadPostInfo(communityId = communityId, postId = postId)
     }
 
     Column(
@@ -60,19 +67,47 @@ fun CommunityPostScreen(
         }
 
         when (val state = commentsState) {
-            is CommunityCommentsUiState.Loading -> {}
+            is CommunityCommentsUiState.Loading -> {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    LoadingScreen()
+                }
+            }
             is CommunityCommentsUiState.Error -> ErrorScreen(
-                onRetry = { viewModel.loadPostInfo(postId) }
+                onRetry = { viewModel.loadPostInfo(communityId, postId) }
             )
+
             is CommunityCommentsUiState.Success -> {
                 CommentsHeader()
 
-                LazyColumn(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    items(state.comments) { comment ->
-                        CommentItem(comment)
-                        Spacer(modifier = Modifier.height(4.dp))
+                if (state.comments.isEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Nenhum comentário ainda",
+                            color = textSecondary,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        items(state.comments) { comment ->
+                            CommentItem(comment)
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
                     }
                 }
             }
@@ -84,14 +119,33 @@ fun CommunityPostScreen(
                 placeholder = "Adicionar um comentário...",
                 profilePictureUrl = null,
                 postText = inputText,
-                onPostTextChange = { inputText = it }
+                onPostTextChange = { inputText = it },
+                onClick = {
+                    viewModel.createComment(
+                        communityId = communityId,
+                        postId = postId,
+                        postText = inputText
+                    ).also {
+                        inputText = ""
+                    }
+                }
             )
+
             is UserInfoUiState.Success -> {
                 InputArea(
                     placeholder = "Adicionar um comentário...",
                     profilePictureUrl = state.profile.profilePictureUrl,
                     postText = inputText,
-                    onPostTextChange = { inputText = it }
+                    onPostTextChange = { inputText = it },
+                    onClick = {
+                        viewModel.createComment(
+                            communityId = communityId,
+                            postId = postId,
+                            postText = inputText
+                        ).also {
+                            inputText = ""
+                        }
+                    }
                 )
             }
         }

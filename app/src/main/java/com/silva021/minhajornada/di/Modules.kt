@@ -6,6 +6,8 @@ import com.silva021.minhajornada.data.repository.CheckInRepository
 import com.silva021.minhajornada.data.repository.CheckInRepositoryImpl
 import com.silva021.minhajornada.data.repository.CommunitiesRepository
 import com.silva021.minhajornada.data.repository.CommunitiesRepositoryImpl
+import com.silva021.minhajornada.data.repository.FeedRepository
+import com.silva021.minhajornada.data.repository.FeedRepositoryImpl
 import com.silva021.minhajornada.data.repository.ProfileRepository
 import com.silva021.minhajornada.data.repository.ProfileRepositoryImpl
 import com.silva021.minhajornada.data.repository.PublicChallengeRepository
@@ -16,11 +18,15 @@ import com.silva021.minhajornada.domain.usecases.AcceptPublicChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CompleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateCheckInUseCase
+import com.silva021.minhajornada.domain.usecases.CreateCommentUseCase
+import com.silva021.minhajornada.domain.usecases.CreatePostUseCase
 import com.silva021.minhajornada.domain.usecases.CreateProfileUseCase
 import com.silva021.minhajornada.domain.usecases.CreatePublicChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.CreateReminderUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteChallengeUseCase
+import com.silva021.minhajornada.domain.usecases.DeletePostUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
+import com.silva021.minhajornada.domain.usecases.EditPostUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommentsByPostIdUseCase
@@ -49,6 +55,7 @@ import com.silva021.minhajornada.ui.screens.communities.details.CommunityDetails
 import com.silva021.minhajornada.ui.screens.communities.feed.CommunityFeedViewModel
 import com.silva021.minhajornada.ui.screens.communities.list.CommunitiesViewModel
 import com.silva021.minhajornada.ui.screens.communities.post.CommunityPostViewModel
+import com.silva021.minhajornada.ui.screens.communities.post.edit.EditPostViewModel
 import com.silva021.minhajornada.ui.screens.explorer.challengedetails.ExplorerChallengeDetailsViewModel
 import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.login.LoginViewModel
@@ -63,8 +70,9 @@ val viewModelModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { ExplorerViewModel(get(), get()) }
     viewModel { CommunityDetailsViewModel(get(), get()) }
-    viewModel { CommunityFeedViewModel(get(), get(), get(), get()) }
-    viewModel { CommunityPostViewModel(get(), get(), get()) }
+    viewModel { CommunityFeedViewModel(get(), get(), get(), get(), get()) }
+    viewModel { CommunityPostViewModel(get(), get(), get(), get()) }
+    viewModel { EditPostViewModel(get(), get(), get()) }
     viewModel { RemindersViewModel(get(), get()) }
     viewModel { CreateReminderViewModel(get(), get(), get()) }
     viewModel { CreateChallengeViewModel(get()) }
@@ -94,6 +102,10 @@ val usecasesModule = module {
     factory { CreateProfileUseCase(get()) }
     factory { CreateCheckInUseCase(get()) }
     factory { CreatePublicChallengeUseCase(get()) }
+    factory { CreatePostUseCase(get()) }
+    factory { EditPostUseCase(get()) }
+    factory { DeletePostUseCase(get()) }
+    factory { CreateCommentUseCase(get()) }
     factory { AcceptPublicChallengeUseCase(get(), get()) }
     factory { GetCommunitiesUseCase(get()) }
     factory { JoinCommunityUseCase(get()) }
@@ -113,4 +125,5 @@ val repositoryModule = module {
     single<CheckInRepository> { CheckInRepositoryImpl() }
     single<ReminderRepository> { ReminderRepositoryImpl() }
     single<PublicChallengeRepository> { PublicChallengeRepositoryImpl() }
+    single<FeedRepository> { FeedRepositoryImpl() }
 }

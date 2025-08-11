@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.silva021.minhajornada.domain.model.Community
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.domain.model.Profile
+import com.silva021.minhajornada.domain.usecases.CreatePostUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetCommunityPostsUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
@@ -21,8 +22,11 @@ class CommunityFeedViewModel(
     private val getCommunityById: GetCommunityByIdUseCase,
     private val getProfile: GetMyProfileUseCase,
     private val getPosts: GetCommunityPostsUseCase,
-    private val leaveCommunityUseCase: LeaveCommunityUseCase
+    private val leaveCommunityUseCase: LeaveCommunityUseCase,
+    private val createPostUseCase: CreatePostUseCase,
 ) : ViewModel() {
+    private var profile: Profile? = null
+
     private val _communityState =
         MutableStateFlow<CommunityHeaderUiState>(CommunityHeaderUiState.Loading)
     val communityState = _communityState.asStateFlow()
@@ -73,6 +77,7 @@ class CommunityFeedViewModel(
         viewModelScope.launch {
             _userState.value = UserInfoUiState.Loading
             getProfile.invoke().onSuccess {
+                profile = it
                 _userState.value = UserInfoUiState.Success(it)
             }.onFailure {
                 _userState.value = UserInfoUiState.Error("Erro ao carregar usuário")
@@ -92,6 +97,31 @@ class CommunityFeedViewModel(
                 _communityState.value = CommunityHeaderUiState.Error(
                     error.message ?: "Erro ao sair da comunidade"
                 )
+            }
+        }
+    }
+
+    fun createPost(
+        communityId: String,
+        text: String,
+    ) {
+        viewModelScope.launch {
+            profile?.let {
+                _communityState.value = CommunityHeaderUiState.Loading
+                _feedState.value = CommunityFeedUiState.Loading
+                _userState.value = UserInfoUiState.Loading
+
+                createPostUseCase(
+                    communityId = communityId,
+                    profile = it,
+                    text = text,
+                ).onSuccess {
+                    loadCommunityScreen(communityId)
+                }.onFailure {
+                    _userState.value = UserInfoUiState.Error("Usuário não encontrado")
+                }
+            } ?: run {
+                _userState.value = UserInfoUiState.Error("Usuário não encontrado")
             }
         }
     }
