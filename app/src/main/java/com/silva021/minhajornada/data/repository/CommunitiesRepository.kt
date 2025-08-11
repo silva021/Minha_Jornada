@@ -6,11 +6,8 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.silva021.minhajornada.data.datastore.FireStoreHelper
-import com.silva021.minhajornada.data.dto.CommentDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
-import com.silva021.minhajornada.data.dto.PostDTO
 import com.silva021.minhajornada.domain.model.CategoryType
-import com.silva021.minhajornada.ui.DatabaseFake
 import kotlinx.coroutines.tasks.await
 
 class CommunitiesRepositoryImpl() : CommunitiesRepository {
@@ -44,7 +41,6 @@ class CommunitiesRepositoryImpl() : CommunitiesRepository {
             .get()
             .await()
             .mapNotNull { it.reference.id }
-//            .toSet()
     }
 
     override suspend fun getCommunities(categoryType: CategoryType): List<CommunityDTO> {
@@ -98,18 +94,6 @@ class CommunitiesRepositoryImpl() : CommunitiesRepository {
         }
 
         return fetched
-    }
-
-    override suspend fun getPostsByCommunityId(communityId: String): List<PostDTO> {
-        return DatabaseFake.postList
-    }
-
-    override suspend fun getPostById(id: String): PostDTO {
-        return DatabaseFake.postList.find { it.id == id }!!
-    }
-
-    override suspend fun getCommentsByPostId(id: String): List<CommentDTO> {
-        return DatabaseFake.comments.filter { it.postId == id }
     }
 
     override suspend fun joinCommunity(communityId: String) {
@@ -182,10 +166,6 @@ interface CommunitiesRepository {
         ids: Set<String>,
         categoryType: CategoryType = CategoryType.ALL,
     ): List<CommunityDTO>
-
-    suspend fun getPostsByCommunityId(communityId: String): List<PostDTO>
-    suspend fun getPostById(id: String): PostDTO
-    suspend fun getCommentsByPostId(id: String): List<CommentDTO>
 
     suspend fun joinCommunity(communityId: String)
     suspend fun leaveCommunity(communityId: String): Result<Unit>
