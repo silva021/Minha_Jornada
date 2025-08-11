@@ -1,10 +1,17 @@
 package com.silva021.minhajornada.data.dto
 
+import com.google.firebase.Timestamp
+
 data class PostDTO(
-    val id: String,
-    val profile: ProfileDTO,
-    val createdAt: String,
-    val content: String,
-    val likes: Int,
-    val comments: Int,
+    val id: String = "",
+    val authorId: String = "",
+    val authorName: String = "",
+    val authorImage: String = "",
+    val authorUserName: String = "",
+    val text: String = "",
+    val createdAt: Timestamp = Timestamp.now(),
+    val updatedAt: Timestamp? = null,
+    val commentsCount: Long = 0,
+    val status: String = "ACTIVE"
+
 )
