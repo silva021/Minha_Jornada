@@ -119,7 +119,7 @@ fun ProfileHeader(profile: Profile) {
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = profile.username,
+            text = profile.userName,
             color = textSecondary,
             fontSize = 16.sp
         )
