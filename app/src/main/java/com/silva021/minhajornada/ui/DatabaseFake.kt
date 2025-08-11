@@ -1,20 +1,21 @@
 package com.silva021.minhajornada.ui
 
 import com.google.firebase.Timestamp
-import com.silva021.minhajornada.data.dto.CommentDTO
 import com.silva021.minhajornada.data.dto.CommunitiesDTO
 import com.silva021.minhajornada.data.dto.CommunityDTO
-import com.silva021.minhajornada.data.dto.PostDTO
 import com.silva021.minhajornada.data.dto.ProfileDTO
 import com.silva021.minhajornada.data.dto.PublicChallengeDTO
 import com.silva021.minhajornada.domain.model.CategoryType
 import com.silva021.minhajornada.domain.model.Challenge
 import com.silva021.minhajornada.domain.model.CheckIn
 import com.silva021.minhajornada.domain.model.CheckInStatus
+import com.silva021.minhajornada.domain.model.Comment
 import com.silva021.minhajornada.domain.model.DurationType
+import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.domain.model.Reminder
 import com.silva021.minhajornada.domain.model.ReminderFrequency
 import com.silva021.minhajornada.domain.model.Weekday
+import com.silva021.minhajornada.domain.model.toDomain
 
 object DatabaseFake {
 
@@ -186,69 +187,37 @@ object DatabaseFake {
     )
 
     val comments = listOf(
-        CommentDTO(
+        Comment(
             postId = "1",
-            profile = profilesDTO.first(),
-            createdAt = "2025-08-03",
+            profile = profilesDTO.first().toDomain(),
+            createdAt = Timestamp.now(),
             comment = "Isso é incrível, Jessica! Eu sempre quis aprender espanhol também. Me avise se precisar de um parceiro para praticar!"
         ),
-        CommentDTO(
+        Comment(
             postId = "1",
-            profile = profilesDTO[1],
-            createdAt = "2025-04-02",
+            profile = profilesDTO[1].toDomain(),
+            createdAt = Timestamp.now(),
             comment = "Boa sorte! Tenho certeza que você vai se sair bem. Lembre-se de celebrar seu progresso ao longo do caminho."
         )
     )
 
     val postList = listOf(
-        PostDTO(
+        Post(
             id = "1",
-            profile = profilesDTO[2],
-            createdAt = "2025-08-03",
+            owner = profilesDTO[2].toDomain(),
+            createdAt = Timestamp.now(),
             content = "Acabei de completar minha corrida de 5km! Me sentindo ótima e cheia de energia para o dia. Quem mais está alcançando seus objetivos fitness hoje?",
-            likes = 23,
-            comments = 5
+            comments = 5,
+            isMine = false
         ),
-        PostDTO(
+        Post(
             id = "2",
-            profile = profilesDTO.first(),
-            createdAt = "2025-07-02",
+            owner = profilesDTO.first().toDomain(),
+            createdAt = Timestamp.now(),
             content = "Estou tentando incluir mais treino de força na minha rotina. Alguma dica para iniciantes?",
-            likes = 15,
-            comments = 3
+            comments = 3,
+            isMine = true
         ),
-        PostDTO(
-            id = "3",
-            profile = profilesDTO[0],
-            createdAt = "2025-06-02",
-            content = "Alguém animado para uma trilha no final de semana? Vamos explorar novas trilhas e aproveitar o ar livre juntos!",
-            likes = 30,
-            comments = 8
-        ),
-        PostDTO(
-            id = "4",
-            profile = profilesDTO[2],
-            createdAt = "2025-05-02",
-            content = "Acabei de completar minha corrida de 5km! Me sentindo ótima e cheia de energia para o dia. Quem mais está alcançando seus objetivos fitness hoje?",
-            likes = 23,
-            comments = 5
-        ),
-        PostDTO(
-            id = "5",
-            profile = profilesDTO[1],
-            createdAt = "2025-04-02",
-            content = "Estou tentando incluir mais treino de força na minha rotina. Alguma dica para iniciantes?",
-            likes = 15,
-            comments = 3
-        ),
-        PostDTO(
-            id = "6",
-            profile = profilesDTO[0],
-            createdAt = "2025-03-02",
-            content = "Alguém animado para uma trilha no final de semana? Vamos explorar novas trilhas e aproveitar o ar livre juntos!",
-            likes = 30,
-            comments = 8
-        )
     )
 
     val challenges = listOf(
@@ -375,7 +344,7 @@ val profilesDTO = listOf(
     ProfileDTO(
         id = "u123",
         name = "Lucas Silva",
-        username = "silva021",
+        userName = "silva021",
         profilePictureUrl = "https://media.licdn.com/dms/image/v2/D4D03AQGHu5O7K6BgOA/profile-displayphoto-shrink_800_800/B4DZYRGyL2GwAk-/0/1744043714075?e=1756944000&v=beta&t=1a1Ej8JUBG-Awxu-qDbAXTUjCk3u5bPOGQ3rTsnPEtE",
         createdAt = Timestamp.now(),
         email = "lucas@gmail.com"
@@ -384,14 +353,14 @@ val profilesDTO = listOf(
         id = "u123",
         profilePictureUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDtOZOGqPBmoMIxOJODpUF6L55FFzYzDm-7hdl2NAIn44H2ViOQAGcW_9BLQ1JXgaCtWCA4Faq3I-uU4MF6pDd9ixBDalXweY9q1Tz1CBZe5F0dCHySwJjn21fBCZ-dHBU_lDUbFSItE21a0vIT-wO9bdYw1hPv5ej6XyBzb5sVHP3Lh0hi59j48AntkhtNH0ADIm--kflWd8AZa-ZA7GmULHesWk8EcM98tMB3ebeLOk5LiaU9-dgp-qwq5ouQj3JP4v1mc73v1L8",
         name = "Sarah Miller",
-        username = "SarahMIMI",
+        userName = "SarahMIMI",
         createdAt = Timestamp.now(),
         email = "sara@gmail.com"
     ),
     ProfileDTO(
         id = "u123",
         name = "Mark Thompson",
-        username = "MarkTThompson",
+        userName = "MarkTThompson",
         profilePictureUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD38031a9CUlzl_YS565weCOqjozwjPs_D8QhTpnQNCNbreXCZXtJmMNmIYPu0l8vmmXMGS3EMcPwJG-tlMUr_-Y0y3qxdtsG0HyurbO0MBouSoZDdD9dX7QgSFqDi5nyeq3Hrioaln2cG345utbSVfOeEuzmpREIlRnlAJXNB_VTsajQcFh-KuG4hX_vWA1CaeRpIXU-1j-ZH20kzY2vxMbAvV1mpjvFXMgD82P80FTne_XTXi1yd1pVPBpE7GXZ-zHFKHnG1yHqo",
         createdAt = Timestamp.now(),
         email = "mark@gmail.com"
