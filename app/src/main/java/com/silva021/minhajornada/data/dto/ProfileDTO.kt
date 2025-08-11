@@ -7,7 +7,7 @@ data class ProfileDTO(
     val id: String = "",
     val name: String = "",
     val email: String = "",
-    val username: String = "",
+    val userName: String = "",
     val profilePictureUrl: String = "",
     val createdAt: Timestamp = Timestamp.now(),
 )
@@ -17,7 +17,7 @@ fun Profile.toDTO(): ProfileDTO {
         id = this.id,
         name = this.name,
         email = this.email,
-        username = this.username,
+        userName = this.userName,
         profilePictureUrl = this.profilePictureUrl,
         createdAt = this.createdAt
     )
