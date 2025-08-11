@@ -40,7 +40,8 @@ fun InputArea(
     profilePictureUrl: String? = null,
     postText: String,
     onPostTextChange: (String) -> Unit,
-    placeholder: String
+    placeholder: String,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -85,10 +86,15 @@ fun InputArea(
         Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(
-            onClick = { /* Adicionar imagem */ }) {
+            onClick = {
+                if (postText.isNotEmpty()) {
+                    onClick.invoke()
+                }
+            },
+        ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,
-                contentDescription = "Adicionar imagem",
+                contentDescription = null,
                 tint = if (postText.isEmpty()) textSecondary else primaryColor,
             )
         }
@@ -104,14 +110,16 @@ fun NewPostAreaPreview() {
             profilePictureUrl = profile.profilePictureUrl,
             postText = "",
             placeholder = "O que você está pensando?",
-            onPostTextChange = {}
+            onPostTextChange = {},
+            onClick = { /* Do something */ }
         )
 
         InputArea(
             profilePictureUrl = null,
             postText = "",
             placeholder = "O que você está pensando?",
-            onPostTextChange = {}
+            onPostTextChange = {},
+            onClick = { /* Do something */ }
         )
     }
 }
