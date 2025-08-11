@@ -9,10 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +22,6 @@ import coil3.compose.AsyncImage
 import com.silva021.minhajornada.domain.extension.formatRelativeDate
 import com.silva021.minhajornada.domain.model.Post
 import com.silva021.minhajornada.ui.theme.Palette.cardBackground
-import com.silva021.minhajornada.ui.theme.Palette.likeColor
 import com.silva021.minhajornada.ui.theme.Palette.textPrimary
 import com.silva021.minhajornada.ui.theme.Palette.textSecondary
 
@@ -62,7 +57,7 @@ fun PostContent(
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "@${post.owner.username}",
+                    text = "@${post.owner.userName}",
                     color = textSecondary,
                     fontSize = 14.sp
                 )
@@ -78,34 +73,9 @@ fun PostContent(
         )
 
         Text(
-            text = post.createdAt.formatRelativeDate() + " atrás",
+            text = post.createdAt.formatRelativeDate(),
             color = textSecondary,
             fontSize = 12.sp
         )
-
-        Row(
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { /* Curtir post */ },
-                modifier = Modifier.size(20.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Curtir",
-                    tint = likeColor
-                )
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "12",
-                color = likeColor,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
     }
 }
