@@ -91,7 +91,7 @@ fun LoginContent(
                 modifier = Modifier.fillMaxWidth(),
                 value = email,
                 onValueChange = { email = it },
-                placeholder = "you@example.com"
+                placeholder = "seu@exemplo.com"
             )
 
             Text(
