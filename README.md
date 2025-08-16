@@ -28,8 +28,6 @@ Aplicativo de hábitos e metas pessoais desenvolvido em Kotlin com Jetpack Compo
 |---------------------|----------|
 | ![Desafio](screenshots/desafio.png) | ![Progresso](screenshots/Atualizar_progresso.png) |
 
-Comunidadeee
-
 ---
 
 ## ✅ Funcionalidades  
