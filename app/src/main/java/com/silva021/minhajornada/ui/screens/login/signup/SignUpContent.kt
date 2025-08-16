@@ -178,34 +178,34 @@ fun SignUpContent(
                     enabled = userName.isNotBlank() && fullName.isNotBlank() && email.isValidEmail() && password.isNotBlank() && confirmPassword.isNotBlank() && password == confirmPassword,
                 )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Divider(
-                        modifier = Modifier.weight(1f),
-                        color = Color(0xFFCBD5E1)
-                    )
-
-                    Text(
-                        text = "Ou continue com",
-                        color = textSecondary,
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        fontSize = 14.sp
-                    )
-
-                    Divider(
-                        modifier = Modifier.weight(1f),
-                        color = Color(0xFFCBD5E1)
-                    )
-                }
-
-                SecondButton(
-                    onClick = { /* Login com Google */ },
-                    modifier = Modifier.fillMaxWidth(),
-                    painter = painterResource(id = R.drawable.ic_google),
-                    text = "Google",
-                )
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Divider(
+//                        modifier = Modifier.weight(1f),
+//                        color = Color(0xFFCBD5E1)
+//                    )
+//
+//                    Text(
+//                        text = "Ou continue com",
+//                        color = textSecondary,
+//                        modifier = Modifier.padding(horizontal = 16.dp),
+//                        fontSize = 14.sp
+//                    )
+//
+//                    Divider(
+//                        modifier = Modifier.weight(1f),
+//                        color = Color(0xFFCBD5E1)
+//                    )
+//                }
+//
+//                SecondButton(
+//                    onClick = { /* Login com Google */ },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    painter = painterResource(id = R.drawable.ic_google),
+//                    text = "Google",
+//                )
 
                 Spacer(Modifier.weight(1f))
 
