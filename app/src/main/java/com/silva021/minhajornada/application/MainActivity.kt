@@ -141,6 +141,10 @@ class MainActivity : ComponentActivity() {
                                         navController
                                     )
                                 }
+                                },
+                                onNavigateToLogin = {
+                                    Routes.LoginScreen.navigateToLoginScreen(navController)
+                                },
                             )
                         }
 

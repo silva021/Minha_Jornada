@@ -42,6 +42,7 @@ import com.silva021.minhajornada.domain.usecases.GetReminderByIdUseCase
 import com.silva021.minhajornada.domain.usecases.JoinCommunityUseCase
 import com.silva021.minhajornada.domain.usecases.LeaveCommunityUseCase
 import com.silva021.minhajornada.domain.usecases.LoginUseCase
+import com.silva021.minhajornada.domain.usecases.LogoutUserUseCase
 import com.silva021.minhajornada.domain.usecases.UpdateReminderUseCase
 import com.silva021.minhajornada.ui.screens.challenges.actives.ActiveChallengesViewModel
 import com.silva021.minhajornada.ui.screens.challenges.completed.ChallengeCompletedViewModel
@@ -67,7 +68,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { ChallengesViewModel(get(), get()) }
     viewModel { CommunitiesViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
     viewModel { ExplorerViewModel(get(), get()) }
     viewModel { CommunityDetailsViewModel(get(), get()) }
     viewModel { CommunityFeedViewModel(get(), get(), get(), get(), get()) }
@@ -116,6 +117,7 @@ val usecasesModule = module {
     factory { LeaveCommunityUseCase(get()) }
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }
+    factory { LogoutUserUseCase() }
 }
 
 val repositoryModule = module {

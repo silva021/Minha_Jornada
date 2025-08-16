@@ -47,6 +47,8 @@ fun ProfileContent(
     onHelpClick: () -> Unit,
     onContactUsClick: () -> Unit,
     onRemindersClick: () -> Unit
+    onRemindersClick: () -> Unit,
+    onLogout: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -60,7 +62,7 @@ fun ProfileContent(
 
         item {
             SectionCard(
-                title = "Conta",
+                title = "Geral",
                 items = listOf(
                     SettingsItem("Editar Perfil", onClick = onEditProfileClick),
                     SettingsItem("Lembretes", onClick = onRemindersClick),
@@ -84,6 +86,15 @@ fun ProfileContent(
                 items = listOf(
                     SettingsItem("Ajuda", onClick = onHelpClick),
                     SettingsItem("Contate-nos", onClick = onContactUsClick)
+                )
+            )
+        }
+
+        item {
+            SectionCard(
+                title = "Conta",
+                items = listOf(
+                    SettingsItem("Sair", onClick = onLogout)
                 )
             )
         }
@@ -207,6 +218,8 @@ fun ProfileContentPreview() {
         onContactUsClick = {},
         onHelpClick = {},
         onEditProfileClick = {},
-        onRemindersClick = {}
+        onRemindersClick = {},
+        onDeleteAccount = {},
+        onLogout = {}
     )
 }

@@ -7,7 +7,7 @@ import com.silva021.minhajornada.data.dto.ProfileDTO
 import kotlinx.coroutines.tasks.await
 
 class ProfileRepositoryImpl() : ProfileRepository {
-    val usersCollection = FireStoreHelper.usersCollection
+    val usersCollection by lazy { FireStoreHelper.usersCollection }
 
     override suspend fun getProfile(): ProfileDTO {
         return usersCollection.document(Firebase.auth.uid.orEmpty()).get().await()

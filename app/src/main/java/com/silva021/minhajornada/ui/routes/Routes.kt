@@ -192,7 +192,12 @@ sealed class Routes(val route: String) {
 
     object LoginScreen : Routes("login_screen") {
         fun navigateToLoginScreen(navController: NavController) {
-            navController.navigate(LoginScreen.route)
+            navController.navigate(LoginScreen.route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
         }
     }
 
