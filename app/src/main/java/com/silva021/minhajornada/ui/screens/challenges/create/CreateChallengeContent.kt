@@ -54,8 +54,8 @@ fun CreateChallengeContent(
     onBackPressed: () -> Unit,
     onSave: (Challenge) -> Unit,
 ) {
-    val title = remember { mutableStateOf("teste") }
-    val description = remember { mutableStateOf("teste") }
+    val title = remember { mutableStateOf("") }
+    val description = remember { mutableStateOf("") }
     var notificationsEnabled by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf(CategoryType.FITNESS) }
     var selectedDuration by remember { mutableStateOf(DurationType.THREE_DAYS) }

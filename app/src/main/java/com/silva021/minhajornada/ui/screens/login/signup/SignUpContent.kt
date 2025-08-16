@@ -49,11 +49,11 @@ fun SignUpContent(
     onBackPressed: () -> Unit,
     onRegister: (Profile, String) -> Unit
 ) {
-    var fullName by remember { mutableStateOf("Lucas Silva") }
-    var userName by remember { mutableStateOf("silva021") }
-    var email by remember { mutableStateOf("lucasssilva021@gmail.com") }
-    var password by remember { mutableStateOf("123456789") }
-    var confirmPassword by remember { mutableStateOf("123456789") }
+    var fullName by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
