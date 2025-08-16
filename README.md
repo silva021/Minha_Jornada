@@ -45,6 +45,7 @@ Comunidadeee
 
 ## 🚀 Próximos Passos  
 
+- [ ] Remover códigos intencionalmente comentados
 - [ ] Implementar notificações push  
 - [ ] Adicionar desafios em grupo  
 - [ ] Criar sistema de conquistas  
