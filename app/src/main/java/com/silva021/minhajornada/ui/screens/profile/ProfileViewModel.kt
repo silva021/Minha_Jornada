@@ -1,8 +1,12 @@
 package com.silva021.minhajornada.ui.screens.profile
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.silva021.minhajornada.domain.model.Profile
+import com.silva021.minhajornada.domain.usecases.DeleteUserAccountUseCase
 import com.silva021.minhajornada.domain.usecases.GetMyProfileUseCase
 import com.silva021.minhajornada.domain.usecases.LogoutUserUseCase
 import kotlinx.coroutines.channels.BufferOverflow
@@ -16,7 +20,8 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val getProfile: GetMyProfileUseCase,
-    private val logoutUserUseCase: LogoutUserUseCase
+    private val logoutUserUseCase: LogoutUserUseCase,
+    private val deleteUserAccountUseCase: DeleteUserAccountUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState.Loading)
@@ -27,17 +32,42 @@ class ProfileViewModel(
     )
     val eventFlow: Flow<NavigationEvent> = _eventFlow.asSharedFlow()
 
+    var profile: Profile? = null
+        private set
 
     fun fetchProfile() {
         if (_uiState.value.isSuccess().not()) {
             viewModelScope.launch {
                 _uiState.value = ProfileUiState.Loading
                 getProfile().onSuccess {
+                    profile = it
                     _uiState.value = ProfileUiState.Success(it)
                 }.onFailure {
                     _uiState.value = ProfileUiState.Error(
                         message = it.message ?: "Erro ao carregar perfil"
                     )
+                }
+            }
+        }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            _uiState.value = ProfileUiState.Loading
+            deleteUserAccountUseCase.invoke().onSuccess {
+                _eventFlow.emit(NavigationEvent.NavigateToLogin)
+            }.onFailure { exception ->
+                profile?.let { profile ->
+                    _uiState.value = ProfileUiState.Success(profile)
+                }.also {
+                    when(exception) {
+                        is FirebaseAuthRecentLoginRequiredException -> {
+                            _eventFlow.emit(NavigationEvent.ShowSnackbar("É necessário fazer login novamente para excluir a conta"))
+                        }
+                        else -> {
+                            _eventFlow.emit(NavigationEvent.ShowSnackbar("Erro ao excluir conta"))
+                        }
+                    }
                 }
             }
         }
@@ -67,4 +97,5 @@ sealed class ProfileUiState {
 
 sealed class NavigationEvent {
     data object NavigateToLogin : NavigationEvent()
+    data class ShowSnackbar(val message: String) : NavigationEvent()
 }

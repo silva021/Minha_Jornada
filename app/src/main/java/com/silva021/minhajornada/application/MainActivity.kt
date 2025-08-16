@@ -140,7 +140,6 @@ class MainActivity : ComponentActivity() {
                                     Routes.ActiveChallengesScreen.navigateToActiveChallengesScreen(
                                         navController
                                     )
-                                }
                                 },
                                 onNavigateToLogin = {
                                     Routes.LoginScreen.navigateToLoginScreen(navController)

@@ -46,8 +46,8 @@ fun ProfileContent(
     onEditProfileClick: () -> Unit,
     onHelpClick: () -> Unit,
     onContactUsClick: () -> Unit,
-    onRemindersClick: () -> Unit
     onRemindersClick: () -> Unit,
+    onDeleteAccount: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
     LazyColumn(
@@ -94,6 +94,7 @@ fun ProfileContent(
             SectionCard(
                 title = "Conta",
                 items = listOf(
+                    SettingsItem("Excluir conta", onClick = onDeleteAccount),
                     SettingsItem("Sair", onClick = onLogout)
                 )
             )

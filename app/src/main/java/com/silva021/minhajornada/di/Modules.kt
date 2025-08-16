@@ -26,6 +26,7 @@ import com.silva021.minhajornada.domain.usecases.CreateReminderUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteChallengeUseCase
 import com.silva021.minhajornada.domain.usecases.DeletePostUseCase
 import com.silva021.minhajornada.domain.usecases.DeleteReminderUseCase
+import com.silva021.minhajornada.domain.usecases.DeleteUserAccountUseCase
 import com.silva021.minhajornada.domain.usecases.EditPostUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengeByIdUseCase
 import com.silva021.minhajornada.domain.usecases.GetChallengesUseCase
@@ -68,7 +69,13 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { ChallengesViewModel(get(), get()) }
     viewModel { CommunitiesViewModel(get()) }
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel {
+        ProfileViewModel(
+            getProfile = get(),
+            logoutUserUseCase = get(),
+            deleteUserAccountUseCase = get()
+        )
+    }
     viewModel { ExplorerViewModel(get(), get()) }
     viewModel { CommunityDetailsViewModel(get(), get()) }
     viewModel { CommunityFeedViewModel(get(), get(), get(), get(), get()) }
@@ -118,6 +125,7 @@ val usecasesModule = module {
     factory { GetPublicChallengesUseCase(get()) }
     factory { GetPublicChallengesByCategoryUseCase(get()) }
     factory { LogoutUserUseCase() }
+    factory { DeleteUserAccountUseCase() }
 }
 
 val repositoryModule = module {
