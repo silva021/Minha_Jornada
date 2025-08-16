@@ -8,21 +8,28 @@ Aplicativo de hábitos e metas pessoais desenvolvido em Kotlin com Jetpack Compo
 
 ## 🖼️ Galeria de Telas
 
-| Tela Inicial | Comunidade | Criar Desafios |
-|--------------|------------|----------------|
-| ![Home](screenshots/Home.png) | ![Comunidade](screenshots/Comunidade.png) | ![Criar Desafios](screenshots/Criar_desafios.png) |
+### 📱 Fluxo Principal
+| Tela Inicial | Explorar |
+|--------------|--------|
+| ![Home](screenshots/Home.png) | ![Explorar](screenshots/Explorar.png) |
 
-| Explorar | Feed da Comunidade | Perfil |
-|----------|--------------------|--------|
-| ![Explorar](screenshots/Explorar.png) | ![Feed](screenshots/Feed_comunidade.png) | ![Perfil](screenshots/Perfil.png) |
+### ⏰ Gerenciamento de Lembretes
+| Perfil | Lista | Criar | 
+|------- |-------|-------|
+| ![Perfil](screenshots/Perfil.png)| ![Lista](screenshots/Lista_lembretes.png) | ![Criar](screenshots/criar_lembrete.png) |
 
-| Lembretes | Criar Lembrete | Desafio |
-|-----------|----------------|---------|
-| ![Lembretes](screenshots/Lista_lembretes.png) | ![Criar Lembrete](screenshots/criar_lembrete.png) | ![Desafio](screenshots/desafio.png) |
+### 👥 Interação Social
+| Detalhe da Comunidade | Feed | Postagem |
+|------|----------|----------|
+| ![Feed](screenshots/Comunidadeee.png) | ![Feed](screenshots/Feed_comunidade.png) | ![Postagem](screenshots/Postagem_comunidade.png) |
 
-| Atualizar Progresso | Postagem na Comunidade | 
-|---------------------|------------------------|
-| ![Progresso](screenshots/Atualizar_progresso.png) | ![Postagem](screenshots/Postagem_comunidade.png) |
+### 🏆 Detalhes
+| Detalhe do Desafio | Progresso |
+|---------------------|----------|
+| ![Desafio](screenshots/desafio.png) | ![Progresso](screenshots/Atualizar_progresso.png) |
+
+Comunidadeee
+
 ---
 
 ## ✅ Funcionalidades  
