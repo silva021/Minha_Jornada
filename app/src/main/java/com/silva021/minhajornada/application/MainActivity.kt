@@ -556,14 +556,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun getStartDestination(): String {
         val isShowWelcomeScreen = PreferencesManager(applicationContext).isWelcomeShown()
-        return if (isShowWelcomeScreen) {
-            Routes.LoginScreen.route
-        } else {
-            if (Firebase.auth.currentUser != null)
-                Routes.ChallengesScreen.route
-            else
+        return if (Firebase.auth.currentUser != null)
+            Routes.ChallengesScreen.route
+        else
+            if (isShowWelcomeScreen) {
+                Routes.LoginScreen.route
+            } else {
                 Routes.WelcomeScreen.route
-        }
+            }
     }
 }
 
