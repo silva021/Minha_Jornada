@@ -2,6 +2,7 @@ package com.silva021.minhajornada.application
 
 import android.app.Application
 import com.silva021.minhajornada.di.repositoryModule
+import com.silva021.minhajornada.di.sharedPreferences
 import com.silva021.minhajornada.di.usecasesModule
 import com.silva021.minhajornada.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +17,8 @@ class Application : Application() {
             modules(
                 viewModelModule,
                 usecasesModule,
-                repositoryModule
+                repositoryModule,
+                sharedPreferences
             )
         }
     }

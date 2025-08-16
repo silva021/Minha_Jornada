@@ -63,6 +63,9 @@ import com.silva021.minhajornada.ui.screens.explorer.list.ExplorerViewModel
 import com.silva021.minhajornada.ui.screens.login.LoginViewModel
 import com.silva021.minhajornada.ui.screens.login.signup.SignUpViewModel
 import com.silva021.minhajornada.ui.screens.profile.ProfileViewModel
+import com.silva021.minhajornada.ui.screens.welcome.WelcomeViewModel
+import com.silva021.minhajornada.ui.utils.helper.PreferencesManager
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -91,6 +94,7 @@ val viewModelModule = module {
     viewModel { ExplorerChallengeDetailsViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { LoginViewModel(get()) }
+    viewModel { WelcomeViewModel(get()) }
 }
 
 val usecasesModule = module {
@@ -136,4 +140,8 @@ val repositoryModule = module {
     single<ReminderRepository> { ReminderRepositoryImpl() }
     single<PublicChallengeRepository> { PublicChallengeRepositoryImpl() }
     single<FeedRepository> { FeedRepositoryImpl() }
+}
+
+val sharedPreferences = module {
+    single { PreferencesManager(androidContext()) }
 }

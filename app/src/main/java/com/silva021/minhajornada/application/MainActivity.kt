@@ -64,6 +64,7 @@ import com.silva021.minhajornada.ui.screens.profile.edit.EditProfileScreen
 import com.silva021.minhajornada.ui.screens.welcome.WelcomeScreen
 import com.silva021.minhajornada.ui.theme.Palette
 import com.silva021.minhajornada.ui.utils.hasNavigationToRoute
+import com.silva021.minhajornada.ui.utils.helper.PreferencesManager
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -102,11 +103,7 @@ class MainActivity : ComponentActivity() {
                 val profileViewModel: ProfileViewModel = koinViewModel()
                 NavHost(
                     navController = navController,
-                    startDestination =
-                        if (Firebase.auth.currentUser != null)
-                            Routes.ChallengesScreen.route
-                        else
-                            Routes.WelcomeScreen.route,
+                    startDestination = getStartDestination(),
                     modifier = Modifier.padding(padding)
                 ) {
                     composable(Routes.WelcomeScreen.route) {
@@ -553,6 +550,19 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun getStartDestination(): String {
+        val isShowWelcomeScreen = PreferencesManager(applicationContext).isWelcomeShown()
+        return if (isShowWelcomeScreen) {
+            Routes.LoginScreen.route
+        } else {
+            if (Firebase.auth.currentUser != null)
+                Routes.ChallengesScreen.route
+            else
+                Routes.WelcomeScreen.route
         }
     }
 }
